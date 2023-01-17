@@ -1,0 +1,27 @@
+{
+	"name": "ran/my-plugin",
+	"description": "A WordPress plugin biolerplate.",
+	"type": "wordpress-plugin",
+	"license": "MIT",
+	"autoload": {
+		"psr-4": {
+			"Ran\\MyPlugin\\": "includes/",
+			"Ran\\Base\\": "vendor/"
+		}
+	},
+	"authors": [
+		{
+			"name": "Ben Rush",
+			"email": "bnjmnrsh@gmail.com"
+		}
+	],
+	"require-dev": {
+		"squizlabs/php_codesniffer": "^3.7",
+		"wp-coding-standards/wpcs": "dev-develop"
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	}
+}

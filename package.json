@@ -1,0 +1,48 @@
+{
+	"name": "my-plugin",
+	"version": "0.0.1",
+	"description": "A WordPress plugin boilerplate.",
+	"config": {
+		"dist": "assets/dist",
+		"src_public": "assets/src/public",
+		"dist_public": "assets/dist/public",
+		"src_admin": "assets/src/admin",
+		"dist_admin": "assets/dist/admin"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"clean": "rimraf $npm_package_config_dist",
+		"clean:public": "rimraf $npm_package_config_dist_public",
+		"clean:admin": "rimraf $npm_package_config_dist_admin",
+		"watch": "npm-run-all -s build -p watch:*",
+		"watch:public": "parcel watch $npm_package_config_src_public/js/public.js $npm_package_config_src_public/styles/public.scss --dist-dir $npm_package_config_dist_public",
+		"watch:admin": "parcel watch $npm_package_config_src_admin/js/admin.js $npm_package_config_src_admin/styles/admin.scss --dist-dir $npm_package_config_dist_admin",
+		"build": "npm-run-all -s clean -p build:*",
+		"build:public": "parcel build --no-content-hash $npm_package_config_src_public/js/public.js $npm_package_config_src_public/styles/public.scss --dist-dir $npm_package_config_dist_public",
+		"build:admin": "parcel build --no-content-hash $npm_package_config_src_admin/js/admin.js $npm_package_config_src_admin/styles/admin.scss --dist-dir $npm_package_config_dist_admin",
+		"stylelint": "stylelint \"assets/src/**/*.scss\" ",
+		"eslint": "eslint \"assets/src/**/*.js\" ",
+		"lint": "npm run stylelint && npm run eslint"
+	},
+	"author": "Benjamin Rush",
+	"license": "MIT",
+	"browserslist": [
+		"defaults"
+	],
+	"devDependencies": {
+		"@parcel/transformer-sass": "^2.8.2",
+		"@wordpress/eslint-plugin": "^13.8.0",
+		"@wordpress/prettier-config": "^2.7.0",
+		"@wordpress/stylelint-config": "^21.7.0",
+		"browserslist-lint": "^0.3.0",
+		"eslint": "^8.32.0",
+		"npm-run-all": "^4.1.5",
+		"parcel": "^2.8.2",
+		"prettier": "^2.8.3",
+		"rimraf": "^4.0.7",
+		"stylelint": "^14.16.1"
+	},
+	"dependencies": {
+		"@wordpress/api-fetch": "^6.21.0"
+	}
+}
