@@ -1,26 +1,23 @@
 <?php
-
 /**
- * Trigger this file on Plugin uninstall
+ * Fired when the plugin is uninstalled.
  *
- * @package  RanStarterPlugin
+ * When populating this file, consider the following flow
+ * of control:
+ *
+ * - This method should be static
+ * - Check if the $_REQUEST content actually is the plugin name
+ * - Run an admin referrer check to make sure it goes through authentication
+ * - Verify the output of $_GET makes sense
+ * - Repeat with other user roles. Best directly by using the links/query string parameters.
+ * - Repeat things for multisite. Once for a single site in the network, once site wide.
+ *
+ * @since 1.0.0
+ *
+ * @package Plugin_Name
  */
 
-if (!defined('WP_UNINSTALL_PLUGIN')) {
-	die;
+// If uninstall not called from WordPress, then exit.
+if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+	exit;
 }
-
-// DO UNINSTALL STUFF
-
-// Clear Database stored data
-// $books = get_posts(array('post_type' => 'book', 'numberposts' => -1));
-
-// foreach ($books as $book) {
-//     wp_delete_post($book->ID, true);
-// }
-
-// Access the database via SQL
-// global $wpdb;
-// $wpdb->query("DELETE FROM wp_posts WHERE post_type = 'book'");
-// $wpdb->query("DELETE FROM wp_postmeta WHERE post_id NOT IN (SELECT id FROM wp_posts)");
-// $wpdb->query("DELETE FROM wp_term_relationships WHERE object_id NOT IN (SELECT id FROM wp_posts)");
