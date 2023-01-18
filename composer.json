@@ -3,25 +3,46 @@
 	"description": "A WordPress plugin biolerplate.",
 	"type": "wordpress-plugin",
 	"license": "MIT",
+	"authors": [
+		{
+			"name": "Benjmn Rush <bnjmnrsh>",
+			"email": "bnjmnrsh@gmail.com"
+		}
+	],
+	"minimum-stability": "dev",
+	"prefer-stable": true,
 	"autoload": {
 		"psr-4": {
 			"Ran\\MyPlugin\\": "includes/",
 			"Ran\\Base\\": "vendor/"
 		}
 	},
-	"authors": [
-		{
-			"name": "Ben Rush",
-			"email": "bnjmnrsh@gmail.com"
-		}
-	],
+	"require": {
+		"php": ">=8.0",
+		"squizlabs/php_codesniffer": "*"
+	},
 	"require-dev": {
-		"squizlabs/php_codesniffer": "^3.7",
-		"wp-coding-standards/wpcs": "dev-develop"
+		"squizlabs/php_codesniffer": "*",
+		"wp-coding-standards/wpcs": "*",
+		"dealerdirect/phpcodesniffer-composer-installer": "*",
+		"yoast/phpunit-polyfills": "^1.0",
+		"phpunit/phpunit": "^9"
 	},
 	"config": {
 		"allow-plugins": {
 			"dealerdirect/phpcodesniffer-composer-installer": true
 		}
+	},
+	"scripts": {
+		"check-cs": [
+			"@php ./vendor/bin/phpcs"
+		],
+		"fix-cs": [
+			"@php ./vendor/bin/phpcbf"
+		]
+	},
+	"support": {
+		"issues": "https://github.com/RocketsAreNostalgic/${plugin}",
+		"source": "https://github.com/RocketsAreNostalgic/${plugin}"
 	}
 }
