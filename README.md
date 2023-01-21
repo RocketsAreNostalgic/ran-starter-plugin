@@ -21,10 +21,11 @@ Followed by:
 
 ### Manually updating
 
-Change the name of the plugin main PHP file from `my-plugin.php` to `your-plugin.php` using kabab-case.
+Change the name of the plugin root directory as well as the root PHP file from `my-plugin.php` to `your-plugin.php` using kabab-case.
 
 In `your-plugin.php` change the details of the documentation block as desired.
-Note: the name of your plugin file name, should be the same as your text domain.
+
+> Note: the name of your plugin file name, should be the same as your text domain.
 
 Also check for relevant details within the following resources:
 
@@ -52,22 +53,26 @@ In edition to enabling linting in your IDE, these rules can also be tested using
 
 #### Linting PHP
 
-The project has implemented the foundation of the [WordPress Coding Standards for PHP_CodeSniffer](https://github.com/WordPress/WordPress-Coding-Standards) by including both as `require-dev` dependencies with composer.
+The project has included [WordPress Coding Standards](https://github.com/WordPress/WordPress-Coding-Standards) with [PHP Code Sniffer]() as `dev` dependencies using Composer.
 
 As this configuration
 
 // Stuff that needs to be done by user for their own environments.
 
-At this point, if you run in your terminal: `$ phpcs -i` you will likely not see WordPress rules, however if you check in the local configuration version of phpcs like so: `./vendor/bin/phpcs -i` the output will look like the following:
+After running the , if you already have Code Sniffer installed globally, and run: `$ phpcs -i` you will likely not see WordPress rules installed unless you have already installed them globally as well, however if you check in the local configuration version of `phpcs` like so: `./vendor/bin/phpcs -i` the output should look like the following:
 
-The installed coding standards are MySource, PEAR, PSR1, PSR2, PSR12, Squiz, Zend, WordPress, WordPress-Core, WordPress-Docs and WordPress-Extra
+    The installed coding standards are MySource, PEAR, PSR1, PSR2, PSR12, Squiz, Zend, WordPress, WordPress-Core, WordPress-Docs and WordPress-Extra
 
-At this point you may wish to set up Symbolic links to these local binaries:
+If you have a UNIX based operating system symbolic links to these local binaries have already been created:
 
+```bash
 ln -s /vendor/bin/phpcs phpcs
 ln -s /vendor/bin/phpcbf phpcbf
+```
 
-### Helpfull phpcs commands
+So now you should be able to just run `./phpcs -i` to see the full set of installed rules. If you would rather use rules installed globally, then
+
+### Helpful `phpcs` Commands
 
 `./phpcs --version` PHP Code Sniffer version:
 
@@ -85,26 +90,51 @@ The installed coding standards are MySource, PEAR, PSR1, PSR2, PSR12, Squiz, Zen
 
 ## Developing front end resources
 
-The project uses [Parcel](https://parceljs.org/) to compile Sass and JavaScript which allows for dynamic reloading, and speed up your development.
+The project uses [Parcel](https://parceljs.org/) to compile Sass and JavaScript which allows for Hot Module Reloading to speed up your development, and a host of other features.
 
 The project separates styles and JavaScript into two areas:
 
 -   `assets/src/public` (front end of the website)
 -   `assets/src/admin` (back end admin screens)
 
-```JavaScript
+The primary commands are:
+
+```bash
 npm run watch
 npm run build
 npm run clean
 ```
 
-Each of these commands can be run with the additional flags `:admin` or `:public` to target these directories specifically, i.e.
+Each of these commands can be run with the additional flags `:admin` or `:public` to target these resources specifically, i.e.
 
-```JavaScript
+```bash
 npm run build:admin
 ```
 
---
+> NOTE: HMR fundamentally changes the contents of scripts and styles. Be sure to run your `build` commands prior to committing resources to production!
+
+### Browser Targets
+
+One of the many benefits of using Parcel is that it has many common toolchains built in, such as Babble and PostCSS's AutoPrefixer and more.Target builds are set done automagically using [BrowserList](https://github.com/browserslist/browserslist) rules found in `.browserlistrc`.
+
+### Sass
+
+To make it easier to import shared libraries we have configured `.sassrc` `includePaths` to include the `node_modules` and `./assets/src/shared/` directories, so you can `@import` sass libs installed from NPM, or shared with both public and admin styles.
+
+```bash
+  🚨 Build failed.
+  @parcel/transformer-css: Unexpected token Delim('*')
+```
+
+If your build fails due to older IE hacks, you can enable CSS error recovery by adding the following to your `package.json`:
+
+```json
+ "@parcel/transformer-css": {
+  "errorRecovery": true
+ },
+```
+
+---
 
 # DEV NOTES
 
