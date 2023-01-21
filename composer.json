@@ -17,11 +17,17 @@
 			"Ran\\Base\\": "vendor/"
 		}
 	},
+	"repositories": [
+		{
+			"url": "https://github.com/RocketsAreNostalgic/PluginLib.git",
+			"type": "git"
+		}
+	],
 	"require": {
-		"php": ">=8.0",
-		"squizlabs/php_codesniffer": "*"
+		"ran/plugin-lib": "*"
 	},
 	"require-dev": {
+		"php": ">=8.0",
 		"squizlabs/php_codesniffer": "*",
 		"wp-coding-standards/wpcs": "*",
 		"dealerdirect/phpcodesniffer-composer-installer": "*",
@@ -42,7 +48,7 @@
 		]
 	},
 	"support": {
-		"issues": "https://github.com/RocketsAreNostalgic/${plugin}",
-		"source": "https://github.com/RocketsAreNostalgic/${plugin}"
+		"issues": "https://github.com/RocketsAreNostalgic/PluginLib/issues",
+		"source": "https://github.com/RocketsAreNostalgic/PluginLib"
 	}
 }
