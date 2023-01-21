@@ -2,11 +2,14 @@
 	"name": "my-plugin",
 	"version": "0.0.1",
 	"description": "A WordPress plugin boilerplate.",
+	"author": "Benjamin Rush",
+	"license": "MIT",
+	"homepage": "https://github.com/RocketsAreNostalgic",
 	"config": {
 		"dist": "assets/dist",
 		"src_public": "assets/src/public",
-		"dist_public": "assets/dist/public",
 		"src_admin": "assets/src/admin",
+		"dist_public": "assets/dist/public",
 		"dist_admin": "assets/dist/admin"
 	},
 	"scripts": {
@@ -24,11 +27,6 @@
 		"eslint": "eslint \"assets/src/**/*.js\" ",
 		"lint": "npm run stylelint && npm run eslint"
 	},
-	"author": "Benjamin Rush",
-	"license": "MIT",
-	"browserslist": [
-		"defaults"
-	],
 	"devDependencies": {
 		"@parcel/transformer-sass": "^2.8.2",
 		"@wordpress/eslint-plugin": "^13.8.0",
