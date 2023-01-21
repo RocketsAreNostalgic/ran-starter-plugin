@@ -1,11 +1,15 @@
 <?xml version="1.0"?>
 <ruleset name="Plugin Wordpress Coding Standards">
     <description>RAN Wordpress Coding Standards</description>
+
     <!-- Temp fix for php 8.* compatibility issue with Config Standards -->
     <!-- https://github.com/WordPress/WordPress-Coding-Standards/issues/2035 -->
     <ini name="error_reporting" value="E_ALL &#38; ~E_DEPRECATED" />
 
 	<config name="minimum_supported_wp_version" value="6.0.0"/>
+
+	<!-- If you want to use your globally installed wpcs instead -->
+	<!-- <config name="installed_paths" value="/root/path/to/wpcs" /> -->
 
     <!-- Scan all files in directory -->
     <file>.</file>
