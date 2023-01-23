@@ -57,6 +57,11 @@
 		<exclude name="WordPress.WhiteSpace.ControlStructureSpacing"/>
 		<exclude name="WordPress.Security.EscapeOutput"/>
 		-->
+
+		<!-- Exceptions for PRS-4 autoloading -->
+        <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+        <exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+
         <exclude name="WordPress.PHP.DisallowShortTernary"/>
     </rule>
 
@@ -103,7 +108,7 @@
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<property name="prefixes" type="array">
-				<element value="ran_example"/>
+				<element value="Ran/MyPlugin"/>
 			</property>
 		</properties>
 	</rule>
