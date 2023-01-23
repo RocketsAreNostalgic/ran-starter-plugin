@@ -13,8 +13,13 @@
 	"prefer-stable": true,
 	"autoload": {
 		"psr-4": {
-			"Ran\\MyPlugin\\": "includes/",
-			"Ran\\Base\\": "vendor/"
+			"Ran\\MyPlugin\\": "inc/",
+			"Ran\\PluginLib\\": "vendor/ran/plugin-lib/inc/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Tests\\": "tests/"
 		}
 	},
 	"repositories": [
