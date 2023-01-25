@@ -69,6 +69,14 @@
     <rule ref="WordPress-Docs"/>
 
     <!-- Extra rules from other standards. -->
+
+	<!-- Class opening braces should be on the same line as the statement. -->
+	<rule ref="Generic.Classes.OpeningBraceSameLine"/>
+	<!-- Covers rule: Braces should always be used, even when they are not required. -->
+	<rule ref="Generic.ControlStructures.InlineControlStructure"/>
+	<!-- Covers rule: Braces shall be used for all blocks. -->
+	<rule ref="Squiz.ControlStructures.ControlSignature"/>
+
     <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
     <rule ref="Generic.Commenting.Todo"/>
 
@@ -108,7 +116,7 @@
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<property name="prefixes" type="array">
-				<element value="Ran/MyPlugin"/>
+				<element value="ran"/>
 			</property>
 		</properties>
 	</rule>
