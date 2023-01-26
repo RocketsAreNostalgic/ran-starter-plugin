@@ -1,23 +1,23 @@
 <?php
-
-
 /**
+ * RAN Starter Plugin
+ *
  * @package  RanStarterPlugin
  */
 
 /*
 Plugin Name: RAN Starter Plugin
-Plugin URI: http://github.com/RocketsAreNostalgic
-Description: A starter plugin with common functionality
+Plugin URI: http://github.com/RocketsAreNostalgic/ran-starter-plugin
+Description: A starter plugin with scaffold for common functionality using the RAN Plugin Lib.
 Version: 0.0.1
 Requires at least: 6.1.0
 Requires PHP: 8.0.0
-Author: Benjamin Rush "bnjmnrsh" <bnjmnrsh@gmail.com>
+Author: Rocket Are Nostalgic
 Author URI: http://github.com/RocketsAreNostalgic
 License: MIT
 Text Domain: ran-starter-plugin
 Domain Path: /languages
-Update URI: http://github.com/RocketsAreNostalgic/{$plugin-name}
+Update URI: http://github.com/RocketsAreNostalgic/ran-starter-plugin
 */
 
 // Silence is golden.
