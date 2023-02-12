@@ -1,28 +1,60 @@
 <?php
-
 /**
+ * An example FeatureController using several Accessories provided by the @ran\plugin-lib.
+ *
+ * @author bnjmnrsh <bnjmnrsh@gmail.com>
  * @package  RanPlugin
  */
 
 namespace Ran\MyPlugin\Features;
 
 use Ran\MyPlugin\Api\Callbacks\AdminCallbacks;
-use Ran\MyPlugin\Api\Callbacks\ManagerCallbacks;
 use Ran\MyPlugin\Base\SettingsApi;
-use Ran\PluginLib\AbstractFeatureController;
-use Ran\PluginLib\RegistrableInterface;
+use Ran\PluginLib\FeaturesAPI\FeatureControllerAbstract;
+use Ran\PluginLib\FeaturesAPI\RegistrableFeatureInterface;
+use Ran\PluginLib\TestAccessory\TestAccessory;
 
 /**
  * An example Service Controller
  */
-class ExampleFeatureController extends AbstractFeatureController implements RegistrableInterface {
+class ExampleFeatureController extends FeatureControllerAbstract implements RegistrableFeatureInterface, TestAccessory {
 
-
+	/**
+	 * Undocumented variable
+	 *
+	 * @var AdminCallbacks
+	 */
 	public AdminCallbacks $callbacks;
 
+	/**
+	 * Undocumented variable
+	 *
+	 * @var SettingsApi
+	 */
 	public SettingsApi $settings;
 
-	public array $feature_subpage = array( 'ExampleFeatureController' => 'An Example Feature Controller Subpage.' );
+	/**
+	 * The settings page key and description.
+	 * The key is use for slugs and database entries, the value is used in
+	 *
+	 * @var array
+	 */
+	public array $feature_settings_page = array(
+		array(
+			'ExampleFeatureController' => array(
+				'An Example Feature Controller Subpage.',
+				array(
+					'example_feature',
+				),
+			),
+		),
+	);
+
+	/**
+	 * Undocumented variable
+	 *
+	 * @var array
+	 */
 	public $subpages = array();
 
 	/**
@@ -30,12 +62,11 @@ class ExampleFeatureController extends AbstractFeatureController implements Regi
 	 *
 	 * @return null
 	 */
-	public function register(): void {
+	public function init(): ExampleFeatureController|false {
 
-		if ( ! $this->activated( key( $this->feature_subpage ) ) ) {
-
-			update_option( $this->plugin_data['PluginOption'], $this->feature_subpage );
-			return;
+		if ( ! $this->activated( key( $this->feature_settings_page ) ) ) {
+			update_option( $this->plugin_data['PluginOption'], $this->feature_settings_page );
+			return false;
 		}
 
 		$this->settings = new SettingsApi();
@@ -43,19 +74,33 @@ class ExampleFeatureController extends AbstractFeatureController implements Regi
 
 		$this->set_subpages();
 
-		$this->settings->add_subpages( $this->subpages )->register();
+		$this->settings->add_subpages( $this->subpages )->init();
+
+		return $this;
 	}
 
+	/**
+	 * Undocumented function
+	 *
+	 * @return void
+	 */
 	public function set_subpages() {
 		$this->subpages = array(
 			array(
 				'parent_slug' => $this->plugin_data['TextDomain'],
-				'page_title' => 'Example Manager',
-				'menu_title' => 'Example Manager',
+				'page_title' => array_key_last( $this->feature_settings_page ),
+				'menu_title' => array_key_last( $this->feature_settings_page ),
 				'capability' => 'manage_options',
-				'menu_slug' => 'ran_example',
+				'menu_slug' => array_key_first( $this->feature_settings_page ),
 				'callback' => array( $this->callbacks, 'example_feature' ),
 			),
 		);
 	}
+
+	/**
+	 * Undocumented function
+	 *
+	 * @return void
+	 */
+	public function test() {}
 }

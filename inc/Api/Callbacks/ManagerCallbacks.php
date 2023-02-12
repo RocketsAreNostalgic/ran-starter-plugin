@@ -22,8 +22,6 @@ class ManagerCallbacks {
 		return $output;
 	}
 
-
-
 	public function checkbox_field( $args ) {
 		$name = $args['label_for'];
 		$classes = $args['class'];

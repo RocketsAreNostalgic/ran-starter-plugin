@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * RAN Starter Plugin
+ *
+ * @package  RanStarterPlugin
+ */
 
 namespace Ran\MyPlugin\Base;
 

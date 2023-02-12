@@ -6,14 +6,14 @@
     <!-- https://github.com/WordPress/WordPress-Coding-Standards/issues/2035 -->
     <ini name="error_reporting" value="E_ALL &#38; ~E_DEPRECATED" />
 
-	<config name="minimum_supported_wp_version" value="6.0.0"/>
+    <config name="minimum_supported_wp_version" value="6.0.0"/>
 
-	<!-- If you want to use your globally installed wpcs instead -->
-	<!-- <config name="installed_paths" value="/root/path/to/wpcs" /> -->
+    <!-- If you want to use your globally installed wpcs instead -->
+    <!-- <config name="installed_paths" value="/root/path/to/wpcs" /> -->
 
     <!-- Scan all files in directory -->
     <file>.</file>
-
+    <include-pattern>./vendor/ran/*</include-pattern>
     <!-- Scan only PHP files -->
     <arg name="extensions" value="php"/>
 
@@ -23,22 +23,22 @@
     <!-- Show sniff codes in all reports -->
     <arg value="ns"/>
 
-	<!-- Exclude WP Core folders and files from being checked. -->
-	<exclude-pattern>/docroot/wp-admin/*</exclude-pattern>
-	<exclude-pattern>/docroot/wp-includes/*</exclude-pattern>
-	<exclude-pattern>/docroot/wp-*.php</exclude-pattern>
-	<exclude-pattern>/docroot/index.php</exclude-pattern>
-	<exclude-pattern>/docroot/xmlrpc.php</exclude-pattern>
-	<exclude-pattern>/docroot/wp-content/plugins/*</exclude-pattern>
+    <!-- Exclude WP Core folders and files from being checked. -->
+    <exclude-pattern>/docroot/wp-admin/*</exclude-pattern>
+    <exclude-pattern>/docroot/wp-includes/*</exclude-pattern>
+    <exclude-pattern>/docroot/wp-*.php</exclude-pattern>
+    <exclude-pattern>/docroot/index.php</exclude-pattern>
+    <exclude-pattern>/docroot/xmlrpc.php</exclude-pattern>
+    <exclude-pattern>/docroot/wp-content/plugins/*</exclude-pattern>
 
-	<!-- Exclude the Composer Vendor directory. -->
-	<exclude-pattern>/vendor/*</exclude-pattern>
+    <!-- Exclude the Composer Vendor directory. -->
+    <!-- <exclude-pattern>/vendor/*</exclude-pattern> -->
 
-	<!-- Exclude the Node Modules directory. -->
-	<exclude-pattern>/node_modules/*</exclude-pattern>
+    <!-- Exclude the Node Modules directory. -->
+    <exclude-pattern>/node_modules/*</exclude-pattern>
 
-	<!-- Exclude minified Javascript files. -->
-	<exclude-pattern>*.min.js</exclude-pattern>
+    <!-- Exclude minified Javascript files. -->
+    <exclude-pattern>*.min.js</exclude-pattern>
     <!-- Include the WordPress-Extra. -->
     <rule ref="WordPress-Extra">
         <!--
@@ -53,12 +53,12 @@
 		They are not intended as advice about which sniffs to exclude.
 		-->
 
-		<!--
+        <!--
 		<exclude name="WordPress.WhiteSpace.ControlStructureSpacing"/>
 		<exclude name="WordPress.Security.EscapeOutput"/>
 		-->
 
-		<!-- Exceptions for PRS-4 autoloading -->
+        <!-- Exceptions for PRS-4 autoloading -->
         <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
         <exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
 
@@ -70,18 +70,18 @@
 
     <!-- Extra rules from other standards. -->
 
-	<!-- Class opening braces should be on the same line as the statement. -->
-	<rule ref="Generic.Classes.OpeningBraceSameLine"/>
-	<!-- Covers rule: Braces should always be used, even when they are not required. -->
-	<rule ref="Generic.ControlStructures.InlineControlStructure"/>
-	<!-- Covers rule: Braces shall be used for all blocks. -->
-	<rule ref="Squiz.ControlStructures.ControlSignature"/>
+    <!-- Class opening braces should be on the same line as the statement. -->
+    <rule ref="Generic.Classes.OpeningBraceSameLine"/>
+    <!-- Covers rule: Braces should always be used, even when they are not required. -->
+    <rule ref="Generic.ControlStructures.InlineControlStructure"/>
+    <!-- Covers rule: Braces shall be used for all blocks. -->
+    <rule ref="Squiz.ControlStructures.ControlSignature"/>
 
     <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
     <rule ref="Generic.Commenting.Todo"/>
 
-	<!-- Check for PHP cross-version compatibility. -->
-	<!--
+    <!-- Check for PHP cross-version compatibility. -->
+    <!--
 	To enable this, the PHPCompatibilityWP standard needs
 	to be installed.
 	See the readme for installation instructions:
@@ -89,12 +89,12 @@
 	For more information, also see:
 	https://github.com/PHPCompatibility/PHPCompatibility
 	-->
-	<!--
+    <!--
 	<config name="testVersion" value="5.2-"/>
 	<rule ref="PHPCompatibilityWP"/>
 	-->
 
-	<!--
+    <!--
 	To get the optimal benefits of using WPCS, we should add a couple of
 	custom properties.
 	Adjust the values of these properties to fit our needs.
@@ -104,21 +104,20 @@
 	https://github.com/WordPress/WordPress-Coding-Standards/wiki/Customizable-sniff-properties
 	-->
 
-	<rule ref="WordPress.WP.I18n">
-		<properties>
-			<property name="text_domain" type="array">
-				<element value="ran-example"/>
-				<element value="library-textdomain"/>
-			</property>
-		</properties>
-	</rule>
+    <rule ref="WordPress.WP.I18n">
+        <properties>
+            <property name="text_domain" type="array">
+                <element value="ran-example"/>
+                <element value="library-textdomain"/>
+            </property>
+        </properties>
+    </rule>
 
-	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
-		<properties>
-			<property name="prefixes" type="array">
-				<element value="ran"/>
-			</property>
-		</properties>
-	</rule>
-
+    <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+        <properties>
+            <property name="prefixes" type="array">
+                <element value="ran"/>
+            </property>
+        </properties>
+    </rule>
 </ruleset>

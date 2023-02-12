@@ -1,21 +1,32 @@
 <?php
-
 /**
+ * Plugin dashboard.
+ *
  * @package  RanPlugin
  */
 
-namespace Ran\MyPlugin\Pages;
+namespace Ran\MyPlugin\Features\Pages;
 
 use Ran\MyPlugin\Api\Callbacks\AdminCallbacks;
 use Ran\MyPlugin\Api\Callbacks\ManagerCallbacks;
 use Ran\MyPlugin\Base\SettingsApi;
-use Ran\PluginLib\AbstractFeatureController;
-use Ran\PluginLib\RegistrableInterface;
+use Ran\PluginLib\FeaturesAPI\FeatureControllerAbstract;
+use Ran\PluginLib\FeaturesAPI\RegistrableFeatureInterface;
 
-class Dashboard extends AbstractFeatureController implements RegistrableInterface {
+class Dashboard extends FeatureControllerAbstract implements RegistrableFeatureInterface {
 
+	/**
+	 * Instance of our Settings API WIP
+	 *
+	 * @var SettingsApi
+	 */
 	public SettingsApi $settings;
 
+	/**
+	 * Instance of our
+	 *
+	 * @var AdminCallbacks
+	 */
 	public AdminCallbacks $callbacks;
 
 	public ManagerCallbacks $callbacks_mngr;
@@ -27,7 +38,7 @@ class Dashboard extends AbstractFeatureController implements RegistrableInterfac
 	 *
 	 * @return void
 	 */
-	public function register(): void {
+	public function init(): Dashboard {
 
 		$this->settings = new SettingsApi();
 
@@ -40,7 +51,8 @@ class Dashboard extends AbstractFeatureController implements RegistrableInterfac
 		$this->set_dashboard_sections();
 		$this->set_dashboard_fields();
 
-		$this->settings->add_wp_admin_pages( $this->wp_admin_sidebar_menu_item )->with_subpages( 'Dashboard' )->register();
+		$this->settings->add_wp_admin_pages( $this->wp_admin_sidebar_menu_item )->with_subpages( 'Dashboard' )->init();
+		return $this;
 	}
 
 	public function create_wp_admin_sidebar_menu_item() {
@@ -85,20 +97,21 @@ class Dashboard extends AbstractFeatureController implements RegistrableInterfac
 	public function set_dashboard_fields() {
 		$args = array();
 
-		foreach ( $this->feature_managers as $key => $value ) {
-			$args[] = array(
-				'id' => $key,
-				'title' => $value,
-				'callback' => array( $this->callbacks_mngr, 'checkbox_field' ),
-				'page' => 'ran_plugin',
-				'section' => 'ran_admin_index',
-				'args' => array(
-					'option_name' => 'ran_plugin',
-					'label_for' => $key,
-					'class' => 'ui-toggle',
-				),
-			);
-		}
+		// TODO: Migrating to Plugin features object.
+		// foreach ( $this->feature_managers as $key => $value ) {
+		// $args[] = array(
+		// 'id' => $key,
+		// 'title' => $value,
+		// 'callback' => array( $this->callbacks_mngr, 'checkbox_field' ),
+		// 'page' => 'ran_plugin',
+		// 'section' => 'ran_admin_index',
+		// 'args' => array(
+		// 'option_name' => 'ran_plugin',
+		// 'label_for' => $key,
+		// 'class' => 'ui-toggle',
+		// ),
+		// );
+		// }
 
 		$this->settings->set_fields( $args );
 	}

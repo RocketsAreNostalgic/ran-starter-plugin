@@ -138,6 +138,49 @@ If your build fails due to older IE hacks, you can enable CSS error recovery by 
 
 # DEV NOTES
 
+The features implementation is a pattern based on the example made by Carl Alexander in [Polymorphism and WordPress: Interfaces](https://carlalexander.ca/polymorphism-wordpress-interfaces/). Which discusses an implementation of the "Interface segregation principle" or I in SOLID.
+
+The pattern as we will implement is as follows:
+
+Our features are essentially controllers for the logic of a particular bit of our plugin's functionality. This functionality may require access to common WP APIs, or other common tasks which could result in differing implementation approaches, and generally a lot of code duplication for example calling hooks or filters, or the Settings API.
+
+As an alternative, we can create an interface for each of these common bits of code, which requires the feature to implement known configuration methods.
+
+Then as we loop over our features classes to instantiate them, we can check what interfaces it implements, and use this to trigger a Factory(? correct terminology?) to implement that interface's methods.
+
+For example a `FrontEnd` feature might need to enqueue script and styles on the front end. However instead of doing this manually in its constructor (discouraged), or better in its `init()` method, we can have the feature class `implement` a `EnqueueFrontEndStyles` interface which requires the feature to have a `enqueue_frontend_styles` method returning the required config.
+
+The `enqueue_frontend_styles` method is not called by the Feature itself, but by by a factory that is triggered when instating each feature. Basically we will check which interfaces each feature implements and call the Factory for that interface.
+
+Feature Class:
+A feature class implements any custom logic required by the feature. However common tasks that many features my need to implement are handled by interfaces. If a feature implements an interface, our `FeatureManager` will check if that interface has a factory class, and if so will pass the feature to it, to fire the interface's methods to implement that common logic.
+
+`FeatureManager` class:
+
+-   The `FeatureManager`'s first job is to allow us to gather implementation details (or register) each feature. Each features is then stored in an individual FeatureContainer object, and all `FeatureContainers` are stored in a `FeatureCache` object.
+
+-   During registration instantiated (using `new` Feature*()) but not activated. Activation is currently done by calling a Feature's init(). The new feature object is stored off the FeatureContainer's `instance` property.
+
+-   After registration, each feature is then loaded using the `FeatureManager->load()` method. This loops over each `FeatureContainer` in `FeaturesCache` and calls the init() on each `instance` property.
+
+`FeatureContainer->instance->init()`
+
+> > > > > Its is after registering that we would like to check each interface and if it exists, load its factory. Logic as follows:
+
+-   Load the array of implemented interfaces and their full namespace.
+    [PHP `class_implements()`](https://www.php.net/manual/en/function.class-implements.php)
+
+    [PHP `get_declared_interfaces()`](https://www.php.net/manual/en/function.get-declared-interfaces.php)
+
+[PHP is_subclass_of()](https://www.php.net/is_subclass_of)
+[PHP is_a()](https://www.php.net/manual/en/function.is-a.php)
+
+    Check in the root of that namespace for a InterfaceFactory.
+
+-   If the Factory is callable, pass in the class and implements the interface's methods on that class, run any logic
+-   Return the class instance for the next loop?
+
+/// /////////////////////////////
 So far we have extracted out many of the core functionality of the plugin into a single namespace: Base
 
 Activation
@@ -162,8 +205,8 @@ ServiceManagers has activated_manager, set_manager, get_managers methods, as wel
 -   Custom Login/Register screen
 -   Custom fields
 -   Shortcodes generation
--   Noces
--   Example Gutenburg block template
+-   Nonces
+-   Example Gutenberg block template
 -   Move js and scss processing from gulp to NPM scripts.
 
 Consolidate plugin specific configuration out of different base files into central services config that can be triggered without augmenting base files.
@@ -182,7 +225,7 @@ Consolidate plugin specific configuration out of different base files into centr
 
 -   uninstall.php only uninstalls a specific 'books' cpt. However, again the ServicesController might be able to dynamically handle this, however there may be some 'quirks' about using OOP with uninstall or autoloading? Vague memory here...
 
--   Enqueue.php also has a static list of files and services that it loads. This could be part of Services Enqueue could be a helper for enquing media, styles and scripts.
+-   Enqueue.php also has a static list of files and services that it loads. This could be part of Services Enqueue could be a helper to enqueue media, styles and scripts.
 
 -   SettingsLinks.php
 

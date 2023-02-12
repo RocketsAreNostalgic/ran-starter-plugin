@@ -1,0 +1,1 @@
+{"mappings":"AACA","sources":["assets/src/admin/styles/admin.scss"],"sourcesContent":["/* stylelint-disable-next-line */\nbody.toplevel_page_ran-starter-plugin {\n\tbackground-color: #fafad2;\n}\n"],"names":[],"version":3,"file":"admin.css.map","sourceRoot":"../../../../"}

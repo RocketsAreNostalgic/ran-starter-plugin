@@ -1,28 +1,51 @@
 <?php
-
 /**
+ * Callback for the plugin Dashboard
+ *
  * @package  RanPlugin
  */
 
 namespace Ran\MyPlugin\Api\Callbacks;
 
+use Ran\PluginLib\Plugin\PluginInterface;
+
+/**
+ * A class containing all of our callbacks for the admin area.
+ */
 class AdminCallbacks {
 
-	private object $plugin;
+	/**
+	 * Array of plugin details.
+	 *
+	 * @var array
+	 */
 	private array $plugin_data = array();
 
-	public function __construct( object $plugin ) {
-
-		$this->plugin = $plugin;
+	/**
+	 * Constructor of our AdminCallbacks class.
+	 *
+	 * @param  PluginInterface $plugin Incoming Plugin instance.
+	 */
+	public function __construct( PluginInterface $plugin ) {
 		$this->plugin_data = $plugin->get_plugin();
 	}
 
-	public function admin_dashboard() {
-
-		return require_once( $this->plugin_data['PATH'] . '/templates/features/admin.php' );
+	/**
+	 * Template for our plugin Dashboard.
+	 *
+	 * @return string
+	 */
+	public function admin_dashboard():string {
+		return require_once $this->plugin_data['PATH'] . 'templates/dashboard.php';
 	}
 
-	public function example_feature() {
+
+	/**
+	 * The template for the example feature.
+	 *
+	 * @return string
+	 */
+	public function example_feature(): string {
 		return require_once( $this->plugin_data['PATH'] . '/templates/features/example-feature.php' );
 	}
 }

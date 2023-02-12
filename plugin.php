@@ -5,6 +5,8 @@
  * @package  RanStarterPlugin
  */
 
+namespace Ran\MyPlugin;
+
 /*
 Plugin Name: RAN Starter Plugin
 Plugin URI: http://github.com/RocketsAreNostalgic/ran-starter-plugin
@@ -28,40 +30,46 @@ if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
 	 require_once dirname( __FILE__ ) . '/vendor/autoload.php';
 }
 
+use Ran\MyPlugin\Base\Activate;
+use Ran\MyPlugin\Base\Bootstrap;
+use Ran\MyPlugin\Base\Deactivate;
 use Ran\MyPlugin\Base\Plugin;
 
 /**
- * Activation hook
+ * Plugin Activation hook
+ * Passing as skeleton instance of Plugin, will not have full record of all plugin classes etc.
  *
  * @since 0.0.1
  */
-function ran_activate_plugin() {
-	 $plugin = new Plugin( __FILE__ );
-	 require_once plugin_dir_path( __FILE__ ) . 'inc/Base/Activate.php';
-	 Ran\MyPlugin\Base\Activate::activate( $plugin );
+function activate_plugin() {
+	Activate::activate( new Plugin( __FILE__ ) );
 }
-register_activation_hook( __FILE__, 'ran_activate_plugin' );
+register_activation_hook( __FILE__, __NAMESPACE__ . '\activate_plugin' );
 
 /**
- * Deactivation hook
+ * Plugin Deactivation hook
+ * Passing as skeleton instance of Plugin, will not have full record of all plugin classes etc.
  *
  * @since 0.0.1
  */
-function ran_deactivate_plugin() {
-	 $plugin = new Plugin( __FILE__ );
-	 require_once plugin_dir_path( __FILE__ ) . 'inc/Base/Deactivate.php';
-	 Ran\MyPlugin\Base\Deactivate::deactivate( $plugin );
+function deactivate_plugin() {
+	Deactivate::deactivate( new Plugin( __FILE__ ) );
 }
-register_deactivation_hook( __FILE__, 'ran_deactivate_plugin' );
+register_deactivation_hook( __FILE__, __NAMESPACE__ . '\deactivate_plugin' );
 
-// Kick off the plugin.
-require_once plugin_dir_path( __FILE__ ) . 'inc/Base/Bootstrap.php';
+/**
+ *   // add_action( 'activate_my-plugin/plugin.php', array( __NAMESPACE__ . '\Base\Activate', 'activate' ), 10, 2 );
+ *   // add_action( 'deactivate_my-plugin/plugin.php', array( __NAMESPACE__ . '\Base\Deactivate', 'deactivate' ), 10, 2 );
+*/
 
-// Load our plugin after WP, plugins, and theme are loaded and instantiated.
+/**
+ * Bootstrap our plugin after WP and plugins but before theme, this can be changed as required.
+ */
 add_action(
-	'wp_loaded',
+	'plugins_loaded',
 	function() {
-		Ran\MyPlugin\Base\Bootstrap::init( __FILE__ );
+		$bootstrap = new Bootstrap( __FILE__ );
+		$bootstrap->init();
 	},
 	20
 );

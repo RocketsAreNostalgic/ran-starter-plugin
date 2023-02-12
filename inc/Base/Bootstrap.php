@@ -1,12 +1,18 @@
 <?php
+/**
+ * RAN Starter Plugin
+ *
+ * @package  RanStarterPlugin
+ */
 
 namespace Ran\MyPlugin\Base;
 
 use Ran\MyPlugin\Base\Plugin;
 use Ran\MyPlugin\Features;
-use Ran\MyPlugin\Pages;
 use Ran\PluginLib\BootstrapInterface;
-use Ran\PluginLib\RegisterFeatures;
+use Ran\PluginLib\EnqueueAdmin;
+use Ran\PluginLib\FeaturesAPI\FeaturesManager;
+use Ran\PluginLib\Plugin\PluginInterface;
 
 /**
  * Plugin bootstrap class
@@ -14,54 +20,103 @@ use Ran\PluginLib\RegisterFeatures;
 class Bootstrap implements BootstrapInterface {
 
 	/**
-	 * Internal reference to the admin pages array.
+	 * The Plugin class object.
 	 *
-	 * @var array $admin_pages
+	 * @var Plugin
 	 */
-	private array $admin_pages = array(
-		'cpt_manager' => 'Activate CPT Manager',
-		'taxonomy_manager' => 'Activate Taxonomy Manager',
-		'media_widget' => 'Activate Media Widget',
-		'testimonial_manager' => 'Activate Testimonial Manager',
-		'templates_manager' => 'Activate Custom Templates',
-		'login_manager' => 'Activate Ajax Login/Signup',
-		'example_manager' => 'Activate Example Manager',
-	);
+	private Plugin $plugin;
 
 	/**
-	 * An array of plugin feature classes to register.
-	 *
-	 * @var array $plugin_features
-	 */
-	public static array $features = array(
-		Pages\Dashboard::class => array(),
-		Features\ExampleFeatureController::class => array(),
-	);
-
-	/**
-	 * An array of feature controllers to register.
+	 * Plugin data array
 	 *
 	 * @var array
 	 */
-	private array $feature_controllers = array();
+	private array $plugin_data = array();
+
+	/**
+	 * Bootstrap constructor.
+	 *
+	 * @param  string $plugin_file file path or __FILE__.
+	 */
+	public function __construct( string $plugin_file ) {
+		$this->plugin = new Plugin( $plugin_file );
+		$this->plugin_data = $this->plugin->get_plugin();
+	}
 
 	/**
 	 * Bootstrap init method.
 	 *
-	 * @param string $plugin_file Is the plugin root file or __FILE__.
-	 *
 	 * @return Plugin
 	 */
-	public static function init( string $plugin_file = '' ):Plugin {
-		$plugin = new Plugin( $plugin_file );
+	public function init():PluginInterface {
+		// TODO: Implement this as a feature with contract which triggers the loading of EnqueueAdmin().
+		// Enqueue admin assets for the plugin in general.
+		// $admin_assets = new EnqueueAdmin();
+		// $admin_assets->add_styles( $this->admin_styles() )
+		// ->add_scripts( $this->admin_scripts() )
+		// ->load();
 
-		// Register feature controllers.
-		$features = new RegisterFeatures();
+		// Registering feature classes with the plugin.
+		$manager = new FeaturesManager( $this->plugin );
+		// Admin Dashboard.
+		// $manager->register_feature(
+			// $this->plugin_data['TextDomain'],
+			// Features\Pages\Dashboard::class,
+			// array(),
+		// );
 
-		$features->instantiate( $plugin, self::$features );
+		// Add additional links to plugin entry.
+		$manager->register_feature(
+			'plugin-meta-links',
+			Features\PluginAdditionalLinks::class,
+			array(
+				array( 'taco' => 'a tasty treat' ),
+			)
+		);
 
-		// Register admin pages.
+		// Example feature controller.
+		// $manager->register_feature(
+		// 'example-feature-manager',
+		// Features\ExampleFeatureController::class,
+		// );
 
-		return $plugin;
+		$manager->load_all();
+
+		// echo '<pre>';
+		// // \print_r( $manager->get_registery() );
+		// echo '<br>';
+		// echo '<h2	> before registery</h2>';
+		// echo '<br>';
+		// foreach ( $manager->get_registery() as $container ) {
+		// echo '<br>';
+		// echo '<h2>New Instance</h2>';
+		// echo '<br>';
+		// print_r( $container->get_instance() );
+		// }
+		// echo '<br>';
+		// echo '</pre>';
+
+		// die();
+		return $this->plugin;
+	}
+
+	/**
+	 * Construct an array of admin css styles.
+	 *
+	 * @return array of admin styles.
+	 */
+	private function admin_styles():array {
+		$admin_styles[] = array( 'dashboard', $this->plugin_data['URL'] . 'assets/dist/admin/styles/dashboard.css' );
+		return $admin_styles;
+	}
+
+	/**
+	 * Construct an array of admin scripts.
+	 *
+	 * @return array
+	 */
+	private function admin_scripts():array {
+		$admin_scripts[] = array( 'admin', $this->plugin_data['URL'] . 'assets/dist/admin/js/admin.js' );
+		return $admin_scripts;
 	}
 }

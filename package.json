@@ -19,15 +19,16 @@
 		"clean:admin": "rimraf $npm_package_config_dist_admin",
 		"watch": "npm-run-all -s build -p watch:*",
 		"watch:public": "parcel watch $npm_package_config_src_public/js/public.js $npm_package_config_src_public/styles/public.scss --dist-dir $npm_package_config_dist_public",
-		"watch:admin": "parcel watch $npm_package_config_src_admin/js/admin.js $npm_package_config_src_admin/styles/admin.scss --dist-dir $npm_package_config_dist_admin",
+		"watch:admin": "parcel watch $npm_package_config_src_admin/js/*.js $npm_package_config_src_admin/styles/*.scss --dist-dir $npm_package_config_dist_admin",
 		"build": "npm-run-all -s clean -p build:*",
 		"build:public": "parcel build --no-content-hash $npm_package_config_src_public/js/public.js $npm_package_config_src_public/styles/public.scss --dist-dir $npm_package_config_dist_public",
-		"build:admin": "parcel build --no-content-hash $npm_package_config_src_admin/js/admin.js $npm_package_config_src_admin/styles/admin.scss --dist-dir $npm_package_config_dist_admin",
+		"build:admin": "parcel build --no-content-hash $npm_package_config_src_admin/js/*.js $npm_package_config_src_admin/styles/*.scss --dist-dir $npm_package_config_dist_admin",
 		"stylelint": "stylelint \"assets/src/**/*.scss\" ",
 		"eslint": "eslint \"assets/src/**/*.js\" ",
 		"lint": "npm run stylelint && npm run eslint"
 	},
 	"devDependencies": {
+		"@parcel/resolver-glob": "^2.8.3",
 		"@parcel/transformer-sass": "^2.8.2",
 		"@wordpress/eslint-plugin": "^13.8.0",
 		"@wordpress/prettier-config": "^2.7.0",

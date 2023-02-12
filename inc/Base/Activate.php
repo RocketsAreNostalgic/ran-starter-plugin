@@ -7,8 +7,8 @@
 
 namespace Ran\MyPlugin\Base;
 
-use Ran\MyPlugin\Base\Plugin;
 use Ran\PluginLib\ActivationInterface;
+use Ran\PluginLib\plugin\PluginInterface;
 
 /**
  * Activation class that establishes the
@@ -19,23 +19,17 @@ use Ran\PluginLib\ActivationInterface;
  * @package  RanPlugin
  */
 class Activate implements ActivationInterface {
-
-
-
 	/**
-	 * Static activation method called by WP 'register_activation_hook'
+	 * Static activation method called by WordPress register_activation_hook when the plugin is activated.
+	 * This must be called as a static method, ideally in the plugin root file.
 	 *
-	 * @param  Plugin $plugin The Plugin class instance.
-	 * @param  array  ...$args and array of mixed arguments.
+	 * @param  PluginInterface $plugin An instance of the Plugin class.
+	 * @param  mixed           ...$args Any required arguments.
 	 *
 	 * @return void
 	 * @throws \InvalidArgumentException If $plugin is not a Plugin instance.
 	 */
-	public static function activate( $plugin, ...$args ):void {
-
-		if ( ! is_a( $plugin, 'Ran\PluginLib\PluginInterface' ) ) {
-			throw new \InvalidArgumentException( '$plugin must be a class that impliments Ran\PluginLib\PluginInterface.' );
-		}
+	public static function activate( PluginInterface $plugin, mixed ...$args ): void {
 
 		$plugin_data = $plugin->get_plugin();
 

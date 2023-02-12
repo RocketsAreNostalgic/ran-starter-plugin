@@ -1,22 +1,57 @@
 <?php
 
 /**
+ * Add links to the active plugin entry in the WordPress admin plugins page.
+ *
  * @package  RanPlugin
  */
 
 namespace Ran\MyPlugin\Features;
 
-use Ran\PluginLib\AbstractPluginAdditionalLinks;
-use Ran\PluginLib\RegistrableInterface;
+use Ran\PluginLib\FeaturesAPI\RegistrableFeatureInterface;
+use Ran\PluginLib\PluginAdditionalLinksAbstract;
 
-class PluginAdditionalLinks extends AbstractPluginAdditionalLinks implements RegistrableInterface {
+/**
+ * Modify the action and meta arrays for the plugin's entry in the admin plugins page.
+ */
+class PluginAdditionalLinks extends PluginAdditionalLinksAbstract implements RegistrableFeatureInterface {
+	/**
+	 * The taco.
+	 *
+	 * @var string $taco
+	 */
+	public string $taco;
 
+	public $burrito;
+
+	/**
+	 * Modifies the plugin action link array.
+	 * The WordPress add_filter callback for the plugin_action_links hook, modifying the add action links array.
+	 * https://developer.wordpress.org/reference/hooks/plugin_action_links/
+	 *
+	 * @param  array $links Array of plugin_action_links.
+	 *
+	 * @return array
+	 */
 	public function plugin_action_links_callback( array $links ):array {
 
 		$links[] = '<a href="admin.php?page=' . $this->plugin_data['TextDomain'] . '">Settings</a>';
 		return $links;
 	}
 
+	/**
+	 * Modifies plugin meta arrays.
+	 * The WordPress add_filter callback for the plugin_row_meta hook, modifying the plugin meta array.
+	 * This filter will be run agains all loaded plugins, so you have to implement your own checks that you are manipulating the correct plugin meta.
+	 * https://developer.wordpress.org/reference/hooks/plugin_row_meta/
+	 *
+	 * @param  array  $plugin_meta The array of plugin meta information.
+	 * @param  string $plugin_file The current plugin file.
+	 * @param  array  $plugin_data Data associated with the plugin.
+	 * @param  string $status The current status of the plugin ie 'active', 'inactive' and more.
+	 *
+	 * @return array
+	 */
 	public function plugin_meta_links_callback( array $plugin_meta, string $plugin_file, array $plugin_data, string $status ):array {
 
 		if ( stripos( $plugin_file, $this->plugin_data['FileName'] ) === false ) {

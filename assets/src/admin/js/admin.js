@@ -1,2 +1,3 @@
-document.addEventListener("DOMContentLoaded",(()=>{console.log("admin scripts here")}));
-//# sourceMappingURL=admin.js.map
+document.addEventListener('DOMContentLoaded', () => {
+	console.log('Admin scripts are here!!');
+});
