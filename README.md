@@ -1,5 +1,9 @@
 # RAN Plugin Starter
 
+This project is a thought experiment in wrapping the often convoluted WordPress plugin development process into one that leverages Composer and modern PHP OOP practices.
+
+This plugin relies on the base functionality found in `./vendor/ran/ran-plugin-library`: https://github.com/RocketsAreNostalgic/ran-plugin-library
+
 ## Requirements
 
 Minimum Requirements are PHP `8.2`, and this scaffold plugin has been built under WordPress `6.1.1`
@@ -159,7 +163,7 @@ A feature class implements any custom logic required by the feature. However com
 
 -   The `FeatureManager`'s first job is to allow us to gather implementation details (or register) each feature. Each features is then stored in an individual FeatureContainer object, and all `FeatureContainers` are stored in a `FeatureCache` object.
 
--   During registration instantiated (using `new` Feature*()) but not activated. Activation is currently done by calling a Feature's init(). The new feature object is stored off the FeatureContainer's `instance` property.
+-   During registration instantiated (using `new` Feature\*()) but not activated. Activation is currently done by calling a Feature's init(). The new feature object is stored off the FeatureContainer's `instance` property.
 
 -   After registration, each feature is then loaded using the `FeatureManager->load()` method. This loops over each `FeatureContainer` in `FeaturesCache` and calls the init() on each `instance` property.
 

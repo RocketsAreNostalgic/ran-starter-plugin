@@ -14,7 +14,7 @@
 	"autoload": {
 		"psr-4": {
 			"Ran\\MyPlugin\\": "inc/",
-			"Ran\\PluginLib\\": "vendor/ran/plugin-lib/inc/"
+			"Ran\\PluginLib\\": "vendor/ran/ran-plugin-lib/inc/"
 		}
 	},
 	"autoload-dev": {
@@ -24,7 +24,7 @@
 	},
 	"repositories": [
 		{
-			"url": "https://github.com/RocketsAreNostalgic/PluginLib.git",
+			"url": "https://github.com/RocketsAreNostalgic/ran-plugin-library.git",
 			"type": "git"
 		}
 	],
@@ -53,7 +53,7 @@
 		]
 	},
 	"support": {
-		"issues": "https://github.com/RocketsAreNostalgic/PluginStarter/issues",
-		"source": "https://github.com/RocketsAreNostalgic/PluginStarter"
+		"issues": "https://github.com/RocketsAreNostalgic/ran-starter-plugin/issues",
+		"source": "https://github.com/RocketsAreNostalgic/ran-starter-plugin"
 	}
 }
