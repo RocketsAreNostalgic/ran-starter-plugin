@@ -22,7 +22,7 @@ class Activate implements ActivationInterface {
 	 * Static activation method called by WordPress register_activation_hook when the plugin is activated.
 	 * This must be called as a static method, ideally in the plugin root file.
 	 *
-	 * @param  ConfigInterface $plugin An instance of the Config class.
+	 * @param  ConfigInterface $config An instance of the Config class.
 	 * @param  mixed           ...$args Any required arguments.
 	 *
 	 * @return void
