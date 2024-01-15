@@ -32,8 +32,8 @@ if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
 
 use Ran\MyPlugin\Base\Activate;
 use Ran\MyPlugin\Base\Bootstrap;
+use Ran\MyPlugin\Base\Config;
 use Ran\MyPlugin\Base\Deactivate;
-use Ran\MyPlugin\Base\Plugin;
 
 /**
  * Plugin Activation hook
@@ -42,7 +42,7 @@ use Ran\MyPlugin\Base\Plugin;
  * @since 0.0.1
  */
 function activate_plugin() {
-	Activate::activate( new Plugin( __FILE__ ) );
+	Activate::activate( new Config( __FILE__ ) );
 }
 register_activation_hook( __FILE__, __NAMESPACE__ . '\activate_plugin' );
 
@@ -53,14 +53,9 @@ register_activation_hook( __FILE__, __NAMESPACE__ . '\activate_plugin' );
  * @since 0.0.1
  */
 function deactivate_plugin() {
-	Deactivate::deactivate( new Plugin( __FILE__ ) );
+	Deactivate::deactivate( new Config( __FILE__ ) );
 }
 register_deactivation_hook( __FILE__, __NAMESPACE__ . '\deactivate_plugin' );
-
-/**
- *   // add_action( 'activate_my-plugin/plugin.php', array( __NAMESPACE__ . '\Base\Activate', 'activate' ), 10, 2 );
- *   // add_action( 'deactivate_my-plugin/plugin.php', array( __NAMESPACE__ . '\Base\Deactivate', 'deactivate' ), 10, 2 );
-*/
 
 /**
  * Bootstrap our plugin after WP and plugins but before theme, this can be changed as required.

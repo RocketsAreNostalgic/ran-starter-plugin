@@ -7,12 +7,11 @@
 
 namespace Ran\MyPlugin\Base;
 
-use Ran\MyPlugin\Base\Plugin;
 use Ran\MyPlugin\Features;
 use Ran\PluginLib\BootstrapInterface;
+use Ran\PluginLib\Config\ConfigInterface;
 use Ran\PluginLib\EnqueueAdmin;
 use Ran\PluginLib\FeaturesAPI\FeaturesManager;
-use Ran\PluginLib\Plugin\PluginInterface;
 
 /**
  * Plugin bootstrap class
@@ -22,9 +21,9 @@ class Bootstrap implements BootstrapInterface {
 	/**
 	 * The Plugin class object.
 	 *
-	 * @var Plugin
+	 * @var Config
 	 */
-	private Plugin $plugin;
+	private Config $config;
 
 	/**
 	 * Plugin data array
@@ -39,8 +38,8 @@ class Bootstrap implements BootstrapInterface {
 	 * @param  string $plugin_file file path or __FILE__.
 	 */
 	public function __construct( string $plugin_file ) {
-		$this->plugin = new Plugin( $plugin_file );
-		$this->plugin_data = $this->plugin->get_plugin();
+		$this->config = new Config( $plugin_file );
+		$this->plugin_data = $this->config->get_plugin();
 	}
 
 	/**
@@ -48,7 +47,7 @@ class Bootstrap implements BootstrapInterface {
 	 *
 	 * @return Plugin
 	 */
-	public function init():PluginInterface {
+	public function init():ConfigInterface {
 		// TODO: Implement this as a feature with contract which triggers the loading of EnqueueAdmin().
 		// Enqueue admin assets for the plugin in general.
 		// $admin_assets = new EnqueueAdmin();
@@ -57,7 +56,7 @@ class Bootstrap implements BootstrapInterface {
 		// ->load();
 
 		// Registering feature classes with the plugin.
-		$manager = new FeaturesManager( $this->plugin );
+		$manager = new FeaturesManager( $this->config );
 		// Admin Dashboard.
 		// $manager->register_feature(
 			// $this->plugin_data['TextDomain'],
@@ -97,7 +96,7 @@ class Bootstrap implements BootstrapInterface {
 		// echo '</pre>';
 
 		// die();
-		return $this->plugin;
+		return $this->config;
 	}
 
 	/**
