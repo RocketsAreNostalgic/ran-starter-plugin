@@ -14,7 +14,7 @@
 	"autoload": {
 		"psr-4": {
 			"Ran\\MyPlugin\\": "inc/",
-			"Ran\\PluginLib\\": "vendor/ran/ran-plugin-lib/inc/"
+			"Ran\\PluginLib\\": "vendor/ran/plugin-lib/inc/"
 		}
 	},
 	"autoload-dev": {
