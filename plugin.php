@@ -26,8 +26,8 @@ Update URI: http://github.com/RocketsAreNostalgic/ran-starter-plugin
 defined( 'ABSPATH' ) || die( '' );
 
 // Require Composer Autoload.
-if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
-	 require_once dirname( __FILE__ ) . '/vendor/autoload.php';
+if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+	 require_once __DIR__ . '/vendor/autoload.php';
 }
 
 use Ran\MyPlugin\Base\Activate;
@@ -62,7 +62,7 @@ register_deactivation_hook( __FILE__, __NAMESPACE__ . '\deactivate_plugin' );
  */
 add_action(
 	'plugins_loaded',
-	function() {
+	function () {
 		$bootstrap = new Bootstrap( __FILE__ );
 		$bootstrap->init();
 	},
