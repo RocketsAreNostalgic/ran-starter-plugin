@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Add links to the active plugin entry in the WordPress admin plugins page.
  *
@@ -22,7 +21,12 @@ class PluginAdditionalLinks extends PluginAdditionalLinksAbstract implements Reg
 	 */
 	public string $taco;
 
-	public $burrito;
+	/**
+	 * The burrito.
+	 *
+	 * @var string $burrito
+	 */
+	public string $burrito;
 
 	/**
 	 * Modifies the plugin action link array.
@@ -33,9 +37,9 @@ class PluginAdditionalLinks extends PluginAdditionalLinksAbstract implements Reg
 	 *
 	 * @return array
 	 */
-	public function plugin_action_links_callback( array $links ):array {
+	public function plugin_action_links_callback( array $links ): array {
 
-		$links[] = '<a href="admin.php?page=' . $this->plugin_data['TextDomain'] . '">Settings</a>';
+		$links[] = '<a href="admin.php?page=' . $this->plugin_array['TextDomain'] . '">Settings</a>';
 		return $links;
 	}
 
@@ -47,14 +51,14 @@ class PluginAdditionalLinks extends PluginAdditionalLinksAbstract implements Reg
 	 *
 	 * @param  array  $plugin_meta The array of plugin meta information.
 	 * @param  string $plugin_file The current plugin file.
-	 * @param  array  $plugin_data Data associated with the plugin.
+	 * @param  array  $plugin_array Data associated with the plugin.
 	 * @param  string $status The current status of the plugin ie 'active', 'inactive' and more.
 	 *
 	 * @return array
 	 */
-	public function plugin_meta_links_callback( array $plugin_meta, string $plugin_file, array $plugin_data, string $status ):array {
+	public function plugin_meta_links_callback( array $plugin_meta, string $plugin_file, array $plugin_array, string $status ): array {
 
-		if ( stripos( $plugin_file, $this->plugin_data['FileName'] ) === false ) {
+		if ( stripos( $plugin_file, $this->plugin_array['FileName'] ) === false ) {
 			return $plugin_meta;
 		}
 
