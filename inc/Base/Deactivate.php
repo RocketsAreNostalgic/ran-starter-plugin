@@ -24,7 +24,7 @@ class Deactivate implements DeactivationInterface {
 	 *
 	 * @return void
 	 */
-	public static function deactivate( $plugin, ...$args ):void {
+	public static function deactivate( $plugin, ...$args ): void {
 		flush_rewrite_rules();
 	}
 }
