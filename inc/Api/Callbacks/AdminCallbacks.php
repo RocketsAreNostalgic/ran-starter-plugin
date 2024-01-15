@@ -7,7 +7,7 @@
 
 namespace Ran\MyPlugin\Api\Callbacks;
 
-use Ran\PluginLib\Plugin\PluginInterface;
+use Ran\PluginLib\Config\ConfigInterface;
 
 /**
  * A class containing all of our callbacks for the admin area.
@@ -24,9 +24,9 @@ class AdminCallbacks {
 	/**
 	 * Constructor of our AdminCallbacks class.
 	 *
-	 * @param  PluginInterface $plugin Incoming Plugin instance.
+	 * @param  ConfigInterface $plugin Incoming Plugin instance.
 	 */
-	public function __construct( PluginInterface $plugin ) {
+	public function __construct( ConfigInterface $plugin ) {
 		$this->plugin_data = $plugin->get_plugin();
 	}
 
@@ -35,7 +35,7 @@ class AdminCallbacks {
 	 *
 	 * @return string
 	 */
-	public function admin_dashboard():string {
+	public function admin_dashboard(): string {
 		return require_once $this->plugin_data['PATH'] . 'templates/dashboard.php';
 	}
 
@@ -46,6 +46,6 @@ class AdminCallbacks {
 	 * @return string
 	 */
 	public function example_feature(): string {
-		return require_once( $this->plugin_data['PATH'] . '/templates/features/example-feature.php' );
+		return require_once $this->plugin_data['PATH'] . '/templates/features/example-feature.php';
 	}
 }
