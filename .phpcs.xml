@@ -61,8 +61,7 @@
         <!-- Exceptions for PRS-4 autoloading -->
         <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
         <exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
-
-        <exclude name="WordPress.PHP.DisallowShortTernary"/>
+        <exclude name="WordPress.PHP.DisallowShortTernary.Found"/>
     </rule>
 
     <!-- Check that everything is properly documented. -->
