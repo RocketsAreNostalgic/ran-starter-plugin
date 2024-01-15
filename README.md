@@ -227,7 +227,7 @@ Consolidate plugin specific configuration out of different base files into centr
 
 -   Deactivate does not do anything but flush rewrite rules.
 
--   uninstall.php only uninstalls a specific 'books' cpt. However, again the ServicesController might be able to dynamically handle this, however there may be some 'quirks' about using OOP with uninstall or autoloading? Vague memory here...
+-   uninstall.php only uninstalls a specific 'books' custom post type. However, again the ServicesController might be able to dynamically handle this, however there may be some 'quirks' about using OOP with uninstall or autoloading? Vague memory here...
 
 -   Enqueue.php also has a static list of files and services that it loads. This could be part of Services Enqueue could be a helper to enqueue media, styles and scripts.
 
