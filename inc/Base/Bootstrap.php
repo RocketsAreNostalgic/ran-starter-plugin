@@ -10,7 +10,7 @@ namespace Ran\MyPlugin\Base;
 use Ran\MyPlugin\Features;
 use Ran\PluginLib\BootstrapInterface;
 use Ran\PluginLib\Config\ConfigInterface;
-use Ran\PluginLib\EnqueueAdmin;
+use Ran\PluginLib\EnqueueAccessory\EnqueueAdmin;
 use Ran\PluginLib\FeaturesAPI\FeaturesManager;
 
 /**
