@@ -12,13 +12,14 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/RocketsAreNostalgic/ran-plugin-library.git",
-                "reference": "387f90c568f502fa8d11c6c3ca56f2a26ade747c"
+                "reference": "b5b6949c352a0f75cb35d210edff262882909404"
             },
             "require-dev": {
                 "10up/wp_mock": "^0.5.0",
                 "dealerdirect/phpcodesniffer-composer-installer": "*",
                 "php": ">=8.1",
                 "phpunit/phpunit": "^9",
+                "slevomat/coding-standard": "~8.0",
                 "squizlabs/php_codesniffer": "*",
                 "wp-coding-standards/wpcs": "*",
                 "yoast/phpunit-polyfills": "^1.0"
@@ -61,7 +62,7 @@
                 "issues": "https://github.com/RocketsAreNostalgic/ran-plugin-library/issues",
                 "source": "https://github.com/RocketsAreNostalgic/ran-plugin-library"
             },
-            "time": "2024-01-15T02:01:43+00:00"
+            "time": "2024-01-19T18:55:05+00:00"
         }
     ],
     "packages-dev": [
