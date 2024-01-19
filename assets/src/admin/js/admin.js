@@ -1,3 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-	console.log('Admin scripts are here!!');
+	/* eslint-disable no-console */
+	console.log('Admin scripts are here!!!');
 });
