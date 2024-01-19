@@ -1,7 +1,22 @@
 <?xml version="1.0"?>
 <ruleset name="Plugin Wordpress Coding Standards">
-    <description>RAN Wordpress Coding Standards</description>
+    <description>Slevomat Coding Standard</description>
+	<config name="installed_paths" value="../../slevomat/coding-standard"/>
 
+	<rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes" />
+	<rule ref="SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax" />
+	<rule ref="SlevomatCodingStandard.TypeHints.DisallowMixedTypeHints" />
+	<rule ref="SlevomatCodingStandard.TypeHints.LongTypeHints" />
+	<rule ref="SlevomatCodingStandard.TypeHints.NullTypeHintOnLastPosition" />
+	<rule ref="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue" />
+	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint" />
+	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing" />
+	<rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint" />
+	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint" />
+	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeSpacingHint" />
+	<rule ref="SlevomatCodingStandard.TypeHints.UselessConstantTypeHint" />
+
+    <description>RAN Wordpress Coding Standards</description>
     <!-- Temp fix for php 8.* compatibility issue with Config Standards -->
     <!-- https://github.com/WordPress/WordPress-Coding-Standards/issues/2035 -->
     <ini name="error_reporting" value="E_ALL &#38; ~E_DEPRECATED" />
@@ -20,9 +35,6 @@
     <!-- Show colors in console -->
     <arg value="-colors"/>
 
-    <!-- Show sniff codes in all reports -->
-    <arg value="ns"/>
-
     <!-- Exclude WP Core folders and files from being checked. -->
     <exclude-pattern>/docroot/wp-admin/*</exclude-pattern>
     <exclude-pattern>/docroot/wp-includes/*</exclude-pattern>
@@ -32,7 +44,7 @@
     <exclude-pattern>/docroot/wp-content/plugins/*</exclude-pattern>
 
     <!-- Exclude the Composer Vendor directory. -->
-    <!-- <exclude-pattern>/vendor/*</exclude-pattern> -->
+    <exclude-pattern>/vendor/*</exclude-pattern>
 
     <!-- Exclude the Node Modules directory. -->
     <exclude-pattern>/node_modules/*</exclude-pattern>
