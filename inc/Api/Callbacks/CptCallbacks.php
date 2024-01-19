@@ -39,7 +39,7 @@ class CptCallbacks {
 		return $output;
 	}
 
-	public function textField( $args ) {
+	public function text_field( $args ) {
 		$name = $args['label_for'];
 		$option_name = $args['option_name'];
 		$value = '';
@@ -52,7 +52,7 @@ class CptCallbacks {
 		echo '<input type="text" class="regular-text" id="' . $name . '" name="' . $option_name . '[' . $name . ']" value="' . $value . '" placeholder="' . $args['placeholder'] . '" required>';
 	}
 
-	public function checkboxField( $args ) {
+	public function checkbox_field( $args ) {
 		$name = $args['label_for'];
 		$classes = $args['class'];
 		$option_name = $args['option_name'];

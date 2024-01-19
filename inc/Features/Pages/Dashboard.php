@@ -13,31 +13,48 @@ use Ran\MyPlugin\Base\SettingsApi;
 use Ran\PluginLib\FeaturesAPI\FeatureControllerAbstract;
 use Ran\PluginLib\FeaturesAPI\RegistrableFeatureInterface;
 
+
+/**
+ * Create plugin dashboard.
+ *
+ * @package  RanPlugin
+ */
 class Dashboard extends FeatureControllerAbstract implements RegistrableFeatureInterface {
 
+
 	/**
-	 * Instance of our Settings API WIP
+	 * Instance of our Settings API (WIP)
 	 *
-	 * @var SettingsApi
+	 * @var \Ran\MyPlugin\Base\SettingsApi
 	 */
 	public SettingsApi $settings;
 
 	/**
-	 * Instance of our
+	 * Instance of our AdminCallbacks
 	 *
-	 * @var AdminCallbacks
+	 * @var \Ran\MyPlugin\Api\Callbacks\AdminCallbacks
 	 */
 	public AdminCallbacks $callbacks;
 
+	/**
+	 * Instance of our ManagerCallbacks
+	 *
+	 * @var \Ran\MyPlugin\Api\Callbacks\ManagerCallbacks
+	 */
 	public ManagerCallbacks $callbacks_mngr;
 
+	/**
+	 * Array of admin menu items.
+	 *
+	 * @var array
+	 */
 	public array $wp_admin_sidebar_menu_item = array();
 
-	/**
-	 * Our registration function to add action hooks to WP
-	 *
-	 * @return void
-	 */
+	 /**
+	  * Our registration function to add action hooks to WP
+
+	  * @return \Ran\MyPlugin\Features\Pages\Dashboard
+	  */
 	public function init(): Dashboard {
 
 		$this->settings = new SettingsApi();
@@ -55,13 +72,18 @@ class Dashboard extends FeatureControllerAbstract implements RegistrableFeatureI
 		return $this;
 	}
 
+	/**
+	 * Create the admin menu sidebar item.
+	 *
+	 * @return void
+	 */
 	public function create_wp_admin_sidebar_menu_item() {
 		$this->wp_admin_sidebar_menu_item = array(
 			array(
-				'page_title' => $this->plugin_data['Name'],
-				'menu_title' => $this->plugin_data['Name'],
+				'page_title' => $this->plugin_array['Name'],
+				'menu_title' => $this->plugin_array['Name'],
 				'capability' => 'manage_options',
-				'menu_slug' => $this->plugin_data['TextDomain'],
+				'menu_slug' => $this->plugin_array['TextDomain'],
 				'callback' => array( $this->callbacks, 'admin_dashboard' ),
 				'icon_url' => 'dashicons-store',
 				'position' => 110,
@@ -69,6 +91,11 @@ class Dashboard extends FeatureControllerAbstract implements RegistrableFeatureI
 		);
 	}
 
+	/**
+	 * Set the dashboard settings for the plugin.
+	 *
+	 * @return void
+	 */
 	public function set_dashboard_settings() {
 		$args = array(
 			array(
@@ -81,6 +108,11 @@ class Dashboard extends FeatureControllerAbstract implements RegistrableFeatureI
 		$this->settings->set_settings( $args );
 	}
 
+	/**
+	 * Set the dashboard sections for the plugin.
+	 *
+	 * @return void
+	 */
 	public function set_dashboard_sections() {
 		$args = array(
 			array(
@@ -94,6 +126,11 @@ class Dashboard extends FeatureControllerAbstract implements RegistrableFeatureI
 		$this->settings->set_sections( $args );
 	}
 
+	/**
+	 * Set the dashboard fields for the plugin.
+	 *
+	 * @return void
+	 */
 	public function set_dashboard_fields() {
 		$args = array();
 

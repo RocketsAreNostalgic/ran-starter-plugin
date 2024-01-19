@@ -21,12 +21,7 @@ class PluginAdditionalLinks extends PluginAdditionalLinksAbstract implements Reg
 	 */
 	public string $taco;
 
-	/**
-	 * The burrito.
-	 *
-	 * @var string $burrito
-	 */
-	public string $burrito;
+
 
 	/**
 	 * Modifies the plugin action link array.

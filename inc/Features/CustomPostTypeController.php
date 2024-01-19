@@ -103,7 +103,7 @@ class CustomPostTypeController extends BaseController implements ControllerInter
 			array(
 				'id' => 'post_type',
 				'title' => 'Custom Post Type ID',
-				'callback' => array( $this->cpt_callbacks, 'textField' ),
+				'callback' => array( $this->cpt_callbacks, 'text_field' ),
 				'page' => 'ran_cpt',
 				'section' => 'ran_cpt_index',
 				'args' => array(
@@ -116,7 +116,7 @@ class CustomPostTypeController extends BaseController implements ControllerInter
 			array(
 				'id' => 'singular_name',
 				'title' => 'Singular Name',
-				'callback' => array( $this->cpt_callbacks, 'textField' ),
+				'callback' => array( $this->cpt_callbacks, 'text_field' ),
 				'page' => 'ran_cpt',
 				'section' => 'ran_cpt_index',
 				'args' => array(
@@ -129,7 +129,7 @@ class CustomPostTypeController extends BaseController implements ControllerInter
 			array(
 				'id' => 'plural_name',
 				'title' => 'Plural Name',
-				'callback' => array( $this->cpt_callbacks, 'textField' ),
+				'callback' => array( $this->cpt_callbacks, 'text_field' ),
 				'page' => 'ran_cpt',
 				'section' => 'ran_cpt_index',
 				'args' => array(
@@ -142,7 +142,7 @@ class CustomPostTypeController extends BaseController implements ControllerInter
 			array(
 				'id' => 'public',
 				'title' => 'Public',
-				'callback' => array( $this->cpt_callbacks, 'checkboxField' ),
+				'callback' => array( $this->cpt_callbacks, 'checkbox_field' ),
 				'page' => 'ran_cpt',
 				'section' => 'ran_cpt_index',
 				'args' => array(
@@ -155,7 +155,7 @@ class CustomPostTypeController extends BaseController implements ControllerInter
 			array(
 				'id' => 'has_archive',
 				'title' => 'Archive',
-				'callback' => array( $this->cpt_callbacks, 'checkboxField' ),
+				'callback' => array( $this->cpt_callbacks, 'checkbox_field' ),
 				'page' => 'ran_cpt',
 				'section' => 'ran_cpt_index',
 				'args' => array(
