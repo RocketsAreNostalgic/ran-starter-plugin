@@ -1,97 +1,129 @@
 <?php
-
 /**
+ * Class of taxonomy callbacks.
+ *
  * @package  RanPlugin
  */
 
-namespace Inc\Api\Callbacks;
+namespace Ran\MyPlugin\Inc\Api\Callbacks;
 
-class TaxonomyCallbacks
-{
-    public function taxSectionManager()
-    {
-        echo 'Create as many Custom Taxonomies as you want.';
-    }
+/**
+ * Class of taxonomy callbacks.
+ *
+ * TODO: add nonce verification.
+ *
+ * @package  RanPlugin
+ */
+class TaxonomyCallbacks {
 
-    public function taxSanitize($input)
-    {
-        $output = get_option('ran_plugin_tax');
+	/**
+	 * Create as many Custom Taxonomies as you want.
+	 *
+	 * @return void
+	 */
+	public function tax_section_manager() {
+		echo 'Create as many Custom Taxonomies as you want.';
+	}
 
-        if (isset($_POST["remove"])) {
-            unset($output[$_POST["remove"]]);
+	/**
+	 * Sanitize the Custom Taxonomies.
+	 *
+	 * @param mixed $input - The input to sanitize.
+	 * @return mixed
+	 */
+	public function tax_sanitize( $input ) {
+		$output = get_option( 'ran_plugin_tax' );
 
-            return $output;
-        }
+		if ( isset( $_POST['remove'] ) ) {
+			unset( $output[ $_POST['remove'] ] );
 
-        if (count($output) == 0) {
-            $output[$input['taxonomy']] = $input;
+			return $output;
+		}
 
-            return $output;
-        }
+		if ( count( $output ) == 0 ) {
+			$output[ $input['taxonomy'] ] = $input;
 
-        foreach ($output as $key => $value) {
-            if ($input['taxonomy'] === $key) {
-                $output[$key] = $input;
-            } else {
-                $output[$input['taxonomy']] = $input;
-            }
-        }
+			return $output;
+		}
 
-        return $output;
-    }
+		foreach ( $output as $key => $value ) {
+			if ( $input['taxonomy'] === $key ) {
+				$output[ $key ] = $input;
+			} else {
+				$output[ $input['taxonomy'] ] = $input;
+			}
+		}
 
-    public function textField($args)
-    {
-        $name = $args['label_for'];
-        $option_name = $args['option_name'];
-        $value = '';
+		return $output;
+	}
 
-        if (isset($_POST["edit_taxonomy"])) {
-            $input = get_option($option_name);
-            $value = $input[$_POST["edit_taxonomy"]][$name];
-        }
+	/**
+	 * Text field callback.
+	 *
+	 * @param mixed $args - The array of arguments.
+	 * @return void
+	 */
+	public function text_field( $args ) {
+		$name = $args['label_for'];
+		$option_name = $args['option_name'];
+		$value = '';
 
-        echo '<input type="text" class="regular-text" id="' . $name . '" name="' . $option_name . '[' . $name . ']" value="' . $value . '" placeholder="' . $args['placeholder'] . '" required>';
-    }
+		if ( isset( $_POST['edit_taxonomy'] ) ) {
+			$input = get_option( $option_name );
+			$value = $input[ $_POST['edit_taxonomy'] ][ $name ];
+		}
 
-    public function checkboxField($args)
-    {
-        $name = $args['label_for'];
-        $classes = $args['class'];
-        $option_name = $args['option_name'];
-        $checked = false;
+		echo '<input type="text" class="regular-text" id="' . $name . '" name="' . $option_name . '[' . $name . ']" value="' . $value . '" placeholder="' . $args['placeholder'] . '" required>';
+	}
 
-        if (isset($_POST["edit_taxonomy"])) {
-            $checkbox = get_option($option_name);
-            $checked = isset($checkbox[$_POST["edit_taxonomy"]][$name]) ?: false;
-        }
+	/**
+	 * Checkbox field callback.
+	 *
+	 * @param array $args - The array of arguments.
+	 * @return void
+	 */
+	public function checkbox_field( $args ) {
+		$name = $args['label_for'];
+		$classes = $args['class'];
+		$option_name = $args['option_name'];
+		$checked = false;
 
-        echo '<div class="' . $classes . '"><input type="checkbox" id="' . $name . '" name="' . $option_name . '[' . $name . ']" value="1" class="" ' . ($checked ? 'checked' : '') . '><label for="' . $name . '"><div></div></label></div>';
-    }
+		if ( isset( $_POST['edit_taxonomy'] ) ) {
+			$checkbox = get_option( $option_name );
+			$checked = isset( $checkbox[ $_POST['edit_taxonomy'] ][ $name ] ) ?: false;
+		}
 
-    public function checkboxPostTypesField($args)
-    {
-        $output = '';
-        $name = $args['label_for'];
-        $classes = $args['class'];
-        $option_name = $args['option_name'];
-        $checked = false;
+		echo '<div class="' . \esc_attr( $classes ) . '"><input type="checkbox" id="' . \esc_attr( $name ) . '" name="' . \esc_attr( $option_name ) . '[' . \esc_attr( $name ) . ']" value="1" class="" ' . ( $checked ? 'checked' : '' ) . '><label for="' . esc_attr( $name ) . '"><div></div></label></div>';
+	}
 
-        if (isset($_POST["edit_taxonomy"])) {
-            $checkbox = get_option($option_name);
-        }
+	/**
+	 *  Checkbox field callback.
+	 *
+	 * @param mixed $args - The array of arguments.
+	 * @return void
+	 */
+	public function checkbox_post_types_field( $args ) {
+		$output = '';
+		$name = $args['label_for'];
+		$classes = $args['class'];
+		$option_name = $args['option_name'];
+		$checked = false;
 
-        $post_types = get_post_types(array('show_ui' => true));
+		if ( isset( $_POST['edit_taxonomy'] ) ) {
+			$checkbox = get_option( $option_name );
+		}
 
-        foreach ($post_types as $post) {
+		$post_types = get_post_types( array( 'show_ui' => true ) );
 
-            if (isset($_POST["edit_taxonomy"])) {
-                $checked = isset($checkbox[$_POST["edit_taxonomy"]][$name][$post]) ?: false;
-            }
+		foreach ( $post_types as $post ) {
 
-            $output .= '<div class="' . $classes . ' mb-10"><input type="checkbox" id="' . $post . '" name="' . $option_name . '[' . $name . '][' . $post . ']" value="1" class="" ' . ($checked ? 'checked' : '') . '><label for="' . $post . '"><div></div></label> <strong>' . $post . '</strong></div>';
-        }
+			if ( isset( $_POST['edit_taxonomy'] ) ) {
+				$checked = isset( $checkbox[ $_POST['edit_taxonomy'] ][ $name ][ $post ] ) ?: false;
+			}
 
-        echo $output;
-    }
+			$output .= '<div class="' . \esc_attr( $classes ) . ' mb-10"><input type="checkbox" id="' . \esc_attr( $post ) . '" name="' . \esc_attr( $option_name ) . '[' . \esc_attr( $name ) . '][' . \esc_attr( $post ) . ']" value="1" class="" ' . ( $checked ? 'checked' : '' ) . '><label for="' . \esc_attr( $post ) . '"><div></div></label> <strong>' . \esc_attr( $post ) . '</strong></div>';
+		}
+
+		echo \esc_html( $output );
+	}
 }
