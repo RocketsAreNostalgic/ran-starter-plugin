@@ -64,8 +64,8 @@ class ExampleFeatureController extends FeatureControllerAbstract implements Regi
 	 */
 	public function init(): ExampleFeatureController|false {
 
-		if ( ! $this->activated( key( $this->feature_settings_page ) ) ) {
-			update_option( $this->plugin_data['PluginOption'], $this->feature_settings_page );
+		if ( ! $this->is_activated( key( $this->feature_settings_page ) ) ) {
+			update_option( $this->plugin_array['PluginOption'], $this->feature_settings_page );
 			return false;
 		}
 
@@ -98,9 +98,12 @@ class ExampleFeatureController extends FeatureControllerAbstract implements Regi
 	}
 
 	/**
-	 * Undocumented function
+	 * Test so far...
 	 *
-	 * @return void
+	 * @param string $string - A string to test.
+	 * @return string
 	 */
-	public function test() {}
+	public function test( $string = 'test' ): string {
+		return $string;
+	}
 }
