@@ -1,0 +1,1 @@
+{"mappings":";;AAAAA,SAASC,iBAAiB,oBAAoB,WAE7CC,QAAQC,IAAI,sBACb","sources":["assets/src/public/js/public.js"],"sourcesContent":["document.addEventListener('DOMContentLoaded', () => {\n\t/* eslint-disable no-console */\n\tconsole.log('public scripts here');\n});\n"],"names":["document","addEventListener","console","log"],"version":3,"file":"public.js.map"}
