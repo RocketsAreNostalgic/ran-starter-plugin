@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c43c5e2273d9e1b8893c29865e64d788",
+    "content-hash": "e0782e98bc3bad11fa77865e82c1ebc5",
     "packages": [
         {
             "name": "ran/plugin-lib",
@@ -12,7 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/RocketsAreNostalgic/ran-plugin-library.git",
-                "reference": "8d06e4d6d348f7163766f20c003bff6d4a6bf0c8"
+                "reference": "387f90c568f502fa8d11c6c3ca56f2a26ade747c"
             },
             "require-dev": {
                 "10up/wp_mock": "^0.5.0",
@@ -61,10 +61,104 @@
                 "issues": "https://github.com/RocketsAreNostalgic/ran-plugin-library/issues",
                 "source": "https://github.com/RocketsAreNostalgic/ran-plugin-library"
             },
-            "time": "2024-01-12T16:32:08+00:00"
+            "time": "2024-01-15T02:01:43+00:00"
         }
     ],
     "packages-dev": [
+        {
+            "name": "10up/wp_mock",
+            "version": "0.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/10up/wp_mock.git",
+                "reference": "5cd57c63b1a946301ce0d7aaaa37cdc25805c163"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/10up/wp_mock/zipball/5cd57c63b1a946301ce0d7aaaa37cdc25805c163",
+                "reference": "5cd57c63b1a946301ce0d7aaaa37cdc25805c163",
+                "shasum": ""
+            },
+            "require": {
+                "antecedent/patchwork": "^2.1",
+                "mockery/mockery": "^1.5",
+                "php": ">=7.3 < 9.0",
+                "phpunit/phpunit": "^9.5.24"
+            },
+            "require-dev": {
+                "behat/behat": "^v3.11.0",
+                "php-coveralls/php-coveralls": "^v2.5.3",
+                "sebastian/comparator": "^4.0.8",
+                "sempro/phpunit-pretty-print": "^1.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "WP_Mock\\": "./php/WP_Mock"
+                },
+                "classmap": [
+                    "php/WP_Mock.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "A mocking library to take the pain out of unit testing for WordPress",
+            "support": {
+                "issues": "https://github.com/10up/wp_mock/issues",
+                "source": "https://github.com/10up/wp_mock/tree/0.5.0"
+            },
+            "time": "2022-11-01T03:01:40+00:00"
+        },
+        {
+            "name": "antecedent/patchwork",
+            "version": "2.1.27",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/antecedent/patchwork.git",
+                "reference": "16a1ab81559aabf14acb616141e801b32777f085"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/antecedent/patchwork/zipball/16a1ab81559aabf14acb616141e801b32777f085",
+                "reference": "16a1ab81559aabf14acb616141e801b32777f085",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": ">=4"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ignas Rudaitis",
+                    "email": "ignas.rudaitis@gmail.com"
+                }
+            ],
+            "description": "Method redefinition (monkey-patching) functionality for PHP.",
+            "homepage": "https://antecedent.github.io/patchwork/",
+            "keywords": [
+                "aop",
+                "aspect",
+                "interception",
+                "monkeypatching",
+                "redefinition",
+                "runkit",
+                "testing"
+            ],
+            "support": {
+                "issues": "https://github.com/antecedent/patchwork/issues",
+                "source": "https://github.com/antecedent/patchwork/tree/2.1.27"
+            },
+            "time": "2023-12-03T18:46:49+00:00"
+        },
         {
             "name": "dealerdirect/phpcodesniffer-composer-installer",
             "version": "v1.0.0",
@@ -212,6 +306,140 @@
                 }
             ],
             "time": "2022-12-30T00:23:10+00:00"
+        },
+        {
+            "name": "hamcrest/hamcrest-php",
+            "version": "v2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hamcrest/hamcrest-php.git",
+                "reference": "8c3d0a3f6af734494ad8f6fbbee0ba92422859f3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hamcrest/hamcrest-php/zipball/8c3d0a3f6af734494ad8f6fbbee0ba92422859f3",
+                "reference": "8c3d0a3f6af734494ad8f6fbbee0ba92422859f3",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3|^7.0|^8.0"
+            },
+            "replace": {
+                "cordoval/hamcrest-php": "*",
+                "davedevelopment/hamcrest-php": "*",
+                "kodova/hamcrest-php": "*"
+            },
+            "require-dev": {
+                "phpunit/php-file-iterator": "^1.4 || ^2.0",
+                "phpunit/phpunit": "^4.8.36 || ^5.7 || ^6.5 || ^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.1-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "hamcrest"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "This is the PHP port of Hamcrest Matchers",
+            "keywords": [
+                "test"
+            ],
+            "support": {
+                "issues": "https://github.com/hamcrest/hamcrest-php/issues",
+                "source": "https://github.com/hamcrest/hamcrest-php/tree/v2.0.1"
+            },
+            "time": "2020-07-09T08:09:16+00:00"
+        },
+        {
+            "name": "mockery/mockery",
+            "version": "1.6.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mockery/mockery.git",
+                "reference": "0cc058854b3195ba21dc6b1f7b1f60f4ef3a9c06"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mockery/mockery/zipball/0cc058854b3195ba21dc6b1f7b1f60f4ef3a9c06",
+                "reference": "0cc058854b3195ba21dc6b1f7b1f60f4ef3a9c06",
+                "shasum": ""
+            },
+            "require": {
+                "hamcrest/hamcrest-php": "^2.0.1",
+                "lib-pcre": ">=7.0",
+                "php": ">=7.3"
+            },
+            "conflict": {
+                "phpunit/phpunit": "<8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.5 || ^9.6.10",
+                "symplify/easy-coding-standard": "^12.0.8"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "library/helpers.php",
+                    "library/Mockery.php"
+                ],
+                "psr-4": {
+                    "Mockery\\": "library/Mockery"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Pádraic Brady",
+                    "email": "padraic.brady@gmail.com",
+                    "homepage": "https://github.com/padraic",
+                    "role": "Author"
+                },
+                {
+                    "name": "Dave Marshall",
+                    "email": "dave.marshall@atstsolutions.co.uk",
+                    "homepage": "https://davedevelopment.co.uk",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Nathanael Esayeas",
+                    "email": "nathanael.esayeas@protonmail.com",
+                    "homepage": "https://github.com/ghostwriter",
+                    "role": "Lead Developer"
+                }
+            ],
+            "description": "Mockery is a simple yet flexible PHP mock object framework",
+            "homepage": "https://github.com/mockery/mockery",
+            "keywords": [
+                "BDD",
+                "TDD",
+                "library",
+                "mock",
+                "mock objects",
+                "mockery",
+                "stub",
+                "test",
+                "test double",
+                "testing"
+            ],
+            "support": {
+                "docs": "https://docs.mockery.io/",
+                "issues": "https://github.com/mockery/mockery/issues",
+                "rss": "https://github.com/mockery/mockery/releases.atom",
+                "security": "https://github.com/mockery/mockery/security/advisories",
+                "source": "https://github.com/mockery/mockery"
+            },
+            "time": "2023-12-10T02:24:34+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -608,6 +836,53 @@
             "time": "2023-12-08T14:50:00+00:00"
         },
         {
+            "name": "phpstan/phpdoc-parser",
+            "version": "1.25.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpdoc-parser.git",
+                "reference": "bd84b629c8de41aa2ae82c067c955e06f1b00240"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/bd84b629c8de41aa2ae82c067c955e06f1b00240",
+                "reference": "bd84b629c8de41aa2ae82c067c955e06f1b00240",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2 || ^8.0"
+            },
+            "require-dev": {
+                "doctrine/annotations": "^2.0",
+                "nikic/php-parser": "^4.15",
+                "php-parallel-lint/php-parallel-lint": "^1.2",
+                "phpstan/extension-installer": "^1.0",
+                "phpstan/phpstan": "^1.5",
+                "phpstan/phpstan-phpunit": "^1.1",
+                "phpstan/phpstan-strict-rules": "^1.0",
+                "phpunit/phpunit": "^9.5",
+                "symfony/process": "^5.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PHPStan\\PhpDocParser\\": [
+                        "src/"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPDoc parser with support for nullable, intersection and generic types",
+            "support": {
+                "issues": "https://github.com/phpstan/phpdoc-parser/issues",
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.25.0"
+            },
+            "time": "2024-01-04T17:06:16+00:00"
+        },
+        {
             "name": "phpunit/php-code-coverage",
             "version": "9.2.30",
             "source": {
@@ -928,16 +1203,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.6.15",
+            "version": "9.6.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "05017b80304e0eb3f31d90194a563fd53a6021f1"
+                "reference": "3767b2c56ce02d01e3491046f33466a1ae60a37f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/05017b80304e0eb3f31d90194a563fd53a6021f1",
-                "reference": "05017b80304e0eb3f31d90194a563fd53a6021f1",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3767b2c56ce02d01e3491046f33466a1ae60a37f",
+                "reference": "3767b2c56ce02d01e3491046f33466a1ae60a37f",
                 "shasum": ""
             },
             "require": {
@@ -1011,7 +1286,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.15"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.16"
             },
             "funding": [
                 {
@@ -1027,7 +1302,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-12-01T16:55:19+00:00"
+            "time": "2024-01-19T07:03:14+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -1994,6 +2269,71 @@
             "time": "2020-09-28T06:39:44+00:00"
         },
         {
+            "name": "slevomat/coding-standard",
+            "version": "8.14.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/slevomat/coding-standard.git",
+                "reference": "fea1fd6f137cc84f9cba0ae30d549615dbc6a926"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/fea1fd6f137cc84f9cba0ae30d549615dbc6a926",
+                "reference": "fea1fd6f137cc84f9cba0ae30d549615dbc6a926",
+                "shasum": ""
+            },
+            "require": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2 || ^0.7 || ^1.0",
+                "php": "^7.2 || ^8.0",
+                "phpstan/phpdoc-parser": "^1.23.1",
+                "squizlabs/php_codesniffer": "^3.7.1"
+            },
+            "require-dev": {
+                "phing/phing": "2.17.4",
+                "php-parallel-lint/php-parallel-lint": "1.3.2",
+                "phpstan/phpstan": "1.10.37",
+                "phpstan/phpstan-deprecation-rules": "1.1.4",
+                "phpstan/phpstan-phpunit": "1.3.14",
+                "phpstan/phpstan-strict-rules": "1.5.1",
+                "phpunit/phpunit": "8.5.21|9.6.8|10.3.5"
+            },
+            "type": "phpcodesniffer-standard",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "8.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SlevomatCodingStandard\\": "SlevomatCodingStandard/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Slevomat Coding Standard for PHP_CodeSniffer complements Consistence Coding Standard by providing sniffs with additional checks.",
+            "keywords": [
+                "dev",
+                "phpcs"
+            ],
+            "support": {
+                "issues": "https://github.com/slevomat/coding-standard/issues",
+                "source": "https://github.com/slevomat/coding-standard/tree/8.14.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/kukulich",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/slevomat/coding-standard",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-10-08T07:28:08+00:00"
+        },
+        {
             "name": "squizlabs/php_codesniffer",
             "version": "3.8.1",
             "source": {
@@ -2257,7 +2597,7 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": {
-        "php": ">=8.0"
+        "php": ">=8.1"
     },
     "plugin-api-version": "2.3.0"
 }
