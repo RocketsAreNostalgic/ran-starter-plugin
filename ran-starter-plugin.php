@@ -37,6 +37,21 @@ use Ran\StarterPlugin\Base\Bootstrap;
 use Ran\StarterPlugin\Base\Config;
 use Ran\StarterPlugin\Base\Deactivate;
 
+
+$ran_config = Config::init( __FILE__ );
+
+/**
+ * Bootstrap our plugin after WP and plugins but before theme, this can be changed as required.
+ */
+add_action(
+	'plugins_loaded',
+	function (): void {
+		$bootstrap = new Bootstrap( Config::get_instance() );
+		$bootstrap->init();
+	},
+	20
+);
+
 /**
  * Plugin Activation hook
  * Passing as skeleton instance of Plugin, will not have full record of all plugin classes etc.
@@ -44,7 +59,7 @@ use Ran\StarterPlugin\Base\Deactivate;
  * @since 0.0.1
  */
 function activate_plugin(): void {
-	Activate::activate( new Config( __FILE__ ) );
+	Activate::activate( Config::get_instance() );
 }
 register_activation_hook( __FILE__, __NAMESPACE__ . '\activate_plugin' );
 
@@ -55,18 +70,6 @@ register_activation_hook( __FILE__, __NAMESPACE__ . '\activate_plugin' );
  * @since 0.0.1
  */
 function deactivate_plugin(): void {
-	Deactivate::deactivate( new Config( __FILE__ ) );
+	Deactivate::deactivate( Config::get_instance() );
 }
 register_deactivation_hook( __FILE__, __NAMESPACE__ . '\deactivate_plugin' );
-
-/**
- * Bootstrap our plugin after WP and plugins but before theme, this can be changed as required.
- */
-add_action(
-	'plugins_loaded',
-	function (): void {
-		$bootstrap = new Bootstrap( __FILE__ );
-		$bootstrap->init();
-	},
-	20
-);
