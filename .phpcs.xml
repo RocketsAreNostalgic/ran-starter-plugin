@@ -1,39 +1,31 @@
 <?xml version="1.0"?>
-<ruleset name="Plugin Wordpress Coding Standards">
-    <description>Slevomat Coding Standard</description>
-	<config name="installed_paths" value="../../slevomat/coding-standard"/>
+<ruleset name="RAN Coding Standards">
+	<description>RAN Plugin Modified Wordpress Coding Standards</description>
+	<!--
+		Setup instructions:
 
-	<rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes" />
-	<rule ref="SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax" />
-	<rule ref="SlevomatCodingStandard.TypeHints.DisallowMixedTypeHints" />
-	<rule ref="SlevomatCodingStandard.TypeHints.LongTypeHints" />
-	<rule ref="SlevomatCodingStandard.TypeHints.NullTypeHintOnLastPosition" />
-	<rule ref="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue" />
-	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint" />
-	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing" />
-	<rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint" />
-	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint" />
-	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeSpacingHint" />
-	<rule ref="SlevomatCodingStandard.TypeHints.UselessConstantTypeHint" />
+		1) Install PHPCS & all required code standards using `composer install`
+		2) Run `composer run lint`. You can use the `-a` flag to run it interactively.
 
-    <description>RAN Wordpress Coding Standards</description>
-    <!-- Temp fix for php 8.* compatibility issue with Config Standards -->
-    <!-- https://github.com/WordPress/WordPress-Coding-Standards/issues/2035 -->
-    <ini name="error_reporting" value="E_ALL &#38; ~E_DEPRECATED" />
+		See these links for useful information:
+			- https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-ruleset.xml
+			- https://github.com/squizlabs/PHP_CodeSniffer/wiki/Customisable-Sniff-Properties
+			- https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/wiki/Customizable-sniff-properties
+			- https://github.com/slevomat/coding-standard/blob/master/doc/type-hints.md
+			- https://github.com/slevomat/coding-standard/blob/master/doc/classes.md
+	-->
 
+	<!-- Min Supported WP version -->
     <config name="minimum_supported_wp_version" value="6.0.0"/>
-
-    <!-- If you want to use your globally installed wpcs instead -->
-    <!-- <config name="installed_paths" value="/root/path/to/wpcs" /> -->
-
-    <!-- Scan all files in directory -->
+	<!-- Scan all files in directory -->
     <file>.</file>
     <include-pattern>./vendor/ran/*</include-pattern>
     <!-- Scan only PHP files -->
     <arg name="extensions" value="php"/>
-
     <!-- Show colors in console -->
     <arg value="-colors"/>
+	<!-- Show sniff codes in all reports -->
+	<arg value="ns"/>
 
     <!-- Exclude WP Core folders and files from being checked. -->
     <exclude-pattern>/docroot/wp-admin/*</exclude-pattern>
@@ -42,63 +34,24 @@
     <exclude-pattern>/docroot/index.php</exclude-pattern>
     <exclude-pattern>/docroot/xmlrpc.php</exclude-pattern>
     <exclude-pattern>/docroot/wp-content/plugins/*</exclude-pattern>
-
     <!-- Exclude the Composer Vendor directory. -->
     <exclude-pattern>/vendor/*</exclude-pattern>
-
     <!-- Exclude the Node Modules directory. -->
     <exclude-pattern>/node_modules/*</exclude-pattern>
-
     <!-- Exclude minified Javascript files. -->
     <exclude-pattern>*.min.js</exclude-pattern>
-    <!-- Include the WordPress-Extra. -->
-    <rule ref="WordPress-Extra">
-        <!--
-		We may want a middle ground though. The best way to do this is add the
-		entire ruleset, then rule by rule, remove ones that don't suit a project.
-		We can do this by running `phpcs` with the '-s' flag, which allows us to
-		see the names of the sniffs reporting errors.
-		Once we know the sniff names, we can opt to exclude sniffs which don't
-		suit our project like so.
 
-		The below two examples just show how you can exclude rules.
-		They are not intended as advice about which sniffs to exclude.
-		-->
+	<!-- !TEMP EXCLUDE!!! -->
+    <exclude-pattern>./inc/__ARCHIVE/*</exclude-pattern>
 
-        <!--
-		<exclude name="WordPress.WhiteSpace.ControlStructureSpacing"/>
-		<exclude name="WordPress.Security.EscapeOutput"/>
-		-->
-
-        <!-- Exceptions for PRS-4 autoloading -->
-        <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
-        <exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
-        <exclude name="WordPress.PHP.DisallowShortTernary.Found"/>
-    </rule>
-
-    <!-- Check that everything is properly documented. -->
-    <rule ref="WordPress-Docs"/>
-
-    <!-- Extra rules from other standards. -->
-
-    <!-- Class opening braces should be on the same line as the statement. -->
-    <rule ref="Generic.Classes.OpeningBraceSameLine"/>
-    <!-- Covers rule: Braces should always be used, even when they are not required. -->
-    <rule ref="Generic.ControlStructures.InlineControlStructure"/>
-    <!-- Covers rule: Braces shall be used for all blocks. -->
-    <rule ref="Squiz.ControlStructures.ControlSignature"/>
-
-    <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
-    <rule ref="Generic.Commenting.Todo"/>
-
-    <!-- Check for PHP cross-version compatibility. -->
+	<!-- Check for PHP cross-version compatibility. -->
     <!--
-	To enable this, the PHPCompatibilityWP standard needs
-	to be installed.
-	See the readme for installation instructions:
-	https://github.com/PHPCompatibility/PHPCompatibilityWP
-	For more information, also see:
-	https://github.com/PHPCompatibility/PHPCompatibility
+		To enable this, the PHPCompatibilityWP standard needs
+		to be installed.
+		See the readme for installation instructions:
+		https://github.com/PHPCompatibility/PHPCompatibilityWP
+		For more information, also see:
+		https://github.com/PHPCompatibility/PHPCompatibility
 	-->
     <!--
 	<config name="testVersion" value="5.2-"/>
@@ -106,19 +59,14 @@
 	-->
 
     <!--
-	To get the optimal benefits of using WPCS, we should add a couple of
-	custom properties.
-	Adjust the values of these properties to fit our needs.
-
-	For information on additional custom properties available, check out
-	the wiki:
-	https://github.com/WordPress/WordPress-Coding-Standards/wiki/Customizable-sniff-properties
+		WPCS custom properties.
+		!UPDATE THESE TO SUITE YOUR PROJECT
+		https://github.com/WordPress/WordPress-Coding-Standards/wiki/Customizable-sniff-properties
 	-->
-
     <rule ref="WordPress.WP.I18n">
         <properties>
             <property name="text_domain" type="array">
-                <element value="ran-example"/>
+                <element value="ran-starter-plugin"/>
                 <element value="library-textdomain"/>
             </property>
         </properties>
@@ -127,8 +75,73 @@
     <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
         <properties>
             <property name="prefixes" type="array">
-                <element value="ran"/>
+                <element value="ran_"/>
             </property>
         </properties>
     </rule>
+
+    <!-- WordPress-Extra is a superset of WordPress-Core rules with recomended best practices. -->
+	<rule ref="WordPress-Extra">
+  		<!--
+			Modify WordPress-CS by adding an entire ruleset, then rule by rule, remove ones that don't suit a project.
+			Running `phpcs` with the '-s' flag, to identify the names of the sniffs reporting errors.
+			We can opt to exclude sniffs which don't suit our project like so:
+
+			<exclude name="WordPress.WhiteSpace.ControlStructureSpacing"/>
+			<exclude name="WordPress.Security.EscapeOutput"/>
+		-->
+
+        <!-- Exceptions for PRS-4 autoloading -->
+        <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+        <exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+		<!-- Exception for Short Ternary -->
+        <exclude name="Universal.Operators.DisallowShortTernary"/>
+    </rule>
+
+	<!-- Check that everything is properly documented. -->
+    <rule ref="WordPress-Docs"></rule>
+
+	<!-- Extra rules from other standards. -->
+
+	<!-- Generic rules from CS  -->
+	<!-- Class opening braces should be on the same line as the statement. -->
+	<rule ref="Generic.Classes.OpeningBraceSameLine"/>
+	<!-- Braces should always be used, even when they are not required. -->
+	<rule ref="Generic.ControlStructures.InlineControlStructure"/>
+	<!-- Warn about unused function params. -->
+	<rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
+	<!-- Warn about @todo comments -->
+	<rule ref="Generic.Commenting.Todo"/>
+	<!-- Warn about @fixme comments -->
+	<rule ref="Generic.Commenting.Fixme"/>
+
+	<!-- Braces shall be used for all blocks. -->
+    <rule ref="Squiz.ControlStructures.ControlSignature"/>
+
+	<!-- SlevomatCodingStandard for type hinting -->
+	<rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes" />
+	<rule ref="SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax" />
+	<!-- <rule ref="SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint" /> -->
+	<rule ref="SlevomatCodingStandard.TypeHints.LongTypeHints" />
+	<rule ref="SlevomatCodingStandard.TypeHints.NullTypeHintOnLastPosition" />
+	<rule ref="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue" />
+	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint" />
+	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing" />
+	<rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint" />
+	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint" />
+	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing" />
+	<rule ref="SlevomatCodingStandard.TypeHints.UselessConstantTypeHint" />
+	<!-- SlevomatCodingStandard Class & Trait snifs  -->
+	<rule ref="SlevomatCodingStandard.Classes.RequireMultiLineMethodSignature" />
+	<!-- Review these notion of class/Interface nameing. -->
+	<!-- At this time I personally feel safer with explicitly pre/suffix-ing Absract/Interface etc to class names. -->
+	<!-- https://phpixie.com/blog/naming-interfaces-in-php.html -->
+	<!-- https://www.reddit.com/r/PHP/comments/2kk4v2/naming_interfaces_in_php_or_why_you_shouldnt_use/ -->
+	<!-- <rule ref="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming" /> -->
+	<!-- <rule ref="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming" /> -->
+	<!-- <rule ref="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming" /> -->
+	<!-- <rule ref="SlevomatCodingStandard.Classes.SuperfluousErrorNaming" /> -->
+	<rule ref="SlevomatCodingStandard.Classes.TraitUseDeclaration" />
+	<rule ref="SlevomatCodingStandard.Classes.TraitUseSpacing" />
+	<rule ref="SlevomatCodingStandard.Classes.UselessLateStaticBinding" />
 </ruleset>
