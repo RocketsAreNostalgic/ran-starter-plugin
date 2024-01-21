@@ -1,6 +1,6 @@
 <?php
 /**
- * RAN Starter Plugin
+ * RAN Starter Plugin: Bootstrap Class
  *
  * @package  RanStarterPlugin
  */
@@ -17,7 +17,7 @@ use Ran\PluginLib\FeaturesAPI\FeaturesManager;
 use Ran\StarterPlugin\Features;
 
 /**
- * Plugin bootstrap class
+ * Plugin bootstrap class registers our plugin with WordPress and sets up our features.
  */
 class Bootstrap implements BootstrapInterface {
 
@@ -36,25 +36,24 @@ class Bootstrap implements BootstrapInterface {
 	private array $plugin_data = array();
 
 	/**
-	 * Bootstrap constructor, loads our config from the docblock in the plugin's entrance file.
+	 * Bootstrap constructor, loads our config details from the docblock in the plugin's entrance file.
 	 *
-	 * @param  string $plugin_file file path or __FILE__.
+	 * @param  ConfigInterface $config the config object.
 	 */
-	public function __construct( string $plugin_file ) {
-		$this->config = new Config( $plugin_file );
+	public function __construct( ConfigInterface $config ) {
+		$this->config = $config;
 		$this->plugin_data = $this->config->get_plugin_config();
 	}
 
 	/**
-	 * Bootstrap init method.
+	 * Bootstrap our plugin and
 	 *
-	 * @return Plugin
+	 * @return ConfigInterface the config object.
 	 */
 	public function init(): ConfigInterface {
-		// TODO: This could be more ergonomic if we created a 'feature'
-		// and contract which triggers the loading of EnqueueAdmin() for us.
-		// TODO: We are register and enqueue at the same time (not leveraging wp_register_script)
-		// TODO: At the moment are not passing.
+
+		// TODO: This could be more ergonomic if we created a 'feature' to trigger the loading of EnqueueAdmin() for us.
+		// TODO: We are register and enqueue at the same time (not leveraging wp_register_script).
 
 		// Enqueue admin assets for the plugin in general.
 		$admin_assets = new EnqueueAdmin();
@@ -73,16 +72,13 @@ class Bootstrap implements BootstrapInterface {
 		$manager->register_feature(
 			$this->plugin_data['TextDomain'],
 			Features\Pages\Dashboard::class,
-			array(),
 		);
 
+		// TODO IN PROGRESS
 		// Add additional links to plugin entry.
 		$manager->register_feature(
 			'plugin-meta-links',
-			Features\PluginAdditionalLinks::class,
-			array(
-				array( 'taco' => 'a tasty treat' ),
-			)
+			Features\PluginAdditionalLinks::class
 		);
 
 		//phpcs:disable
@@ -110,6 +106,7 @@ class Bootstrap implements BootstrapInterface {
 		// echo '</pre>';
 		// die();
 		//phpcs:enable
+
 		return $this->config;
 	}
 
