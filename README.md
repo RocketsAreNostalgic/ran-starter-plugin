@@ -23,19 +23,27 @@ Followed by:
 
 `$ npm install`
 
-### Manually updating
+### Reqired manual updates
 
-Change the name of the plugin root directory as well as the root PHP file from `my-plugin.php` to `your-plugin.php` using kabab-case.
+**IMPORTANT**: Manually update the following:
 
-In `your-plugin.php` change the details of the documentation block as desired.
+-   Change the name of the plugin root directory as well as the root PHP file from `ran-starter-plugin.php` to `your-plugin.php` using kabab-case.
+-   `your-plugin.php` change the details of the documentation block as required.
+    -   -> Note: the name of your plugin file name _must also_ the name of your text-domain.
+-   `composer.json` { such as: `name`, `discription`, `author`, `license`, `copyright`, `version`, `supports`, `homepage`, `repository`, `bugs`, `keywords` }
+-   `package.json` { similar changes to `composer.json` }
+-   `phpcs.xml` { rules: `WordPress.WP.I18n` (text-domain), `WordPress.NamingConventions.PrefixAllGlobals` () }
 
-> Note: the name of your plugin file name, should be the same as your text domain.
+You may also wish to chage the base namespace from `Ran\StarterPlugin` to something else. This can be typically achieved by a search and replace (yolo). One done, you will need to update the `composer.json` file to reflect the new namespace, and then run `composer dump-autoload` to update the autoloader.
 
-Also check for relevant details within the following resources:
-
--   `package.json`
--   `composer.json`
--   `phpcs.xml`
+```
+"autoload": {
+	"psr-4": {
+		"Ran\\MyPlugin\\": "inc/",
+		"Ran\\PluginLib\\": "vendor/ran/plugin-lib/inc/"
+	}
+},
+```
 
 ## Avaliable tools
 
