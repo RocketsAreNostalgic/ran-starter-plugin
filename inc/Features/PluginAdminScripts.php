@@ -7,10 +7,10 @@
 
 declare(strict_types = 1);
 
-namespace Ran\MyPlugin\Features;
+namespace Ran\StarterPlugin\Features;
 
-use Ran\MyPlugin\Base\ControllerInterface;
-use Ran\MyPlugin\Base\Enqueue;
+use Ran\StarterPlugin\Base\ControllerInterface;
+use Ran\StarterPlugin\Base\Enqueue;
 
 /**
  * Plugin Admin Scripts

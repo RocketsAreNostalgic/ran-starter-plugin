@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1fcced199458fc8ca3fbdef700039836",
+    "content-hash": "c2913758498d5f69ec8548326be78cf3",
     "packages": [
         {
             "name": "ran/plugin-lib",

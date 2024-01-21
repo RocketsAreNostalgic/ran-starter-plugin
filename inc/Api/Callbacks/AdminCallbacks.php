@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Ran\MyPlugin\Api\Callbacks;
+namespace Ran\StarterPlugin\Api\Callbacks;
 
 use Ran\PluginLib\Config\ConfigInterface;
 

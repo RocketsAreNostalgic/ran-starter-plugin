@@ -7,12 +7,12 @@
 
 declare(strict_types = 1);
 
-namespace Ran\MyPlugin\Services;
+namespace Ran\StarterPlugin\Services;
 
-use Ran\MyPlugin\Api\Callbacks\TestimonialCallbacks;
-use Ran\MyPlugin\Base\BaseController;
-use Ran\MyPlugin\Base\ControllerInterface;
-use Ran\MyPlugin\Base\SettingsApi;
+use Ran\StarterPlugin\Api\Callbacks\TestimonialCallbacks;
+use Ran\StarterPlugin\Base\BaseController;
+use Ran\StarterPlugin\Base\ControllerInterface;
+use Ran\StarterPlugin\Base\SettingsApi;
 
 /**
  * TestimonialController Class

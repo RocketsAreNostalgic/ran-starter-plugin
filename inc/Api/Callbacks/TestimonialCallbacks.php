@@ -7,9 +7,9 @@
 
 declare(strict_types = 1);
 
-namespace Ran\MyPlugin\Api\Callbacks;
+namespace Ran\StarterPlugin\Api\Callbacks;
 
-use Ran\MyPlugin\Base\BaseController;
+use Ran\StarterPlugin\Base\BaseController;
 
 /**
  * TestimonialCallbacks Class

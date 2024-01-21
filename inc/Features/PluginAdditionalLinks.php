@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Ran\MyPlugin\Features;
+namespace Ran\StarterPlugin\Features;
 
 use Ran\PluginLib\FeaturesAPI\RegistrableFeatureInterface;
 use Ran\PluginLib\PluginAdditionalLinksAbstract;

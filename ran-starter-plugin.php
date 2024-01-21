@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Ran\MyPlugin;
+namespace Ran\StarterPlugin;
 
 /*
 	Plugin Name: RAN Starter Plugin
@@ -32,10 +32,10 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	require_once __DIR__ . '/vendor/autoload.php';
 }
 
-use Ran\MyPlugin\Base\Activate;
-use Ran\MyPlugin\Base\Bootstrap;
-use Ran\MyPlugin\Base\Config;
-use Ran\MyPlugin\Base\Deactivate;
+use Ran\StarterPlugin\Base\Activate;
+use Ran\StarterPlugin\Base\Bootstrap;
+use Ran\StarterPlugin\Base\Config;
+use Ran\StarterPlugin\Base\Deactivate;
 
 /**
  * Plugin Activation hook

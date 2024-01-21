@@ -7,14 +7,14 @@
 
 declare(strict_types = 1);
 
-namespace Ran\MyPlugin\Base;
+namespace Ran\StarterPlugin\Base;
 
-use Ran\MyPlugin\Features;
 use Ran\PluginLib\BootstrapInterface;
 use Ran\PluginLib\Config\ConfigInterface;
 use Ran\PluginLib\EnqueueAccessory\EnqueueAdmin;
 use Ran\PluginLib\EnqueueAccessory\EnqueuePublic;
 use Ran\PluginLib\FeaturesAPI\FeaturesManager;
+use Ran\StarterPlugin\Features;
 
 /**
  * Plugin bootstrap class

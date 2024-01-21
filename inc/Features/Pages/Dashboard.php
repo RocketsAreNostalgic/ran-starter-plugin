@@ -7,11 +7,11 @@
 
 declare(strict_types = 1);
 
-namespace Ran\MyPlugin\Features\Pages;
+namespace Ran\StarterPlugin\Features\Pages;
 
-use Ran\MyPlugin\Api\Callbacks\AdminCallbacks;
-use Ran\MyPlugin\Api\Callbacks\ManagerCallbacks;
-use Ran\MyPlugin\Base\SettingsApi;
+use Ran\StarterPlugin\Api\Callbacks\AdminCallbacks;
+use Ran\StarterPlugin\Api\Callbacks\ManagerCallbacks;
+use Ran\StarterPlugin\Base\SettingsApi;
 use Ran\PluginLib\FeaturesAPI\FeatureControllerAbstract;
 use Ran\PluginLib\FeaturesAPI\RegistrableFeatureInterface;
 

@@ -1,5 +1,5 @@
 {
-	"name": "ran/my-plugin",
+	"name": "ran/starter-plugin",
 	"description": "A WordPress plugin biolerplate.",
 	"type": "wordpress-plugin",
 	"license": "MIT",
@@ -13,7 +13,7 @@
 	"prefer-stable": true,
 	"autoload": {
 		"psr-4": {
-			"Ran\\MyPlugin\\": "inc/",
+			"Ran\\StarterPlugin\\": "inc/",
 			"Ran\\PluginLib\\": "vendor/ran/plugin-lib/inc/"
 		}
 	},

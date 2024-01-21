@@ -7,12 +7,12 @@
 
 declare(strict_types = 1);
 
-namespace Ran\MyPlugin\Api\Callbacks;
+namespace Ran\StarterPlugin\Api\Callbacks;
 
 /**
  * A class containing all of our callbacks for the admin area.
  *
- * @package Ran\MyPlugin\Api\Callbacks
+ * @package Ran\StarterPlugin\Api\Callbacks
  */
 class ManagerCallbacks {
 

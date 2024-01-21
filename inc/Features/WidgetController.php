@@ -7,11 +7,11 @@
 
 declare(strict_types = 1);
 
-namespace Ran\MyPlugin\Features;
+namespace Ran\StarterPlugin\Features;
 
-use Ran\MyPlugin\Api\Widgets\MediaWidget;
-use Ran\MyPlugin\Base\BaseController;
-use Ran\MyPlugin\Base\ControllerInterface;
+use Ran\StarterPlugin\Api\Widgets\MediaWidget;
+use Ran\StarterPlugin\Base\BaseController;
+use Ran\StarterPlugin\Base\ControllerInterface;
 
 /**
  * WidgetController implements the ControllerInterface.

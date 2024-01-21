@@ -7,14 +7,14 @@
 
 declare(strict_types = 1);
 
-namespace Ran\MyPlugin\Features;
+namespace Ran\StarterPlugin\Features;
 
-use Ran\MyPlugin\Api\Callbacks\AdminCallbacks;
-use Ran\MyPlugin\Api\Callbacks\TaxonomyCallbacks;
-use Ran\MyPlugin\Base\BaseController;
-use Ran\MyPlugin\Base\Config;
-use Ran\MyPlugin\Base\ControllerInterface;
-use Ran\MyPlugin\Base\SettingsApi;
+use Ran\StarterPlugin\Api\Callbacks\AdminCallbacks;
+use Ran\StarterPlugin\Api\Callbacks\TaxonomyCallbacks;
+use Ran\StarterPlugin\Base\BaseController;
+use Ran\StarterPlugin\Base\Config;
+use Ran\StarterPlugin\Base\ControllerInterface;
+use Ran\StarterPlugin\Base\SettingsApi;
 /**
  * Custom Taxonomy Controller
  *

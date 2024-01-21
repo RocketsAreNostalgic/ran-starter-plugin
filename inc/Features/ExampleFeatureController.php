@@ -8,10 +8,10 @@
 
 declare(strict_types = 1);
 
-namespace Ran\MyPlugin\Features;
+namespace Ran\StarterPlugin\Features;
 
-use Ran\MyPlugin\Api\Callbacks\AdminCallbacks;
-use Ran\MyPlugin\Base\SettingsApi;
+use Ran\StarterPlugin\Api\Callbacks\AdminCallbacks;
+use Ran\StarterPlugin\Base\SettingsApi;
 use Ran\PluginLib\FeaturesAPI\FeatureControllerAbstract;
 use Ran\PluginLib\FeaturesAPI\RegistrableFeatureInterface;
 use Ran\PluginLib\TestAccessory\TestAccessory;

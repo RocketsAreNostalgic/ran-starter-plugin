@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Ran\MyPlugin\Api\Widgets;
+namespace Ran\StarterPlugin\Api\Widgets;
 
 use WP_Widget;
 

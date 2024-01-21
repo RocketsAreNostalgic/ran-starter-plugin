@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Ran\MyPlugin\Base;
+namespace Ran\StarterPlugin\Base;
 
 /**
  * This class is meant to be extended and instantiated via the RegisterServices Class.
