@@ -6,6 +6,8 @@
  * @package  RanPlugin
  */
 
+declare(strict_types = 1);
+
 namespace Ran\MyPlugin\Features;
 
 use Ran\MyPlugin\Api\Callbacks\AdminCallbacks;
@@ -20,16 +22,17 @@ use Ran\PluginLib\TestAccessory\TestAccessory;
 class ExampleFeatureController extends FeatureControllerAbstract implements RegistrableFeatureInterface, TestAccessory {
 
 	/**
-	 * Undocumented variable
 	 *
-	 * @var AdminCallbacks
+	 * AdminCallbacks.
+	 *
+	 * @var mixed
 	 */
 	public AdminCallbacks $callbacks;
 
 	/**
-	 * Undocumented variable
+	 * SettingsApi settings.
 	 *
-	 * @var SettingsApi
+	 * @var mixed
 	 */
 	public SettingsApi $settings;
 
@@ -37,7 +40,7 @@ class ExampleFeatureController extends FeatureControllerAbstract implements Regi
 	 * The settings page key and description.
 	 * The key is use for slugs and database entries, the value is used in
 	 *
-	 * @var array
+	 * @var array<mixed>
 	 */
 	public array $feature_settings_page = array(
 		array(
@@ -51,11 +54,11 @@ class ExampleFeatureController extends FeatureControllerAbstract implements Regi
 	);
 
 	/**
-	 * Undocumented variable
+	 * Subpages array
 	 *
-	 * @var array
+	 * @var array<mixed>
 	 */
-	public $subpages = array();
+	public array $subpages = array();
 
 	/**
 	 * Our registration function to add action hooks to WP
@@ -81,10 +84,8 @@ class ExampleFeatureController extends FeatureControllerAbstract implements Regi
 
 	/**
 	 * Undocumented function
-	 *
-	 * @return void
 	 */
-	public function set_subpages() {
+	public function set_subpages(): void {
 		$this->subpages = array(
 			array(
 				'parent_slug' => $this->plugin_data['TextDomain'],
@@ -101,9 +102,8 @@ class ExampleFeatureController extends FeatureControllerAbstract implements Regi
 	 * Test so far...
 	 *
 	 * @param string $string - A string to test.
-	 * @return string
 	 */
-	public function test( $string = 'test' ): string {
+	public function test( string $string = 'test' ): string {
 		return $string;
 	}
 }

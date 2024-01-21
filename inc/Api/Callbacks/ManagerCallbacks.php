@@ -5,6 +5,8 @@
  * @package  RanPlugin
  */
 
+declare(strict_types = 1);
+
 namespace Ran\MyPlugin\Api\Callbacks;
 
 /**
@@ -16,10 +18,8 @@ class ManagerCallbacks {
 
 	/**
 	 * Array of plugin details.
-	 *
-	 * @return void
 	 */
-	public function admin_section_manager() {
+	public function admin_section_manager(): void {
 		echo 'Manage the Sections and Features of this Plugin by activating the checkboxes from the following list.';
 	}
 
@@ -27,9 +27,9 @@ class ManagerCallbacks {
 	 * Checkbox sanitization.
 	 *
 	 * @param mixed $input - The input.
-	 * @return bool[]
+	 * @return array<bool>
 	 */
-	public function checkbox_sanitize( $input ) {
+	public function checkbox_sanitize( mixed $input ): array {
 		$output = array();
 
 		// Loop through our checkbox array and create an array of sanitized values.
@@ -44,9 +44,8 @@ class ManagerCallbacks {
 	 * Checkbox field.
 	 *
 	 * @param mixed $args - Array of arguments for checkboxes.
-	 * @return void
 	 */
-	public function checkbox_field( $args ) {
+	public function checkbox_field( mixed $args ): void {
 		$name = $args['label_for'];
 		$classes = $args['class'];
 		$option_name = $args['option_name'];

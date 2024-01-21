@@ -1,9 +1,11 @@
 <?php
 /**
- * Handel plugin activation.
+ * RAN Starter Plugin: Deactivate
  *
  * @package  RanPlugin
  */
+
+declare(strict_types = 1);
 
 namespace Ran\MyPlugin\Base;
 
@@ -12,8 +14,8 @@ use Ran\PluginLib\Config\ConfigInterface;
 /**
  * Activation class that establishes the
  *
- * @param  ConfigInterface $plugin the current plugin instance.
- * @param  mixed  ...$args mixed array of arguments.
+ * @param  ConfigInterface $plugin the current config instance.
+ * @param  mixed ...$args mixed array of arguments.
  *
  * @package  RanPlugin
  */
@@ -25,12 +27,11 @@ class Activate implements ActivationInterface {
 	 * @param  ConfigInterface $config An instance of the Config class.
 	 * @param  mixed           ...$args Any required arguments.
 	 *
-	 * @return void
 	 * @throws \InvalidArgumentException If $config is not a Config instance.
 	 */
 	public static function activate( ConfigInterface $config, mixed ...$args ): void {
 
-		$plugin_data = $config->get_plugin();
+		$plugin_data = $config->get_plugin_config();
 
 		$option_data = array( 'Version' => $plugin_data['Version'] );
 

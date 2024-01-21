@@ -5,6 +5,8 @@
  * @package  RanPlugin
  */
 
+declare(strict_types = 1);
+
 namespace Ran\MyPlugin\Base;
 
 use Ran\PluginLib\FeaturesAPI\RegistrableFeatureInterface;
@@ -17,44 +19,42 @@ class SettingsApi implements RegistrableFeatureInterface {
 	/**
 	 * Array of top level pages.
 	 *
-	 * @var array
+	 * @var array<mixed>
 	 */
-	public $wp_admin_pages = array();
+	public array $wp_admin_pages = array();
 
 	/**
 	 * Array of subpages.
 	 *
-	 * @var array
+	 * @var array<mixed>
 	 */
-	public $wp_admin_subpages = array();
+	public array $wp_admin_subpages = array();
 
 	/**
 	 * Settings array.
 	 *
-	 * @var array
+	 * @var array<mixed>
 	 */
-	public $settings = array();
+	public array $settings = array();
 
 	/**
 	 * Array of sections.
 	 *
-	 * @var array
+	 * @var array<mixed>
 	 */
-	public $sections = array();
+	public array $sections = array();
 
 	/**
 	 * Array of fields.
 	 *
-	 * @var array
+	 * @var array<mixed>
 	 */
-	public $fields = array();
+	public array $fields = array();
 
 	/**
 	 * Our registration function to add action hooks to WP
-	 *
-	 * @return void
 	 */
-	public function init():SettingsApi {
+	public function init(): SettingsApi {
 		if ( ! empty( $this->wp_admin_pages ) || ! empty( $this->wp_admin_subpages ) ) {
 			add_action( 'admin_menu', array( $this, 'add_admin_menu_pages' ) );
 		}
@@ -68,11 +68,9 @@ class SettingsApi implements RegistrableFeatureInterface {
 	/**
 	 * Internal reference of to the WordPress Pages array.
 	 *
-	 * @param  array $pages An array of top level pages.
-	 *
-	 * @return SettingsApi
+	 * @param array<mixed> $pages An array of top level pages.
 	 */
-	public function add_wp_admin_pages( array $pages ) {
+	public function add_wp_admin_pages( array $pages ): SettingsApi {
 		$this->wp_admin_pages = $pages;
 
 		return $this;
@@ -82,10 +80,8 @@ class SettingsApi implements RegistrableFeatureInterface {
 	 * Adds a subpage to the public subpages array.
 	 *
 	 * @param  string|null $title the tile of the page being added.
-	 *
-	 * @return SettingsApi
 	 */
-	public function with_subpages( string $title = null ) {
+	public function with_subpages( ?string $title = null ): SettingsApi {
 		if ( empty( $this->wp_admin_pages ) ) {
 			return $this;
 		}
@@ -111,11 +107,9 @@ class SettingsApi implements RegistrableFeatureInterface {
 	/**
 	 * Merges subpages into to the public pages array.
 	 *
-	 * @param  array $subpages The pages array provided by WordPress.
-	 *
-	 * @return SettingsApi
+	 * @param  array<mixed> $subpages The pages array provided by WordPress.
 	 */
-	public function add_subpages( array $subpages ) {
+	public function add_subpages( array $subpages ): SettingsApi {
 		$this->wp_admin_subpages = array_merge( $this->wp_admin_subpages, $subpages );
 
 		return $this;
@@ -123,10 +117,8 @@ class SettingsApi implements RegistrableFeatureInterface {
 
 	/**
 	 * Adds admin pages and subpages to the WordPress admin.
-	 *
-	 * @return void
 	 */
-	public function add_admin_menu_pages():void {
+	public function add_admin_menu_pages(): void {
 		foreach ( $this->wp_admin_pages as $page ) {
 			add_menu_page( $page['page_title'], $page['menu_title'], $page['capability'], $page['menu_slug'], $page['callback'], $page['icon_url'], $page['position'] );
 		}
@@ -139,11 +131,9 @@ class SettingsApi implements RegistrableFeatureInterface {
 	/**
 	 * Set incoming array of custom settings to the public property of the class instance.
 	 *
-	 * @param  array $settings An array of settings.
-	 *
-	 * @return SettingsApi
+	 * @param  array<mixed> $settings An array of settings.
 	 */
-	public function set_settings( array $settings ):SettingsApi {
+	public function set_settings( array $settings ): SettingsApi {
 		$this->settings = $settings;
 
 		return $this;
@@ -152,11 +142,9 @@ class SettingsApi implements RegistrableFeatureInterface {
 	/**
 	 * Set incoming array of custom sections to the public property of the class instance.
 	 *
-	 * @param  array $sections An array of sections.
-	 *
-	 * @return SettingsApi
+	 * @param  array<mixed> $sections An array of sections.
 	 */
-	public function set_sections( array $sections ):SettingsApi {
+	public function set_sections( array $sections ): SettingsApi {
 		$this->sections = $sections;
 
 		return $this;
@@ -165,11 +153,9 @@ class SettingsApi implements RegistrableFeatureInterface {
 	/**
 	 * Set the incoming array of custom fields to the public property of the class instance.
 	 *
-	 * @param  array $fields An array of custom fields.
-	 *
-	 * @return SettingsApi
+	 * @param  array<mixed> $fields An array of custom fields.
 	 */
-	public function set_fields( array $fields ):SettingsApi {
+	public function set_fields( array $fields ): SettingsApi {
 		$this->fields = $fields;
 
 		return $this;
@@ -177,10 +163,8 @@ class SettingsApi implements RegistrableFeatureInterface {
 
 	/**
 	 * Register custom setting groups, sections and fields with WordPress.
-	 *
-	 * @return void
 	 */
-	public function register_custom_fields() {
+	public function register_custom_fields(): void {
 		// Register each setting.
 		foreach ( $this->settings as $setting ) {
 			register_setting( $setting['option_group'], $setting['option_name'], ( isset( $setting['callback'] ) ? $setting['callback'] : '' ) );

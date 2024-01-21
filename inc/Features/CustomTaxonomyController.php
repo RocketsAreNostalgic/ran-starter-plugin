@@ -1,19 +1,20 @@
 <?php
-
 /**
  * Custom Taxonomy Controller
  *
  * @package  RanPlugin
  */
 
-namespace Ran\MyPlugin\Inc\Services;
+declare(strict_types = 1);
 
-use Ran\MyPlugin\Inc\Api\Callbacks\AdminCallbacks;
-use Ran\MyPlugin\Inc\Api\Callbacks\TaxonomyCallbacks;
-use Ran\MyPlugin\Inc\Base\BaseController;
-use Ran\MyPlugin\Inc\Base\ControllerInterface;
-use Ran\MyPlugin\Inc\Base\SettingsApi;
+namespace Ran\MyPlugin\Features;
 
+use Ran\MyPlugin\Api\Callbacks\AdminCallbacks;
+use Ran\MyPlugin\Api\Callbacks\TaxonomyCallbacks;
+use Ran\MyPlugin\Base\BaseController;
+use Ran\MyPlugin\Base\Config;
+use Ran\MyPlugin\Base\ControllerInterface;
+use Ran\MyPlugin\Base\SettingsApi;
 /**
  * Custom Taxonomy Controller
  *
@@ -21,20 +22,60 @@ use Ran\MyPlugin\Inc\Base\SettingsApi;
  */
 class CustomTaxonomyController extends BaseController implements ControllerInterface {
 
-	public $settings;
-
-	public $callbacks;
-
-	public $tax_callbacks;
-
-	public $subpages = array();
-
-	public $taxonomies = array();
+	/**
+	 * Construct method.
+	 *
+	 * @param Config $config Config object.
+	 */
+	public function __construct( Config $config ) {
+		$this->config = $config;
+	}
 
 	/**
-	 * Our registration funtion to add action hooks to WP
+	 * Config object.
 	 *
-	 * @return null
+	 * @var Config $config - The config object.
+	 */
+	private Config $config;
+
+
+	/**
+	 * Public settings variable.
+	 *
+	 * @var mixed - the settings
+	 */
+	public mixed $settings;
+
+	/**
+	 * Public callbacks variable.
+	 *
+	 * @var mixed - the callbacks
+	 */
+	public mixed $callbacks;
+
+	/**
+	 * Public taxonomy callbacks variable.
+	 *
+	 * @var mixed - the taxonomy callbacks
+	 */
+	public mixed $tax_callbacks;
+
+	/**
+	 * Public subpages variable.
+	 *
+	 * @var array<mixed> - An array of subpages.
+	 */
+	public array $subpages = array();
+
+	/**
+	 * Public taxonomies variable.
+	 *
+	 * @var array<mixed> - An array of taxonomies.
+	 */
+	public array $taxonomies = array();
+
+	/**
+	 * Our registration function to add action hooks to WP.
 	 */
 	public function register(): void {
 		if ( ! $this->activated( 'taxonomy_manager' ) ) {
@@ -43,7 +84,7 @@ class CustomTaxonomyController extends BaseController implements ControllerInter
 
 		$this->settings = new SettingsApi();
 
-		$this->callbacks = new AdminCallbacks();
+		$this->callbacks = new AdminCallbacks( $this->$config );
 
 		$this->tax_callbacks = new TaxonomyCallbacks();
 
@@ -64,10 +105,13 @@ class CustomTaxonomyController extends BaseController implements ControllerInter
 		}
 	}
 
-	public function setSubpages() {
+	/**
+	 * Set Subpages.
+	 */
+	public function setSubpages(): void {
 		$this->subpages = array(
 			array(
-				'parent_slug' => 'ran_plugin',
+				'parent_slug' => "$this->config['Text Domain']",
 				'page_title' => 'Custom Taxonomies',
 				'menu_title' => 'Taxonomy Manager',
 				'capability' => 'manage_options',
@@ -77,7 +121,10 @@ class CustomTaxonomyController extends BaseController implements ControllerInter
 		);
 	}
 
-	public function setSettings() {
+	/**
+	 * Set Settings.
+	 */
+	public function setSettings(): void {
 		$args = array(
 			array(
 				'option_group' => 'ran_plugin_tax_settings',
@@ -89,7 +136,10 @@ class CustomTaxonomyController extends BaseController implements ControllerInter
 		$this->settings->setSettings( $args );
 	}
 
-	public function setSections() {
+	/**
+	 * Set Sections.
+	 */
+	public function setSections(): void {
 		$args = array(
 			array(
 				'id' => 'ran_tax_index',
@@ -102,7 +152,10 @@ class CustomTaxonomyController extends BaseController implements ControllerInter
 		$this->settings->setSections( $args );
 	}
 
-	public function setFields() {
+	/**
+	 * Set Fields.
+	 */
+	public function setFields(): void {
 		$args = array(
 			array(
 				'id' => 'taxonomy',
@@ -161,8 +214,15 @@ class CustomTaxonomyController extends BaseController implements ControllerInter
 		$this->settings->setFields( $args );
 	}
 
-	public function storeCustomTaxonomies() {
-		$options = get_option( 'ran_plugin_tax' ) ?: array();
+	/**
+	 * Store Custom Taxonomies.
+	 */
+	public function storeCustomTaxonomies(): void {
+		if ( get_option( 'ran_plugin_tax' ) ) {
+			$options = get_option( 'ran_plugin_tax' );
+		} else {
+			$options = array();
+		}
 
 		foreach ( $options as $option ) {
 			$labels = array(
@@ -192,7 +252,10 @@ class CustomTaxonomyController extends BaseController implements ControllerInter
 		}
 	}
 
-	public function registerCustomTaxonomy() {
+	/**
+	 * Register Custom Taxonomy.
+	 */
+	public function registerCustomTaxonomy(): void {
 		foreach ( $this->taxonomies as $taxonomy ) {
 			$objects = isset( $taxonomy['objects'] ) ? array_keys( $taxonomy['objects'] ) : null;
 			register_taxonomy( $taxonomy['rewrite']['slug'], $objects, $taxonomy );

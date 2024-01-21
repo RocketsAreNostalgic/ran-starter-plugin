@@ -5,7 +5,8 @@
  * @package  RanPlugin
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
+
 namespace Ran\MyPlugin\Base;
 
 use Ran\PluginLib\Config\ConfigAbstract;

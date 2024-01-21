@@ -1,27 +1,39 @@
 <?php
+/**
+ * Plugin Admin Scripts
+ *
+ * @package RanPlugin
+ */
 
-namespace Inc\Services;
+declare(strict_types = 1);
 
-use Inc\Base\ControllerInterface;
-use Inc\Base\Enqueue;
+namespace Ran\MyPlugin\Features;
+
+use Ran\MyPlugin\Base\ControllerInterface;
+use Ran\MyPlugin\Base\Enqueue;
 
 /**
- *
- * Inherits register method()
+ * Plugin Admin Scripts
  */
-class PluginAdminScripts extends Enqueue implements ControllerInterface
-{
+class PluginAdminScripts extends Enqueue implements ControllerInterface {
 
-    public function enqueue()
-    {
-        $this->styles[]  = ['mypluginstyle', $this->plugin_url . 'assets/mystyle.css'];
-        $this->scripts[] = ['media-upload'];
-        $this->scripts[] = ['mypluginscript', $this->plugin_url . 'assets/myscript.js'];
-        $this->scripts[] = ['test', $this->plugin_url . 'assets/test.js', null, '0.0.1', false];
+	/**
+	 * Register the Admin Scripts.
+	 */
+	public function register(): void {}
 
-        // enqueue all our scripts, styles and media
-        $this->enqueue_scripts($this->scripts);
-        $this->enqueue_styles($this->styles);
-        $this->enqueue_media($this->media);
-    }
+	/**
+	 * Enqueue the Admin Scripts.
+	 */
+	public function enqueue(): void {
+		$this->styles[]  = array( 'mypluginstyle', $this->plugin_url . 'assets/mystyle.css' );
+		$this->scripts[] = array( 'media-upload' );
+		$this->scripts[] = array( 'mypluginscript', $this->plugin_url . 'assets/myscript.js' );
+		$this->scripts[] = array( 'test', $this->plugin_url . 'assets/test.js', null, '0.0.1', false );
+
+		// Enqueue all our scripts, styles and media.
+		$this->enqueue_scripts( $this->scripts );
+		$this->enqueue_styles( $this->styles );
+		$this->enqueue_media( $this->media );
+	}
 }

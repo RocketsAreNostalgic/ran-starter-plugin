@@ -1,17 +1,24 @@
 <?php
-
 /**
+ * Class of TestimonialCallbacks.
+ *
  * @package  RanPlugin
  */
 
-namespace Inc\Api\Callbacks;
+declare(strict_types = 1);
 
-use Inc\Base\BaseController;
+namespace Ran\MyPlugin\Api\Callbacks;
 
-class TestimonialCallbacks extends BaseController
-{
-    public function shortcodePage()
-    {
-        return require_once("$this->plugin_path/templates/testimonial.php");
-    }
+use Ran\MyPlugin\Base\BaseController;
+
+/**
+ * TestimonialCallbacks Class
+ */
+class TestimonialCallbacks extends BaseController {
+	/**
+	 * Our registration function to add action hooks to WP.
+	 */
+	public function shortcodePage(): string|bool {
+		return require_once "$this->plugin_path/templates/testimonial.php";
+	}
 }

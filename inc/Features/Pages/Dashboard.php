@@ -5,6 +5,8 @@
  * @package  RanPlugin
  */
 
+declare(strict_types = 1);
+
 namespace Ran\MyPlugin\Features\Pages;
 
 use Ran\MyPlugin\Api\Callbacks\AdminCallbacks;
@@ -12,7 +14,6 @@ use Ran\MyPlugin\Api\Callbacks\ManagerCallbacks;
 use Ran\MyPlugin\Base\SettingsApi;
 use Ran\PluginLib\FeaturesAPI\FeatureControllerAbstract;
 use Ran\PluginLib\FeaturesAPI\RegistrableFeatureInterface;
-
 
 /**
  * Create plugin dashboard.
@@ -25,35 +26,33 @@ class Dashboard extends FeatureControllerAbstract implements RegistrableFeatureI
 	/**
 	 * Instance of our Settings API (WIP)
 	 *
-	 * @var \Ran\MyPlugin\Base\SettingsApi
+	 * @var mixed $settings - The settings API.
 	 */
 	public SettingsApi $settings;
 
 	/**
 	 * Instance of our AdminCallbacks
 	 *
-	 * @var \Ran\MyPlugin\Api\Callbacks\AdminCallbacks
+	 * @var mixed $callbacks - The admin callbacks.
 	 */
 	public AdminCallbacks $callbacks;
 
 	/**
 	 * Instance of our ManagerCallbacks
 	 *
-	 * @var \Ran\MyPlugin\Api\Callbacks\ManagerCallbacks
+	 * @var mixed $callbacks_mngr - The manager callbacks.
 	 */
 	public ManagerCallbacks $callbacks_mngr;
 
 	/**
 	 * Array of admin menu items.
 	 *
-	 * @var array
+	 * @var array<mixed> - The admin menu items.
 	 */
 	public array $wp_admin_sidebar_menu_item = array();
 
 	 /**
 	  * Our registration function to add action hooks to WP
-
-	  * @return \Ran\MyPlugin\Features\Pages\Dashboard
 	  */
 	public function init(): Dashboard {
 
@@ -74,10 +73,8 @@ class Dashboard extends FeatureControllerAbstract implements RegistrableFeatureI
 
 	/**
 	 * Create the admin menu sidebar item.
-	 *
-	 * @return void
 	 */
-	public function create_wp_admin_sidebar_menu_item() {
+	public function create_wp_admin_sidebar_menu_item(): void {
 		$this->wp_admin_sidebar_menu_item = array(
 			array(
 				'page_title' => $this->plugin_array['Name'],
@@ -93,10 +90,8 @@ class Dashboard extends FeatureControllerAbstract implements RegistrableFeatureI
 
 	/**
 	 * Set the dashboard settings for the plugin.
-	 *
-	 * @return void
 	 */
-	public function set_dashboard_settings() {
+	public function set_dashboard_settings(): void {
 		$args = array(
 			array(
 				'option_group' => 'ran_plugin_settings',
@@ -110,10 +105,8 @@ class Dashboard extends FeatureControllerAbstract implements RegistrableFeatureI
 
 	/**
 	 * Set the dashboard sections for the plugin.
-	 *
-	 * @return void
 	 */
-	public function set_dashboard_sections() {
+	public function set_dashboard_sections(): void {
 		$args = array(
 			array(
 				'id' => 'ran_admin_index',
@@ -128,13 +121,12 @@ class Dashboard extends FeatureControllerAbstract implements RegistrableFeatureI
 
 	/**
 	 * Set the dashboard fields for the plugin.
-	 *
-	 * @return void
 	 */
-	public function set_dashboard_fields() {
+	public function set_dashboard_fields(): void {
 		$args = array();
 
 		// TODO: Migrating to Plugin features object.
+		//phpcs:disable
 		// foreach ( $this->feature_managers as $key => $value ) {
 		// $args[] = array(
 		// 'id' => $key,
@@ -149,6 +141,7 @@ class Dashboard extends FeatureControllerAbstract implements RegistrableFeatureI
 		// ),
 		// );
 		// }
+		//phpcs:enable
 
 		$this->settings->set_fields( $args );
 	}

@@ -1,30 +1,30 @@
 <?php
 /**
- * RAN Starter Plugin
+ * RAN Starter Plugin: Deactivate
  *
  * @package  RanStarterPlugin
  */
 
+declare(strict_types = 1);
+
 namespace Ran\MyPlugin\Base;
 
+use Ran\PluginLib\Config\ConfigInterface;
 use Ran\PluginLib\DeactivationInterface;
 
 /**
- * Deactivation class
- *
- * @package  RanPlugin
+ * A Deactivate class which implements the DeactivationInterface
  */
 class Deactivate implements DeactivationInterface {
 
 	/**
-	 * Plugin deactivation callback
+	 * Deactivation function called by WordPress register_deactivation_hook when the plugin is deactivated.
+	 * This must be called as a static method, ideally in the plugin root file or Bootstrap.php
 	 *
-	 * @param  Plugin $plugin the current plugin instance.
-	 * @param  mixed  ...$args mixed array of arguments.
-	 *
-	 * @return void
+	 * @param  ConfigInterface $config the current config instance.
+	 * @param  mixed           ...$args mixed array of arguments.
 	 */
-	public static function deactivate( $plugin, ...$args ): void {
+	public static function deactivate( ConfigInterface $config, mixed ...$args ): void {
 		flush_rewrite_rules();
 	}
 }

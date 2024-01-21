@@ -1,31 +1,59 @@
 <?php
-
 /**
+ * Custom Post Type Controller
+ *
  * @package  RanPlugin
  */
 
-namespace Inc\Services;
+declare(strict_types = 1);
 
-use Inc\Api\Callbacks\AdminCallbacks;
-use Inc\Api\Callbacks\CptCallbacks;
-use Inc\Base\BaseController;
-use Inc\Base\ControllerInterface;
-use Inc\Base\SettingsApi;
+namespace Ran\MyPlugin\Features;
+
+use Ran\MyPlugin\Api\Callbacks\AdminCallbacks;
+use Ran\MyPlugin\Api\Callbacks\CptCallbacks;
+use Ran\MyPlugin\Base\BaseController;
+use Ran\MyPlugin\Base\ControllerInterface;
+use Ran\MyPlugin\Base\SettingsApi;
 
 /**
- *
+ * Custom Post Type Controller
  */
 class CustomPostTypeController extends BaseController implements ControllerInterface {
 
-	public $settings;
+	/**
+	 * Public settings variable.
+	 *
+	 * @var $settings mixed - the settings.
+	 */
+	public mixed $settings;
 
-	public $callbacks;
+	/**
+	 * Public callbacks variable.
+	 *
+	 * @var mixed - the callbacks.
+	 */
+	public mixed $callbacks;
 
-	public $cpt_callbacks;
+	/**
+	 * Public cpt_callbacks variable.
+	 *
+	 * @var mixed - the cpt_callbacks.
+	 */
+	public mixed $cpt_callbacks;
 
-	public $subpages = array();
+	/**
+	 * Public subpages variable.
+	 *
+	 * @var array<mixed> - the subpages array.
+	 */
+	public array $subpages = array();
 
-	public $custom_post_types = array();
+	/**
+	 * Public custom_post_types variable.
+	 *
+	 * @var array<mixed> - the custom_post_types array.
+	 */
+	public array $custom_post_types = array();
 
 	/**
 	 * Our registration funtion to add action hooks to WP
@@ -60,7 +88,10 @@ class CustomPostTypeController extends BaseController implements ControllerInter
 		}
 	}
 
-	public function setSubpages() {
+	/**
+	 * Set Subpages.
+	 */
+	public function setSubpages(): void {
 		$this->subpages = array(
 			array(
 				'parent_slug' => 'ran_plugin',
@@ -73,7 +104,10 @@ class CustomPostTypeController extends BaseController implements ControllerInter
 		);
 	}
 
-	public function setSettings() {
+	/**
+	 * Set Settings.
+	 */
+	public function setSettings(): void {
 		$args = array(
 			array(
 				'option_group' => 'ran_plugin_cpt_settings',
@@ -85,7 +119,10 @@ class CustomPostTypeController extends BaseController implements ControllerInter
 		$this->settings->setSettings( $args );
 	}
 
-	public function setSections() {
+	/**
+	 *  Set Sections.
+	 */
+	public function setSections(): void {
 		$args = array(
 			array(
 				'id' => 'ran_cpt_index',
@@ -98,7 +135,10 @@ class CustomPostTypeController extends BaseController implements ControllerInter
 		$this->settings->setSections( $args );
 	}
 
-	public function setFields() {
+	/**
+	 * Set Fields.
+	 */
+	public function setFields(): void {
 		$args = array(
 			array(
 				'id' => 'post_type',
@@ -170,8 +210,16 @@ class CustomPostTypeController extends BaseController implements ControllerInter
 		$this->settings->setFields( $args );
 	}
 
-	public function storeCustomPostTypes() {
-		$options = get_option( 'ran_plugin_cpt' ) ?: array();
+	/**
+	 * Store Custom Post Types.
+	 */
+	public function storeCustomPostTypes(): void {
+
+		if ( get_option( 'ran_plugin_cpt' ) ) {
+			$options = get_option( 'ran_plugin_cpt' );
+		} else {
+			$options = array();
+		}
 
 		foreach ( $options as $option ) {
 
@@ -207,17 +255,17 @@ class CustomPostTypeController extends BaseController implements ControllerInter
 				'label'                 => $option['singular_name'],
 				'description'           => $option['plural_name'] . 'Custom Post Type',
 				'supports'              => array( 'title', 'editor', 'thumbnail' ),
-				'show_in_rest'            => true,
+				'show_in_rest'          => true,
 				'taxonomies'            => array( 'category', 'post_tag' ),
 				'hierarchical'          => false,
-				'public'                => isset( $option['public'] ) ?: false,
+				'public'                => isset( $option['public'] ) ?: false, //phpcs:ignore
 				'show_ui'               => true,
 				'show_in_menu'          => true,
 				'menu_position'         => 5,
 				'show_in_admin_bar'     => true,
 				'show_in_nav_menus'     => true,
 				'can_export'            => true,
-				'has_archive'           => isset( $option['has_archive'] ) ?: false,
+				'has_archive'           => isset( $option['has_archive'] ) ?: false, //phpcs:ignore
 				'exclude_from_search'   => false,
 				'publicly_queryable'    => true,
 				'capability_type'       => 'post',
@@ -225,7 +273,10 @@ class CustomPostTypeController extends BaseController implements ControllerInter
 		}
 	}
 
-	public function registerCustomPostTypes() {
+	/**
+	 * Register Custom Post Types.
+	 */
+	public function registerCustomPostTypes(): void {
 		foreach ( $this->custom_post_types as $post_type ) {
 			register_post_type(
 				$post_type['post_type'],

@@ -1,12 +1,17 @@
-<div class="wrap">
 <?php
 /**
  * The template for an example feature.
+ * TODO add nonce verification. See TestimonialController for an example.
  *
  * @package  RanPlugin
  */
 
+declare(strict_types = 1);
+
+//phpcs:disable WordPress.Security.NonceVerification.Missing,WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 ?>
+<div class="wrap">
+
 <h1>Example Feature Manager</h1>
 	<?php settings_errors(); ?>
 
@@ -44,3 +49,4 @@
 
 	</div>
 </div>
+<?php //phpcs:enable ?>

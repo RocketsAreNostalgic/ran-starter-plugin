@@ -5,6 +5,8 @@
  * @package  RanStarterPlugin
  */
 
+declare(strict_types = 1);
+
 namespace Ran\MyPlugin\Base;
 
 use Ran\MyPlugin\Features;
@@ -20,16 +22,16 @@ use Ran\PluginLib\FeaturesAPI\FeaturesManager;
 class Bootstrap implements BootstrapInterface {
 
 	/**
-	 * The Plugin class object.
+	 * The Config class object.
 	 *
-	 * @var Config
+	 * @var Config $config - the config object.
 	 */
 	private Config $config;
 
 	/**
 	 * Plugin data array
 	 *
-	 * @var array
+	 * @var array<mixed>
 	 */
 	private array $plugin_data = array();
 
@@ -40,7 +42,7 @@ class Bootstrap implements BootstrapInterface {
 	 */
 	public function __construct( string $plugin_file ) {
 		$this->config = new Config( $plugin_file );
-		$this->plugin_data = $this->config->get_plugin();
+		$this->plugin_data = $this->config->get_plugin_config();
 	}
 
 	/**
@@ -52,7 +54,7 @@ class Bootstrap implements BootstrapInterface {
 		// TODO: This could be more ergonomic if we created a 'feature'
 		// and contract which triggers the loading of EnqueueAdmin() for us.
 		// TODO: We are register and enqueue at the same time (not leveraging wp_register_script)
-		// TODO: At the moment are not passing
+		// TODO: At the moment are not passing.
 
 		// Enqueue admin assets for the plugin in general.
 		$admin_assets = new EnqueueAdmin();
@@ -83,11 +85,12 @@ class Bootstrap implements BootstrapInterface {
 			)
 		);
 
+		//phpcs:disable
 		// Example feature controller.
-		$manager->register_feature(
-			'example-feature-manager',
-			Features\ExampleFeatureController::class,
-		);
+		// $manager->register_feature(
+		// 'example-feature-manager',
+		// Features\ExampleFeatureController::class,
+		// );
 
 		// Load all of our registered features.
 		$manager->load_all();
@@ -106,13 +109,14 @@ class Bootstrap implements BootstrapInterface {
 		// echo '<br>';
 		// echo '</pre>';
 		// die();
+		//phpcs:enable
 		return $this->config;
 	}
 
 	/**
 	 * Construct an array of admin css styles.
 	 *
-	 * @return array of admin styles.
+	 * @return array<mixed>
 	 */
 	private function admin_styles(): array {
 		$admin_styles[] = array( 'dashboard', $this->plugin_data['URL'] . 'assets/dist/admin/styles/dashboard.css' );
@@ -122,7 +126,7 @@ class Bootstrap implements BootstrapInterface {
 	/**
 	 * Construct an array of admin scripts.
 	 *
-	 * @return array
+	 * @return array<mixed>
 	 */
 	private function admin_scripts(): array {
 		$admin_scripts[] = array( 'admin', $this->plugin_data['URL'] . 'assets/dist/admin/js/admin.js' );
@@ -132,7 +136,7 @@ class Bootstrap implements BootstrapInterface {
 	/**
 	 * Construct an array of public css styles.
 	 *
-	 * @return array of public styles.
+	 * @return array<mixed> of public styles.
 	 */
 	private function public_styles(): array {
 		$public_styles[] = array( 'dashboard', $this->plugin_data['URL'] . 'assets/dist/public/styles/plugin.css' );
@@ -142,7 +146,7 @@ class Bootstrap implements BootstrapInterface {
 	/**
 	 * Construct an array of public scripts.
 	 *
-	 * @return array
+	 * @return array<mixed>
 	 */
 	private function public_scripts(): array {
 		$public_scripts[] = array( 'public', $this->plugin_data['URL'] . 'assets/dist/public/js/public.js' );
