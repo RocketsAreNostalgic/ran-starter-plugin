@@ -16,14 +16,6 @@ use Ran\PluginLib\PluginAdditionalLinksAbstract;
  * Modify the action and meta arrays for the plugin's entry in the admin plugins page.
  */
 class PluginAdditionalLinks extends PluginAdditionalLinksAbstract implements RegistrableFeatureInterface {
-	/**
-	 * The taco.
-	 *
-	 * @var string $taco - the taco.
-	 */
-	public string $taco;
-
-
 
 	/**
 	 * Modifies the plugin action link array.
@@ -37,6 +29,7 @@ class PluginAdditionalLinks extends PluginAdditionalLinksAbstract implements Reg
 	public function plugin_action_links_callback( array $links ): array {
 
 		$links[] = '<a href="admin.php?page=' . $this->plugin_array['TextDomain'] . '">Settings</a>';
+		// $links[] = '<a href="admin.php?page=ran_plugin">SomeOtherLink</a>';
 		return $links;
 	}
 
@@ -64,8 +57,8 @@ class PluginAdditionalLinks extends PluginAdditionalLinksAbstract implements Reg
 			return $plugin_meta;
 		}
 
-		$plugin_meta[] = '<a href="https://github.com/bnjmnrsh">BnjmnRsh</a>';
+			$plugin_meta[] = '<a href="https://github.com/bnjmnrsh">BnjmnRsh</a>';
 
-		return $plugin_meta;
+			return $plugin_meta;
 	}
 }
