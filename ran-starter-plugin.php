@@ -5,6 +5,8 @@
  * @package  RanStarterPlugin
  */
 
+declare(strict_types = 1);
+
 namespace Ran\MyPlugin;
 
 /*
@@ -27,7 +29,7 @@ defined( 'ABSPATH' ) || die( '' );
 
 // Require Composer Autoload.
 if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
-	 require_once __DIR__ . '/vendor/autoload.php';
+	require_once __DIR__ . '/vendor/autoload.php';
 }
 
 use Ran\MyPlugin\Base\Activate;
@@ -41,7 +43,7 @@ use Ran\MyPlugin\Base\Deactivate;
  *
  * @since 0.0.1
  */
-function activate_plugin() {
+function activate_plugin(): void {
 	Activate::activate( new Config( __FILE__ ) );
 }
 register_activation_hook( __FILE__, __NAMESPACE__ . '\activate_plugin' );
@@ -52,7 +54,7 @@ register_activation_hook( __FILE__, __NAMESPACE__ . '\activate_plugin' );
  *
  * @since 0.0.1
  */
-function deactivate_plugin() {
+function deactivate_plugin(): void {
 	Deactivate::deactivate( new Config( __FILE__ ) );
 }
 register_deactivation_hook( __FILE__, __NAMESPACE__ . '\deactivate_plugin' );
@@ -62,7 +64,7 @@ register_deactivation_hook( __FILE__, __NAMESPACE__ . '\deactivate_plugin' );
  */
 add_action(
 	'plugins_loaded',
-	function () {
+	function (): void {
 		$bootstrap = new Bootstrap( __FILE__ );
 		$bootstrap->init();
 	},
