@@ -54,7 +54,6 @@ add_action(
 
 /**
  * Plugin Activation hook
- * Passing as skeleton instance of Plugin, will not have full record of all plugin classes etc.
  *
  * @since 0.0.1
  */
@@ -65,7 +64,6 @@ register_activation_hook( __FILE__, __NAMESPACE__ . '\activate_plugin' );
 
 /**
  * Plugin Deactivation hook
- * Passing as skeleton instance of Plugin, will not have full record of all plugin classes etc.
  *
  * @since 0.0.1
  */
