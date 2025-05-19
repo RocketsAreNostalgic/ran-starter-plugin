@@ -2,3 +2,5 @@ vendor/
 node_modules/
 *.xml
 *.md
+README.md
+**/*.md

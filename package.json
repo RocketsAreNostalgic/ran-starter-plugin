@@ -5,6 +5,7 @@
 	"author": "Benjamin Rush",
 	"license": "MIT",
 	"homepage": "https://github.com/RocketsAreNostalgic",
+	"type": "module",
 	"config": {
 		"dist": "assets/dist",
 		"src_public": "assets/src/public",
@@ -15,33 +16,36 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"clean": "rimraf $npm_package_config_dist",
-		"clean:public": "rimraf $npm_package_config_dist_public",
-		"clean:admin": "rimraf $npm_package_config_dist_admin",
-		"watch": "npm-run-all -s build -p watch:*",
-		"watch:public": "parcel watch $npm_package_config_src_public/js/public.js $npm_package_config_src_public/styles/public.scss --dist-dir $npm_package_config_dist_public",
-		"watch:admin": "parcel watch $npm_package_config_src_admin/js/*.js $npm_package_config_src_admin/styles/*.scss --dist-dir $npm_package_config_dist_admin",
-		"build": "npm-run-all -s clean -p build:*",
-		"build:public": "parcel build --no-content-hash $npm_package_config_src_public/js/public.js $npm_package_config_src_public/styles/public.scss --dist-dir $npm_package_config_dist_public",
-		"build:admin": "parcel build --no-content-hash $npm_package_config_src_admin/js/*.js $npm_package_config_src_admin/styles/*.scss --dist-dir $npm_package_config_dist_admin",
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview",
 		"stylelint": "stylelint \"assets/src/**/*.scss\" ",
 		"eslint": "eslint \"assets/src/**/*.js\" ",
-		"lint": "npm run stylelint && npm run eslint"
+		"lint": "pnpm run stylelint && pnpm run eslint",
+		"format": "prettier --write \"assets/src/**/*.{js,scss,css}\""
 	},
 	"devDependencies": {
-		"@parcel/resolver-glob": "^2.8.3",
-		"@parcel/transformer-sass": "^2.8.2",
 		"@wordpress/eslint-plugin": "^13.8.0",
 		"@wordpress/prettier-config": "^2.7.0",
 		"@wordpress/stylelint-config": "^21.7.0",
 		"browserslist-lint": "^0.3.0",
 		"eslint": "^8.32.0",
 		"npm-run-all": "^4.1.5",
-		"parcel": "^2.8.2",
 		"prettier": "^2.8.3",
 		"rimraf": "^4.0.7",
-		"stylelint": "^14.16.1"
+		"sass": "^1.89.0",
+		"stylelint": "^14.16.1",
+		"vite": "^5.0.0"
 	},
 	"dependencies": {
 		"@wordpress/api-fetch": "^6.21.0"
-	}
+	},
+	"browserslist": [
+		"extends @wordpress/browserslist-config"
+	],
+	"engines": {
+		"node": ">=16",
+		"pnpm": ">=7"
+	},
+	"packageManager": "pnpm@10.11.0"
 }

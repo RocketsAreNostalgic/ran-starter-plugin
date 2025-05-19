@@ -1,1 +1,0 @@
-{"mappings":"ACAA","sources":["styles/example_feature.css","assets/src/admin/styles/example_feature.scss"],"sourcesContent":["body.ran-starter-plugin_page_0 {\n  background-color: #add8e6;\n}\n\n/*# sourceMappingURL=example_feature.css.map */\n","body.ran-starter-plugin_page_0 {\n\tbackground-color: lightblue;\n}\n"],"names":[],"version":3,"file":"example_feature.css.map"}

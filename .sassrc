@@ -1,6 +1,0 @@
-{
-	"includePaths": [
-		"node_modules/",
-		"assets/src/shared/"
-	]
-}
