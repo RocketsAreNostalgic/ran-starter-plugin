@@ -57,8 +57,6 @@ class CustomPostTypeController extends BaseController implements ControllerInter
 
 	/**
 	 * Our registration funtion to add action hooks to WP
-	 *
-	 * @return null
 	 */
 	public function register(): void {
 		if ( ! $this->activated( 'cpt_manager' ) ) {

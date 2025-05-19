@@ -11,6 +11,7 @@ cache
 .sass-cache/
 *.sass-cache
 .phpunit.result.cache
+composer.lock
 
 vendor/
 !vendor/autoload.php

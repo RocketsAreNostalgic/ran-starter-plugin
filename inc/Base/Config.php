@@ -20,5 +20,5 @@ use Ran\PluginLib\Config\ConfigInterface;
  * @package  RanPlugin
  */
 final class Config extends ConfigAbstract implements ConfigInterface {
-	// we're just going to keep the stock implementation for now.
+	// Stock implementation for now.
 }

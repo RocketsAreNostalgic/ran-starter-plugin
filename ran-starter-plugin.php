@@ -1,6 +1,18 @@
 <?php
 /**
- * RAN Starter Plugin
+ * Plugin Name: RAN Starter Plugin
+ * Plugin URI: http://github.com/RocketsAreNostalgic/ran-starter-plugin
+ * Description: A starter plugin with scaffold for common functionality using the RAN Plugin Lib.
+ * Version: 0.0.3
+ * Requires at least: 6.7.0
+ * Requires PHP: 8.1.0
+ * Author: Rockets Are Nostalgic
+ * Author URI: http://github.com/RocketsAreNostalgic
+ * License: MIT
+ * Text Domain: ran-starter-plugin
+ * Domain Path: /languages
+ * Update URI: http://github.com/RocketsAreNostalgic/ran-starter-plugin
+ * SomeVal: Some Value
  *
  * @package  RanStarterPlugin
  */
@@ -8,21 +20,6 @@
 declare(strict_types = 1);
 
 namespace Ran\StarterPlugin;
-
-/*
-	Plugin Name: RAN Starter Plugin
-	Plugin URI: http://github.com/RocketsAreNostalgic/ran-starter-plugin
-	Description: A starter plugin with scaffold for common functionality using the RAN Plugin Lib.
-	Version: 0.0.1
-	Requires at least: 6.1.0
-	Requires PHP: 8.1.0
-	Author: Rockets Are Nostalgic
-	Author URI: http://github.com/RocketsAreNostalgic
-	License: MIT
-	Text Domain: ran-starter-plugin
-	Domain Path: /languages
-	Update URI: http://github.com/RocketsAreNostalgic/ran-starter-plugin
-*/
 
 // Silence is golden.
 defined( 'ABSPATH' ) || die( '' );
@@ -32,16 +29,21 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	require_once __DIR__ . '/vendor/autoload.php';
 }
 
+use Ran\StarterPlugin\Base\Config;
 use Ran\StarterPlugin\Base\Activate;
 use Ran\StarterPlugin\Base\Bootstrap;
-use Ran\StarterPlugin\Base\Config;
 use Ran\StarterPlugin\Base\Deactivate;
 
-
+// Initialize Config.
 $ran_config = Config::init( __FILE__ );
 
 /**
  * Bootstrap our plugin after WP and plugins but before theme, this can be changed as required.
+ *
+ * Other hooks include:
+ * - 'init' - for loading text domains
+ * - 'wp_enqueue_scripts' - for enqueuing assets
+ * - 'admin_enqueue_scripts' - for enqueuing admin assets
  */
 add_action(
 	'plugins_loaded',

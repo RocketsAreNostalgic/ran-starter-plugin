@@ -126,7 +126,7 @@ class Bootstrap implements BootstrapInterface {
 	 * @return array<mixed>
 	 */
 	private function admin_scripts(): array {
-		$admin_scripts[] = array( 'admin', $this->plugin_data['URL'] . 'assets/dist/admin/js/admin.js' );
+		$admin_scripts[] = array( 'admin', $this->plugin_data['URL'] . 'assets/dist/admin/js/admin.min.js' );
 		return $admin_scripts;
 	}
 
@@ -146,7 +146,7 @@ class Bootstrap implements BootstrapInterface {
 	 * @return array<mixed>
 	 */
 	private function public_scripts(): array {
-		$public_scripts[] = array( 'public', $this->plugin_data['URL'] . 'assets/dist/public/js/public.js' );
+		$public_scripts[] = array( 'public', $this->plugin_data['URL'] . 'assets/dist/public/js/public.min.js' );
 		return $public_scripts;
 	}
 }

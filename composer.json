@@ -5,10 +5,19 @@
 	"license": "MIT",
 	"authors": [
 		{
-			"name": "Benjamin Rush <bnjmnrsh>",
-			"email": "bnjmnrsh@gmail.com"
+			"name": "Benjamin Rush <bnjmnrsh>"
 		}
 	],
+	"repositories": [
+		{
+			"url": "git@github.com:RocketsAreNostalgic/ran-plugin-library.git",
+			"type": "git"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/RocketsAreNostalgic/ran-plugin-library/issues",
+		"source": "https://github.com/RocketsAreNostalgic/ran-plugin-library/"
+	},
 	"minimum-stability": "dev",
 	"prefer-stable": true,
 	"autoload": {
@@ -22,21 +31,17 @@
 			"Tests\\": "tests/"
 		}
 	},
-	"repositories": [
-		{
-			"url": "https://github.com/RocketsAreNostalgic/ran-plugin-library.git",
-			"type": "git"
-		}
-	],
 	"require": {
+		"php": ">=8.1",
 		"ran/plugin-lib": "*"
 	},
 	"require-dev": {
-		"php": ">=8.1",
 		"squizlabs/php_codesniffer": "^3.8",
 		"wp-coding-standards/wpcs": "^3.0",
 		"dealerdirect/phpcodesniffer-composer-installer": "^1.0",
 		"slevomat/coding-standard": "^8.14",
+		"friendsofphp/php-cs-fixer": "^3.0",
+		"phpcsstandards/phpcsutils": "^1.0",
 		"yoast/phpunit-polyfills": "^2.0",
 		"phpunit/phpunit": "^9.6",
 		"10up/wp_mock": "^1.0",
@@ -44,21 +49,30 @@
 		"phpcompatibility/phpcompatibility-wp": "*",
 		"rmccue/requests": "^2.0"
 	},
+	"scripts": {
+		"lint": [
+			"@cs:check",
+			"@standards:full"
+		],
+		"format": [
+			"@cs",
+			"@standards:fix"
+		],
+		"cs": "php-cs-fixer fix --config='./scripts/.php-cs-fixer.php' --allow-risky=yes --using-cache=no",
+		"cs:check": "php-cs-fixer fix --config='./scripts/.php-cs-fixer.php' --allow-risky=yes --dry-run --diff --using-cache=no",
+		"cs:sequential": "php-cs-fixer fix --config='./scripts/.php-cs-fixer.php' --allow-risky=yes --sequential --using-cache=no",
+		"standards": "phpcs --standard=.phpcs.xml --report=summary",
+		"standards:full": "phpcs --standard=.phpcs.xml",
+		"standards:fix": "phpcbf --standard=.phpcs.xml --report=summary",
+		"build-assets": "bash ./scripts/build-assets.sh",
+		"build": [
+			"@format",
+			"@build-assets"
+		]
+	},
 	"config": {
 		"allow-plugins": {
 			"dealerdirect/phpcodesniffer-composer-installer": true
 		}
-	},
-	"scripts": {
-		"lint": [
-			"@php ./vendor/bin/phpcs"
-		],
-		"format": [
-			"@php ./vendor/bin/phpcbf"
-		]
-	},
-	"support": {
-		"issues": "https://github.com/RocketsAreNostalgic/ran-starter-plugin/issues",
-		"source": "https://github.com/RocketsAreNostalgic/ran-starter-plugin"
 	}
 }

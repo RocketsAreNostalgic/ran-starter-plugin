@@ -25,8 +25,6 @@ class TemplateController extends BaseController implements ControllerInterface {
 
 	/**
 	 * Our registration function to add action hooks to WP
-	 *
-	 * @return null
 	 */
 	public function register(): void {
 		if ( ! $this->activated( 'templates_manager' ) ) {

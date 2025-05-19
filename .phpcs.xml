@@ -106,8 +106,7 @@
 	<!-- Check that everything is properly documented. -->
     <rule ref="WordPress-Docs"></rule>
 
-	<!-- Extra rules from other standards. -->
-
+	<!-- Rules adopted from other standards. -->
 	<!-- Generic rules from CS  -->
 	<!-- Class opening braces should be on the same line as the statement. -->
 	<rule ref="Generic.Classes.OpeningBraceSameLine"/>
@@ -126,7 +125,6 @@
 	<!-- SlevomatCodingStandard for type hinting -->
 	<rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes" />
 	<rule ref="SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax" />
-	<!-- <rule ref="SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint" /> -->
 	<rule ref="SlevomatCodingStandard.TypeHints.LongTypeHints" />
 	<rule ref="SlevomatCodingStandard.TypeHints.NullTypeHintOnLastPosition" />
 	<rule ref="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue" />
@@ -138,14 +136,6 @@
 	<rule ref="SlevomatCodingStandard.TypeHints.UselessConstantTypeHint" />
 	<!-- SlevomatCodingStandard Class & Trait snifs  -->
 	<rule ref="SlevomatCodingStandard.Classes.RequireMultiLineMethodSignature" />
-	<!-- Review these notion of class/Interface nameing. -->
-	<!-- At this time I personally feel safer with explicitly pre/suffix-ing Absract/Interface etc to class names. -->
-	<!-- https://phpixie.com/blog/naming-interfaces-in-php.html -->
-	<!-- https://www.reddit.com/r/PHP/comments/2kk4v2/naming_interfaces_in_php_or_why_you_shouldnt_use/ -->
-	<!-- <rule ref="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming" /> -->
-	<!-- <rule ref="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming" /> -->
-	<!-- <rule ref="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming" /> -->
-	<!-- <rule ref="SlevomatCodingStandard.Classes.SuperfluousErrorNaming" /> -->
 	<rule ref="SlevomatCodingStandard.Classes.TraitUseDeclaration" />
 	<rule ref="SlevomatCodingStandard.Classes.TraitUseSpacing" />
 	<rule ref="SlevomatCodingStandard.Classes.UselessLateStaticBinding" />

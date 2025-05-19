@@ -36,8 +36,6 @@ class TestimonialController extends BaseController implements ControllerInterfac
 
 	/**
 	 * Our registration funtion to add action hooks to WP
-	 *
-	 * @return null
 	 */
 	public function register(): void {
 		if ( ! $this->activated( 'testimonial_manager' ) ) {

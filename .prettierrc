@@ -1,14 +1,3 @@
 {
-	"extends": "@wordpress/prettier-config",
-	"proseWrap": "preserve",
-	"overrides": [
-		{
-			"files": "*.md",
-			"options": {
-				"tabWidth": 2,
-				"useTabs": false,
-				"listItemIndent": "one"
-			}
-		}
-	]
+	"extends": "@wordpress/prettier-config"
 }

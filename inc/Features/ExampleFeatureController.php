@@ -62,8 +62,6 @@ class ExampleFeatureController extends FeatureControllerAbstract implements Regi
 
 	/**
 	 * Our registration function to add action hooks to WP
-	 *
-	 * @return null
 	 */
 	public function init(): ExampleFeatureController|false {
 
