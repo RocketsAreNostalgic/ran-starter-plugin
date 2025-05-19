@@ -63,8 +63,11 @@
 		!UPDATE THESE TO SUITE YOUR PROJECT
 		https://github.com/WordPress/WordPress-Coding-Standards/wiki/Customizable-sniff-properties
 	-->
-    <!-- Include WordPress standard explicitly to ensure all sniffs are loaded -->
-    <rule ref="WordPress"/>
+    <!-- Use specific WordPress rulesets that we know exist -->
+    <rule ref="WordPress-Core"/>
+    <rule ref="WordPress-Docs"/>
+    <rule ref="WordPress-Extra"/>
+
     <rule ref="WordPress.WP.I18n">
         <properties>
             <property name="text_domain" type="array">
