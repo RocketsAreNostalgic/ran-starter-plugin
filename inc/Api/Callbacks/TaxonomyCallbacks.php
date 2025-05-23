@@ -37,7 +37,8 @@ class TaxonomyCallbacks {
 
 		//phpcs:disable WordPress.Security.NonceVerification.Missing
 		if ( isset( $_POST['remove'] ) ) {
-			unset( $output[ $_POST['remove'] ] );
+			$remove_key = sanitize_text_field( wp_unslash( $_POST['remove'] ) );
+			unset( $output[ $remove_key ] );
 
 			return $output;
 		}
@@ -73,7 +74,8 @@ class TaxonomyCallbacks {
 		//phpcs:disable WordPress.Security.NonceVerification.Missing
 		if ( isset( $_POST['edit_taxonomy'] ) ) {
 			$input = get_option( $option_name );
-			$value = $input[ $_POST['edit_taxonomy'] ][ $name ];
+			$edit_taxonomy = sanitize_text_field( wp_unslash( $_POST['edit_taxonomy'] ) );
+			$value = $input[ $edit_taxonomy ][ $name ] ?? '';
 		}
 		//phpcs:enable
 
@@ -95,7 +97,8 @@ class TaxonomyCallbacks {
 		//phpcs:disable WordPress.Security.NonceVerification.Missing
 		if ( isset( $_POST['edit_taxonomy'] ) ) {
 			$checkbox = get_option( $option_name );
-			$checked = isset( $checkbox[ $_POST['edit_taxonomy'] ][ $name ] ) ?: false; //phpcs:ignore
+			$edit_taxonomy = sanitize_text_field( wp_unslash( $_POST['edit_taxonomy'] ) );
+			$checked = isset( $checkbox[ $edit_taxonomy ][ $name ] ) ?: false; //phpcs:ignore
 		}
 		// phpcs:enable
 
@@ -119,6 +122,7 @@ class TaxonomyCallbacks {
 		//phpcs:disable WordPress.Security.NonceVerification.Missing
 		if ( isset( $_POST['edit_taxonomy'] ) ) {
 			$checkbox = get_option( $option_name );
+			$edit_taxonomy = sanitize_text_field( wp_unslash( $_POST['edit_taxonomy'] ) );
 		}
 		// phpcs:enable
 
@@ -127,7 +131,7 @@ class TaxonomyCallbacks {
 		foreach ( $post_types as $post ) {
 			//phpcs:disable WordPress.Security.NonceVerification.Missing
 			if ( isset( $_POST['edit_taxonomy'] ) ) {
-				$checked = isset( $checkbox[ $_POST['edit_taxonomy'] ][ $name ][ $post ] ) ?: false; //phpcs:ignore
+				$checked = isset( $checkbox[ $edit_taxonomy ][ $name ][ $post ] ) ?: false; //phpcs:ignore
 			}
 			// phpcs:enable
 

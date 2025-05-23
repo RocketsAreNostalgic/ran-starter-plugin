@@ -68,9 +68,11 @@ class TestimonialController extends BaseController implements ControllerInterfac
 		if ( ! DOING_AJAX || ! check_ajax_referer( 'testimonial-nonce', 'nonce' ) ) {
 			$this->return_json( 'error' );
 		}
-		$name = sanitize_text_field( $_POST['name'] );
-		$email = sanitize_email( $_POST['email'] );
-		$message = sanitize_textarea_field( $_POST['message'] );
+
+		// Validate and sanitize POST data
+		$name = isset( $_POST['name'] ) ? sanitize_text_field( wp_unslash( $_POST['name'] ) ) : '';
+		$email = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
+		$message = isset( $_POST['message'] ) ? sanitize_textarea_field( wp_unslash( $_POST['message'] ) ) : '';
 
 		$data = array(
 			'name' => $name,
@@ -252,7 +254,7 @@ class TestimonialController extends BaseController implements ControllerInterfac
 			return $post_id;
 		}
 
-		if ( ! wp_verify_nonce( $_POST['ran_testimonial_nonce'], 'ran_testimonial' ) ) {
+		if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['ran_testimonial_nonce'] ) ), 'ran_testimonial' ) ) {
 			return $post_id;
 		}
 
@@ -265,8 +267,8 @@ class TestimonialController extends BaseController implements ControllerInterfac
 		}
 
 		$data = array(
-			'name' => sanitize_text_field( $_POST['ran_testimonial_author'] ),
-			'email' => sanitize_email( $_POST['ran_testimonial_email'] ),
+			'name' => isset( $_POST['ran_testimonial_author'] ) ? sanitize_text_field( wp_unslash( $_POST['ran_testimonial_author'] ) ) : '',
+			'email' => isset( $_POST['ran_testimonial_email'] ) ? sanitize_email( wp_unslash( $_POST['ran_testimonial_email'] ) ) : '',
 			'approved' => isset( $_POST['ran_testimonial_approved'] ) ? 1 : 0,
 			'featured' => isset( $_POST['ran_testimonial_featured'] ) ? 1 : 0,
 		);

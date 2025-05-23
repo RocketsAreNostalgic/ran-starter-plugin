@@ -1,11 +1,15 @@
 {
-  "extends": ["plugin:@wordpress/eslint-plugin/recommended"],
-  "settings": {
-    "react": {
-      "version": "999.999.999"
-    }
-  },
-  "rules": {
-    "no-console": "warn"
-  }
+	"extends": ["plugin:@wordpress/eslint-plugin/recommended"],
+	"settings": {
+		"react": {
+			"version": "999.999.999",
+		},
+	},
+	"globals": {
+		"jQuery": "readonly",
+		"$": "readonly",
+	},
+	"rules": {
+		"no-console": "warn",
+	},
 }
