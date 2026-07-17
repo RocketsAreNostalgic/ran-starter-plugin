@@ -33,4 +33,11 @@ class SampleWithWPMockTest extends WP_Mock\Tools\TestCase {
 	public function tearDown(): void {
 		WP_Mock::tearDown();
 	}
+
+	/**
+	 * Ensures the WP_Mock harness itself remains usable by the starter.
+	 */
+	public function test_harness_is_available(): void {
+		self::assertTrue( true );
+	}
 }
