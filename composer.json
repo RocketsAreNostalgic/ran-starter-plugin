@@ -1,6 +1,6 @@
 {
 	"name": "ran/starter-plugin",
-	"description": "A WordPress plugin biolerplate.",
+	"description": "A modern WordPress plugin starter.",
 	"type": "wordpress-plugin",
 	"license": "MIT",
 	"authors": [
@@ -8,12 +8,17 @@
 			"name": "Benjamin Rush <bnjmnrsh>"
 		}
 	],
-	"repositories": [],
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/RocketsAreNostalgic/ran-plugin-library.git"
+		}
+	],
 	"support": {
-		"issues": "https://github.com/RocketsAreNostalgic/ran-plugin-library/issues",
-		"source": "https://github.com/RocketsAreNostalgic/ran-plugin-library/"
+		"issues": "https://github.com/RocketsAreNostalgic/ran-starter-plugin/issues",
+		"source": "https://github.com/RocketsAreNostalgic/ran-starter-plugin"
 	},
-	"minimum-stability": "dev",
+	"minimum-stability": "stable",
 	"prefer-stable": true,
 	"autoload": {
 		"psr-4": {
@@ -27,8 +32,8 @@
 		}
 	},
 	"require": {
-		"php": ">=8.1",
-		"ran/plugin-lib": "*"
+		"php": "^8.4",
+		"ran/plugin-lib": "dev-main"
 	},
 	"require-dev": {
 		"squizlabs/php_codesniffer": "^3.8",
@@ -59,6 +64,7 @@
 		"standards": "phpcs --standard=.phpcs.xml --report=summary",
 		"standards:full": "phpcs --standard=.phpcs.xml",
 		"standards:fix": "phpcbf --standard=.phpcs.xml --report=summary",
+		"test": "phpunit --configuration phpunit.xml",
 		"build-assets": "bash ./scripts/build-assets.sh",
 		"build": [
 			"@format",

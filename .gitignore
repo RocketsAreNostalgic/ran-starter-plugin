@@ -11,10 +11,11 @@ cache
 .sass-cache/
 *.sass-cache
 .phpunit.result.cache
-composer.lock
+.phpunit.cache/
+tests/.phpunit.cache/
+.dex
 
 vendor/
-!vendor/autoload.php
 node_modules/
 npm-debug.log
 

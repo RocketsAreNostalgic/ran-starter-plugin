@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -eu
+
+if ! git diff --cached --name-only --diff-filter=ACMR | grep -Eq '^(assets/src/|vite\.config\.js$|pnpm-lock\.yaml$|pnpm-workspace\.yaml$|\.npmrc$)'; then
+	exit 0
+fi
+
+node_modules/.bin/vite build
+
+if ! git diff --quiet -- assets/dist || test -n "$(git ls-files --others --exclude-standard -- assets/dist)"; then
+	echo 'Generated asset files are out of date.' >&2
+	echo 'Review and stage assets/dist before committing.' >&2
+	git diff --name-only -- assets/dist >&2
+	git ls-files --others --exclude-standard -- assets/dist >&2
+	exit 1
+fi
