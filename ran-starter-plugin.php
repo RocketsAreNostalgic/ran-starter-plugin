@@ -1,18 +1,19 @@
 <?php
 /**
  * Plugin Name: RAN Starter Plugin
- * Plugin URI: http://github.com/RocketsAreNostalgic/ran-starter-plugin
- * Description: A starter plugin with scaffold for common functionality using the RAN Plugin Lib.
+ * Plugin URI: https://github.com/RocketsAreNostalgic/ran-starter-plugin
+ * Description: A modern WordPress plugin starter with optional feature scaffolding.
+ * x-release-please-start-version
  * Version: 0.0.4
- * Requires at least: 6.7.0
- * Requires PHP: 8.1.0
+ * x-release-please-end
+ * Requires at least: 7.0
+ * Requires PHP: 8.4
  * Author: Rockets Are Nostalgic
- * Author URI: http://github.com/RocketsAreNostalgic
+ * Author URI: https://github.com/RocketsAreNostalgic
  * License: MIT
  * Text Domain: ran-starter-plugin
  * Domain Path: /languages
- * Update URI: http://github.com/RocketsAreNostalgic/ran-starter-plugin
- * SomeVal: Some Value
+ * Update URI: https://github.com/RocketsAreNostalgic/ran-starter-plugin
  *
  * @package  RanStarterPlugin
  */
@@ -24,10 +25,23 @@ namespace Ran\StarterPlugin;
 // Silence is golden.
 defined( 'ABSPATH' ) || die( '' );
 
-// Require Composer Autoload.
-if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
-	require_once __DIR__ . '/vendor/autoload.php';
+// A deployable archive must include Composer dependencies. A source checkout
+// must run `composer install` before it can be activated safely.
+if ( ! file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+	add_action(
+		'admin_notices',
+		static function (): void {
+			printf(
+				'<div class="notice notice-error"><p>%s</p></div>',
+				esc_html__( 'RAN Starter Plugin needs its Composer dependencies. Run composer install before activating this source checkout.', 'ran-starter-plugin' )
+			);
+		}
+	);
+
+	return;
 }
+
+require_once __DIR__ . '/vendor/autoload.php';
 
 use Ran\StarterPlugin\Base\Config;
 use Ran\StarterPlugin\Base\Activate;

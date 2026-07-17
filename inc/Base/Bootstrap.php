@@ -116,8 +116,11 @@ class Bootstrap implements BootstrapInterface {
 	 * @return array<mixed>
 	 */
 	private function admin_styles(): array {
-		$admin_styles[] = array( 'dashboard', $this->plugin_data['URL'] . 'assets/dist/admin/styles/dashboard.css' );
-		return $admin_styles;
+		$asset = 'assets/dist/admin/styles/admin.min.css';
+
+		return array(
+			array( 'ran-starter-plugin-admin', $this->asset_url( $asset ), array(), $this->asset_version( $asset ) ),
+		);
 	}
 
 	/**
@@ -126,8 +129,11 @@ class Bootstrap implements BootstrapInterface {
 	 * @return array<mixed>
 	 */
 	private function admin_scripts(): array {
-		$admin_scripts[] = array( 'admin', $this->plugin_data['URL'] . 'assets/dist/admin/js/admin.min.js' );
-		return $admin_scripts;
+		$asset = 'assets/dist/admin/js/admin.min.js';
+
+		return array(
+			array( 'ran-starter-plugin-admin', $this->asset_url( $asset ), array(), $this->asset_version( $asset ), true ),
+		);
 	}
 
 	/**
@@ -136,8 +142,11 @@ class Bootstrap implements BootstrapInterface {
 	 * @return array<mixed> of public styles.
 	 */
 	private function public_styles(): array {
-		$public_styles[] = array( 'dashboard', $this->plugin_data['URL'] . 'assets/dist/public/styles/plugin.css' );
-		return $public_styles;
+		$asset = 'assets/dist/public/styles/public.min.css';
+
+		return array(
+			array( 'ran-starter-plugin-public', $this->asset_url( $asset ), array(), $this->asset_version( $asset ) ),
+		);
 	}
 
 	/**
@@ -146,7 +155,35 @@ class Bootstrap implements BootstrapInterface {
 	 * @return array<mixed>
 	 */
 	private function public_scripts(): array {
-		$public_scripts[] = array( 'public', $this->plugin_data['URL'] . 'assets/dist/public/js/public.min.js' );
-		return $public_scripts;
+		$asset = 'assets/dist/public/js/public.min.js';
+
+		return array(
+			array( 'ran-starter-plugin-public', $this->asset_url( $asset ), array(), $this->asset_version( $asset ), true ),
+		);
+	}
+
+	/**
+	 * Returns a plugin asset URL from a repository-relative path.
+	 *
+	 * @param string $asset Relative asset path.
+	 */
+	private function asset_url( string $asset ): string {
+		return trailingslashit( (string) $this->plugin_data['URL'] ) . ltrim( $asset, '/' );
+	}
+
+	/**
+	 * Uses the built asset modification time as a cache-busting version.
+	 *
+	 * @param string $asset Relative asset path.
+	 */
+	private function asset_version( string $asset ): string|false {
+		$path = trailingslashit( (string) $this->plugin_data['PATH'] ) . ltrim( $asset, '/' );
+		if ( ! file_exists( $path ) ) {
+			return false;
+		}
+
+		$modified = filemtime( $path );
+
+		return false === $modified ? false : (string) $modified;
 	}
 }
