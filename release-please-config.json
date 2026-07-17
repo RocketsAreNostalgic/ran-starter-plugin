@@ -1,0 +1,24 @@
+{
+	"$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+	"bootstrap-sha": "0c540b8",
+	"packages": {
+		".": {
+			"release-type": "php",
+			"package-name": "ran-starter-plugin",
+			"changelog-path": "CHANGELOG.md",
+			"include-component-in-tag": false,
+			"include-v-in-tag": true,
+			"extra-files": [
+				{
+					"type": "generic",
+					"path": "ran-starter-plugin.php"
+				},
+				{
+					"type": "json",
+					"path": "package.json",
+					"jsonpath": "$.version"
+				}
+			]
+		}
+	}
+}
