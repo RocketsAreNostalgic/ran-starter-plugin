@@ -8,7 +8,8 @@ explicitly concerns the parent site.
 
 The supported baseline is WordPress 7.0+ and PHP 8.4+. Keep the plugin header,
 `composer.json`, `.phpcs.xml`, CI, and documentation aligned whenever that
-contract changes. The JavaScript baseline is Node.js 24+ with pnpm 11.13+.
+contract changes. The JavaScript baseline is Node.js 24.11.0 with pnpm 11.13+;
+`package.json` is the local and CI Node-version authority.
 
 ## Dex: plans and execution record
 
