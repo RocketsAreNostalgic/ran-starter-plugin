@@ -38,10 +38,11 @@ plugin rather than a placeholder.
 - [ ] Make every user-facing PHP, JavaScript, and block-metadata string
       translatable with the final text domain. Add and maintain a POT template;
       do not ship unreviewed `.po` or `.mo` files merely to fill the archive.
-- [ ] Add a product-specific, allowlisted archive builder and verification
-      command. It must produce one `<slug>/` top-level directory, include the
-      exact runtime files (including `vendor/` and committed `assets/dist/`
-      when needed), and exclude source-only, test, cache, credential, and
+- [ ] Review and adapt the starter's `release-contents.txt` and
+      `scripts/build-release.php` for the actual product. The derived builder
+      must produce one `<slug>/` top-level directory, include the exact runtime
+      files (including production `vendor/` and committed `assets/dist/` when
+      needed), and exclude source-only, test, cache, credential, and
       development files. Do not use a blanket Git export as the release ZIP.
 - [ ] Add an archive-install smoke test and an official Plugin Check run against
       the built ZIP or its unpacked plugin directory. Test activation and the

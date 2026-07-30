@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Ran\StarterPlugin\Services;
+namespace Ran\StarterPlugin\Features;
 
 use Ran\StarterPlugin\Api\Callbacks\TestimonialCallbacks;
 use Ran\StarterPlugin\Base\BaseController;

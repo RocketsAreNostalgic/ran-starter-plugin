@@ -91,7 +91,18 @@ release; it does not publish to WordPress.org or deploy a site.
 The release manifest starts at the current `0.0.4` plugin version and keeps the
 main plugin header and `package.json` version synchronized. Before merging the
 first release PR, verify its proposed version, changelog, generated assets, and
-the distributable archive separately.
+the distributable archive separately:
+
+```sh
+pnpm release:archive:check
+pnpm release:archive -- --output=/tmp/ran-starter-plugin.zip
+```
+
+The archive builder copies only the explicit runtime allowlist in
+`release-contents.txt`, installs production Composer dependencies in a
+temporary staging directory, normalizes archive metadata, and validates the
+resulting ZIP. A derived plugin must review that allowlist and validation
+contract along with its renamed identity before relying on it for a release.
 
 Do not manually edit a generated release version or tag. Correct the Release
 Please configuration instead, then let the next release PR make the change.
@@ -99,10 +110,11 @@ Please configuration instead, then let the next release PR make the change.
 ## WordPress.org publication
 
 The starter is private by default and is not submission-ready on its own. A
-derived public plugin needs its own `readme.txt`, translation and archive
-contract, clean-install/Plugin Check coverage, directory assets, and SVN
-handoff. See [PRE-RELEASE-CHECKLIST.md](PRE-RELEASE-CHECKLIST.md) for the
-operator checklist and [RELEASE.md](RELEASE.md) for the full, deliberately
+derived public plugin needs its own `readme.txt`, translation contract,
+clean-install/Plugin Check coverage, directory assets, and SVN handoff. It may
+start from this archive builder, but must make the allowlist and validation
+product-specific. See [PRE-RELEASE-CHECKLIST.md](PRE-RELEASE-CHECKLIST.md) for
+the operator checklist and [RELEASE.md](RELEASE.md) for the full, deliberately
 separate WordPress.org publication path.
 
 ## Scope and support

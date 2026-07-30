@@ -33,6 +33,7 @@
 	},
 	"require": {
 		"php": "^8.4",
+		"psr/log": "^3.0",
 		"ran/plugin-lib": "dev-main"
 	},
 	"require-dev": {

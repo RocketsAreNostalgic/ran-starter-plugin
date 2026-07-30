@@ -11,10 +11,6 @@ namespace Ran\StarterPlugin\Base;
 
 use Ran\PluginLib\BootstrapInterface;
 use Ran\PluginLib\Config\ConfigInterface;
-use Ran\PluginLib\EnqueueAccessory\EnqueueAdmin;
-use Ran\PluginLib\EnqueueAccessory\EnqueuePublic;
-use Ran\PluginLib\FeaturesAPI\FeaturesManager;
-use Ran\StarterPlugin\Features;
 
 /**
  * Plugin bootstrap class registers our plugin with WordPress and sets up our features.
@@ -52,62 +48,37 @@ class Bootstrap implements BootstrapInterface {
 	 */
 	public function init(): ConfigInterface {
 
-		// TODO: This could be more ergonomic if we created a 'feature' to trigger the loading of EnqueueAdmin() for us.
-		// TODO: We are register and enqueue at the same time (not leveraging wp_register_script).
-
-		// Enqueue admin assets for the plugin in general.
-		$admin_assets = new EnqueueAdmin();
-		$admin_assets->add_styles( $this->admin_styles() )
-		->add_scripts( $this->admin_scripts() )
-		->load();
-
-		$public_assets = new EnqueuePublic();
-		$public_assets->add_styles( $this->public_styles() )
-		->add_scripts( $this->public_scripts() )
-		->load();
-
-		// Registering feature classes with the plugin.
-		$manager = new FeaturesManager( $this->config );
-		// Admin Dashboard.
-		$manager->register_feature(
-			$this->plugin_data['TextDomain'],
-			Features\Pages\Dashboard::class,
-		);
-
-		// TODO IN PROGRESS
-		// Add additional links to plugin entry.
-		$manager->register_feature(
-			'plugin-meta-links',
-			Features\PluginAdditionalLinks::class
-		);
-
-		//phpcs:disable
-		// Example feature controller.
-		// $manager->register_feature(
-		// 'example-feature-manager',
-		// Features\ExampleFeatureController::class,
-		// );
-
-		// Load all of our registered features.
-		$manager->load_all();
-
-		// echo '<pre>';
-		// // \print_r( $manager->get_registry() );
-		// echo '<br>';
-		// echo '<h2> Before registry</h2>';
-		// echo '<br>';
-		// foreach ( $manager->get_registry() as $container ) {
-		// echo '<br>';
-		// echo '<h2>New Instance</h2>';
-		// echo '<br>';
-		// print_r( $container->get_instance() );
-		// }
-		// echo '<br>';
-		// echo '</pre>';
-		// die();
-		//phpcs:enable
+		if ( is_admin() ) {
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );
+		} else {
+			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_public_assets' ) );
+		}
 
 		return $this->config;
+	}
+
+	/**
+	 * Enqueue the starter's admin assets with the stable core WordPress APIs.
+	 */
+	public function enqueue_admin_assets(): void {
+		foreach ( $this->admin_styles() as $style ) {
+			wp_enqueue_style( $style['handle'], $style['src'], $style['deps'], $style['version'] );
+		}
+		foreach ( $this->admin_scripts() as $script ) {
+			wp_enqueue_script( $script['handle'], $script['src'], $script['deps'], $script['version'], $script['in_footer'] );
+		}
+	}
+
+	/**
+	 * Enqueue the starter's public assets with the stable core WordPress APIs.
+	 */
+	public function enqueue_public_assets(): void {
+		foreach ( $this->public_styles() as $style ) {
+			wp_enqueue_style( $style['handle'], $style['src'], $style['deps'], $style['version'] );
+		}
+		foreach ( $this->public_scripts() as $script ) {
+			wp_enqueue_script( $script['handle'], $script['src'], $script['deps'], $script['version'], $script['in_footer'] );
+		}
 	}
 
 	/**
@@ -119,7 +90,12 @@ class Bootstrap implements BootstrapInterface {
 		$asset = 'assets/dist/admin/styles/admin.min.css';
 
 		return array(
-			array( 'ran-starter-plugin-admin', $this->asset_url( $asset ), array(), $this->asset_version( $asset ) ),
+			array(
+				'handle'  => 'ran-starter-plugin-admin',
+				'src'     => $this->asset_url( $asset ),
+				'deps'    => array(),
+				'version' => $this->asset_version( $asset ),
+			),
 		);
 	}
 
@@ -132,7 +108,13 @@ class Bootstrap implements BootstrapInterface {
 		$asset = 'assets/dist/admin/js/admin.min.js';
 
 		return array(
-			array( 'ran-starter-plugin-admin', $this->asset_url( $asset ), array(), $this->asset_version( $asset ), true ),
+			array(
+				'handle'    => 'ran-starter-plugin-admin',
+				'src'       => $this->asset_url( $asset ),
+				'deps'      => array(),
+				'version'   => $this->asset_version( $asset ),
+				'in_footer' => true,
+			),
 		);
 	}
 
@@ -145,7 +127,12 @@ class Bootstrap implements BootstrapInterface {
 		$asset = 'assets/dist/public/styles/public.min.css';
 
 		return array(
-			array( 'ran-starter-plugin-public', $this->asset_url( $asset ), array(), $this->asset_version( $asset ) ),
+			array(
+				'handle'  => 'ran-starter-plugin-public',
+				'src'     => $this->asset_url( $asset ),
+				'deps'    => array(),
+				'version' => $this->asset_version( $asset ),
+			),
 		);
 	}
 
@@ -158,7 +145,13 @@ class Bootstrap implements BootstrapInterface {
 		$asset = 'assets/dist/public/js/public.min.js';
 
 		return array(
-			array( 'ran-starter-plugin-public', $this->asset_url( $asset ), array(), $this->asset_version( $asset ), true ),
+			array(
+				'handle'    => 'ran-starter-plugin-public',
+				'src'       => $this->asset_url( $asset ),
+				'deps'      => array(),
+				'version'   => $this->asset_version( $asset ),
+				'in_footer' => true,
+			),
 		);
 	}
 

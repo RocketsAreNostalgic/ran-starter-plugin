@@ -1,0 +1,13 @@
+# Runtime files for the private starter's distributable archive.
+# A derived public plugin must review this list for its own runtime contract.
+# The builder installs production Composer dependencies into a temporary stage;
+# do not add vendor/ here.
+LICENSE
+index.php
+ran-starter-plugin.php
+uninstall.php
+inc/
+templates/
+assets/dist/
+composer.json
+composer.lock

@@ -26,7 +26,7 @@ implemented.
 ## Release artifact and verification
 
 - [ ] Worktree is clean and all committed generated runtime assets are current.
-- [ ] Run the normal starter gate shown below.
+- [ ] Run the normal starter gate and archive validation shown below.
 
 ```sh
 composer install --no-interaction
@@ -36,11 +36,11 @@ pnpm check:generated
 composer test
 composer run cs:check
 composer run standards
+pnpm release:archive:check
 ```
 
-- [ ] Run the product's archive build, archive verification, integration, and
-      Plugin Check commands. The starter does not provide those commands until
-      the derived plugin implements its own release contract.
+- [ ] Run the product's adapted archive build, archive verification,
+      integration, and Plugin Check commands.
 - [ ] Inspect the ZIP: one `<slug>/` root, correct main plugin file and
       version, runtime `vendor/` and built assets when required, no credentials,
       logs, test files, caches, source-only tooling, or directory artwork.

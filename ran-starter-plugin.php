@@ -43,16 +43,17 @@ if ( ! file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 
 require_once __DIR__ . '/vendor/autoload.php';
 
+// Load the plugin's PSR-3 contract before later plugins can register an
+// incompatible legacy copy of the same global interface.
+interface_exists( \Psr\Log\LoggerInterface::class );
+
 use Ran\StarterPlugin\Base\Config;
 use Ran\StarterPlugin\Base\Activate;
 use Ran\StarterPlugin\Base\Bootstrap;
 use Ran\StarterPlugin\Base\Deactivate;
 
-// Initialize Config.
-$ran_config = Config::init( __FILE__ );
-
 /**
- * Bootstrap our plugin after WP and plugins but before theme, this can be changed as required.
+ * Bootstrap our plugin after WordPress has loaded pluggable functions.
  *
  * Other hooks include:
  * - 'init' - for loading text domains
@@ -62,6 +63,7 @@ $ran_config = Config::init( __FILE__ );
 add_action(
 	'plugins_loaded',
 	function (): void {
+		Config::init( __FILE__ );
 		$bootstrap = new Bootstrap( Config::get_instance() );
 		$bootstrap->init();
 	},
@@ -74,7 +76,7 @@ add_action(
  * @since 0.0.1
  */
 function activate_plugin(): void {
-	Activate::activate( Config::get_instance() );
+	Activate::activate( Config::init( __FILE__ ) );
 }
 register_activation_hook( __FILE__, __NAMESPACE__ . '\activate_plugin' );
 
@@ -84,6 +86,6 @@ register_activation_hook( __FILE__, __NAMESPACE__ . '\activate_plugin' );
  * @since 0.0.1
  */
 function deactivate_plugin(): void {
-	Deactivate::deactivate( Config::get_instance() );
+	Deactivate::deactivate( Config::init( __FILE__ ) );
 }
 register_deactivation_hook( __FILE__, __NAMESPACE__ . '\deactivate_plugin' );
