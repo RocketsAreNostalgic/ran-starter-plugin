@@ -4,7 +4,7 @@
  * Plugin URI: https://github.com/RocketsAreNostalgic/ran-starter-plugin
  * Description: A modern WordPress plugin starter with optional feature scaffolding.
  * x-release-please-start-version
- * Version: 0.0.4
+ * Version: 0.1.0
  * x-release-please-end
  * Requires at least: 7.0
  * Requires PHP: 8.4
