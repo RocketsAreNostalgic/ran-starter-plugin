@@ -45,21 +45,27 @@ Read the relevant `SKILL.md` before working in its area:
 ## Development workflow
 
 Install from the tracked locks; never use a setup script that deletes them.
+The ordinary deterministic quality gates are the canonical aggregate commands:
 
 ```sh
 composer install --no-interaction
 pnpm install --frozen-lockfile
+composer check
 pnpm check
-pnpm check:generated
-composer test
-composer run standards -- --report=summary
 ```
+
+`composer check` runs the PHP formatting/standards and unit-test baseline.
+`pnpm check` runs frontend lint/format checks and verifies that committed
+`assets/dist/` output is current. Focused release/archive checks remain separate
+where documented by CI or release guidance.
 
 Source assets live in `assets/src/`; compiled runtime files in `assets/dist/`
 are committed. When a staged change can affect generated assets, the
 pre-commit hook rebuilds and requires the resulting `assets/dist/` changes to
 be staged. Tooling, documentation, and release-only changes must not trigger
-an unnecessary rebuild.
+an unnecessary rebuild. The asset build path runs `pnpm check:source` before
+building so a legitimate stale `assets/dist/` tree can be regenerated; use
+`pnpm check` after generation when verifying parity.
 
 ## Git and releases
 
