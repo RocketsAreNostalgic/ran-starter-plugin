@@ -33,10 +33,13 @@ baseline; it is a normal PHP release branch, not a PHP "LTS" designation.
 ```sh
 composer install
 pnpm install --frozen-lockfile
+composer check
 pnpm check
-pnpm check:generated
-composer test
 ```
+
+`composer check` is the ordinary deterministic PHP quality contract. `pnpm
+check` is the ordinary deterministic frontend contract and includes committed
+asset freshness verification.
 
 Composer resolves the RAN plugin library from its declared GitHub VCS source;
 `composer.lock` is tracked to make that resolution reproducible. A deployable
@@ -51,13 +54,15 @@ Source assets are under `assets/src/`; compiled runtime assets are committed in
 
 ```sh
 pnpm build
-pnpm check:generated
+pnpm check
 ```
 
-`check:generated` rebuilds the bundle and fails if `assets/dist/` is stale. The
-pre-commit hook applies the same rule when a staged change can affect generated
-assets. It intentionally does not rebuild for documentation, release, lint, or
-test-script-only edits.
+`check:generated`, which is included by `pnpm check`, rebuilds the bundle and
+fails if `assets/dist/` is stale. The asset build path uses `pnpm check:source`
+before rebuilding so legitimate source changes can update stale generated
+output. The pre-commit hook applies the same generation rule when a staged
+change can affect generated assets. It intentionally does not rebuild for
+documentation, release, lint, or test-script-only edits.
 
 ## Commits
 
