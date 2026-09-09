@@ -28,7 +28,7 @@
 		"format:check": "prettier --check 'assets/**/*.{js,scss,css}'",
 		"release:archive": "php scripts/build-release.php",
 		"release:archive:check": "php scripts/build-release.php --check",
-		"check": "eslint 'assets/src/admin/js/**/*.{js,mjs,ts,mts}' 'assets/src/public/js/**/*.{js,mjs,ts,mts}' && stylelint 'assets/src/admin/styles/**/*.{css,scss}' 'assets/src/public/styles/**/*.{css,scss}' && prettier --check 'assets/**/*.{js,scss,css}'",
+		"check": "eslint 'assets/src/admin/js/**/*.{js,mjs,ts,mts}' 'assets/src/public/js/**/*.{js,mjs,ts,mts}' && stylelint 'assets/src/admin/styles/**/*.{css,scss}' 'assets/src/public/styles/**/*.{css,scss}' && prettier --check 'assets/**/*.{js,scss,css}' && pnpm check:generated",
 		"check:generated": "vite build && git diff --exit-code -- assets/dist",
 		"test:php": "composer test"
 	},
