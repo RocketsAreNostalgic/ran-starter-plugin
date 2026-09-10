@@ -18,7 +18,7 @@ class TestimonialCallbacks extends BaseController {
 	/**
 	 * Our registration function to add action hooks to WP.
 	 */
-	public function shortcodePage(): mixed {
-		return require_once $this->plugin_path . 'templates/features/testimonial.php';
+	public function shortcodePage(): void {
+		require $this->plugin_path . 'templates/features/testimonial.php';
 	}
 }

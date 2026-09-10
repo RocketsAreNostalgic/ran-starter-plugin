@@ -62,6 +62,14 @@ class ExampleFeatureController extends FeatureControllerAbstract implements Regi
 		}
 
 		if ( ! $this->is_activated( $feature_key ) ) {
+			$option_name = $this->config->get_options_key();
+			$options     = get_option( $option_name, array() );
+
+			if ( is_array( $options ) && ! array_key_exists( $feature_key, $options ) ) {
+				$options[ $feature_key ] = false;
+				update_option( $option_name, $options );
+			}
+
 			return false;
 		}
 
