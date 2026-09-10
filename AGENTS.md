@@ -46,9 +46,10 @@ Read the relevant `SKILL.md` before working in its area:
 
 Public RAN-derived plugins must conform to the
 [RAN Community Standards](https://github.com/RocketsAreNostalgic/.github/blob/main/COMMUNITY_STANDARDS.md).
-Repositories in the RAN organization inherit the default community-health files
-from the public organization `.github` repository when they do not define a
-local equivalent.
+Public repositories in the RAN organization inherit the default community-health
+files from the public organization `.github` repository when they do not define
+a local equivalent. Private and internal derivatives do not inherit those
+defaults and must provide local equivalents when they rely on those policies.
 
 A derived plugin may add local `CODE_OF_CONDUCT.md`, `CONTRIBUTING.md`,
 `SUPPORT.md`, `SECURITY.md`, issue forms, or a pull-request template when its

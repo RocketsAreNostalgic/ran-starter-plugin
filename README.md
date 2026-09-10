@@ -88,11 +88,13 @@ skills, and the community-health requirements for derived plugins.
 
 ## Community health
 
-Repositories owned by Rockets Are Nostalgic inherit the organization's default
-community-health files when they do not provide a local equivalent. Public,
-supported RAN and legacy TNY WordPress plugins must either inherit that complete
+Public repositories owned by Rockets Are Nostalgic inherit the organization's
+default community-health files when they do not provide a local equivalent.
+Public, supported RAN-derived WordPress plugins must either inherit that complete
 baseline or provide local files that preserve the same conduct, disclosure,
-privacy, security-reporting, issue-intake, and pull-request safeguards.
+privacy, security-reporting, issue-intake, and pull-request safeguards. Private
+and internal derivatives do not inherit the organization defaults and must
+provide local equivalents when they rely on those policies.
 
 Local community files should be added only when a plugin needs project-specific
 support scope, supported-version statements, diagnostics, or contribution
