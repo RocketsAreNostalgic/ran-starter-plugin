@@ -8,14 +8,16 @@ intended to be activated unchanged on a production site.
 ## Baseline
 
 - WordPress 7.0 or newer
-- PHP 8.4 or newer (PHP 9 is intentionally not claimed yet)
+- PHP 8.4–8.5
 - Node.js 24 or newer
 - pnpm 11.13 or newer
 - Composer 2
 
-The plugin header, Composer constraint, PHP_CodeSniffer configuration, CI, and
-documentation must remain aligned with this baseline. PHP 8.4 is the project
-baseline; it is a normal PHP release branch, not a PHP "LTS" designation.
+The plugin header expresses the minimum PHP version, while `composer.json` and
+PHPCompatibility define the currently supported PHP range (`>=8.4 <8.6`). Keep
+the plugin header, Composer constraint, PHP_CodeSniffer configuration, CI, and
+documentation aligned whenever that contract changes. PHP 8.6 and PHP 9 are
+not claimed until they are deliberately added to the compatibility contract.
 
 ## Create a plugin from the starter
 
