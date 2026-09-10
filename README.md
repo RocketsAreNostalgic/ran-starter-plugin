@@ -28,7 +28,11 @@ not claimed until they are deliberately added to the compatibility contract.
    release configuration, and this README as one identity change.
 4. Remove unused example controllers, templates, and assets before adding new
    product behaviour.
-5. Run the checks below before the first commit.
+5. Decide whether the derived plugin is private/internal or publicly supported.
+   Public RAN plugins must conform to the
+   [RAN Community Standards](https://github.com/RocketsAreNostalgic/.github/blob/main/COMMUNITY_STANDARDS.md)
+   before public support or contribution intake is enabled.
+6. Run the checks below before the first commit.
 
 ## Install and verify
 
@@ -88,8 +92,29 @@ that should not independently trigger a plugin release. Use `!` or a
 ## Agent workflow
 
 See [AGENTS.md](AGENTS.md) for the repository operating guide, Dex-backed
-working plans and execution records, and the installed official WordPress agent
-skills.
+working plans and execution records, the installed official WordPress agent
+skills, and the community-health requirements for derived plugins.
+
+## Community health
+
+Public repositories owned by Rockets Are Nostalgic inherit the organization's
+default community-health files when they do not provide a local equivalent.
+Public, supported RAN-derived WordPress plugins must either inherit that complete
+baseline or provide local files that preserve the same conduct, disclosure,
+privacy, security-reporting, issue-intake, and pull-request safeguards. Private
+and internal derivatives do not inherit the organization defaults and must
+provide local equivalents when they rely on those policies.
+
+Local community files should be added only when a plugin needs project-specific
+support scope, supported-version statements, diagnostics, or contribution
+checks. Local `CONTRIBUTING.md` and pull-request guidance must use the actual
+validation contract for that derived repository rather than copying commands
+from another plugin.
+
+If any local issue template or issue-template configuration is introduced, the
+derived repository must provide its complete local intake set because GitHub
+suppresses the organization default issue templates rather than combining the
+two sets.
 
 ## Release Please
 

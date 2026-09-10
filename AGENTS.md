@@ -45,6 +45,32 @@ Read the relevant `SKILL.md` before working in its area:
 - `wp-wpcli-and-ops` for WP-CLI or operational changes.
 - `wp-phpstan` when adding or changing static analysis.
 
+## Community health
+
+Public RAN-derived plugins must conform to the
+[RAN Community Standards](https://github.com/RocketsAreNostalgic/.github/blob/main/COMMUNITY_STANDARDS.md).
+Public repositories in the RAN organization inherit the default community-health
+files from the public organization `.github` repository when they do not define
+a local equivalent. Private and internal derivatives do not inherit those
+defaults and must provide local equivalents when they rely on those policies.
+
+A derived plugin may add local `CODE_OF_CONDUCT.md`, `CONTRIBUTING.md`,
+`SUPPORT.md`, `SECURITY.md`, issue forms, or a pull-request template when its
+project contract requires more specific guidance. Local overrides must preserve
+the organization privacy, disclosure, conduct, and security-reporting
+boundaries. In particular, public issues and pull requests must not contain
+private repository/site identities, secrets, private source, customer data, or
+vulnerability details.
+
+GitHub does not merge a repository's local issue-template set with the
+organization defaults. If a derived plugin adds any local issue template or
+`.github/ISSUE_TEMPLATE/config.yml`, it must provide the complete local intake
+surface it needs and preserve all required safety acknowledgements.
+
+A public derived plugin outside the RAN organization does not receive the
+organization defaults automatically; copy or recreate compliant community
+health files before offering public support or contributions.
+
 ## Development workflow
 
 Install from the tracked locks; never use a setup script that deletes them.
