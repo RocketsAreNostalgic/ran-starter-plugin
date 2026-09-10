@@ -1,6 +1,6 @@
 <?php
 /**
- * An example FeatureController using several Accessories provided by the @ran\plugin-lib.
+ * An example FeatureController using the current ran/plugin-lib Features API.
  *
  * @author bnjmnrsh <bnjmnrsh@gmail.com>
  * @package  RanPlugin
@@ -14,94 +14,93 @@ use Ran\StarterPlugin\Api\Callbacks\AdminCallbacks;
 use Ran\StarterPlugin\Base\SettingsApi;
 use Ran\PluginLib\FeaturesAPI\FeatureControllerAbstract;
 use Ran\PluginLib\FeaturesAPI\RegistrableFeatureInterface;
-use Ran\PluginLib\TestAccessory\TestAccessory;
 
 /**
- * An example Service Controller
+ * An example feature controller.
  */
-class ExampleFeatureController extends FeatureControllerAbstract implements RegistrableFeatureInterface, TestAccessory {
-
+class ExampleFeatureController extends FeatureControllerAbstract implements RegistrableFeatureInterface {
 	/**
+	 * Admin callbacks.
 	 *
-	 * AdminCallbacks.
-	 *
-	 * @var mixed
+	 * @var AdminCallbacks
 	 */
 	public AdminCallbacks $callbacks;
 
 	/**
-	 * SettingsApi settings.
+	 * Settings API.
 	 *
-	 * @var mixed
+	 * @var SettingsApi
 	 */
 	public SettingsApi $settings;
 
 	/**
 	 * The settings page key and description.
-	 * The key is use for slugs and database entries, the value is used in
 	 *
-	 * @var array<mixed>
+	 * @var array<string, array{0: string, 1: array<int, string>}>
 	 */
 	public array $feature_settings_page = array(
-		array(
-			'ExampleFeatureController' => array(
-				'An Example Feature Controller Subpage.',
-				array(
-					'example_feature',
-				),
-			),
+		'ExampleFeatureController' => array(
+			'An Example Feature Controller Subpage.',
+			array( 'example_feature' ),
 		),
 	);
 
 	/**
-	 * Subpages array
+	 * Subpages array.
 	 *
 	 * @var array<mixed>
 	 */
 	public array $subpages = array();
 
 	/**
-	 * Our registration function to add action hooks to WP
+	 * Initialize the optional example feature.
 	 */
 	public function init(): ExampleFeatureController|false {
-
-		if ( ! $this->is_activated( key( $this->feature_settings_page ) ) ) {
-			update_option( $this->plugin_array['PluginOption'], $this->feature_settings_page );
+		$feature_key = array_key_first( $this->feature_settings_page );
+		if ( null === $feature_key ) {
 			return false;
 		}
 
-		$this->settings = new SettingsApi();
-		$this->callbacks = new AdminCallbacks( $this->plugin );
+		if ( ! $this->is_activated( $feature_key ) ) {
+			$option_name = $this->config->get_options_key();
+			$options     = get_option( $option_name, array() );
+
+			if ( is_array( $options ) && ! array_key_exists( $feature_key, $options ) ) {
+				$options[ $feature_key ] = false;
+				update_option( $option_name, $options );
+			}
+
+			return false;
+		}
+
+		$this->settings  = new SettingsApi();
+		$this->callbacks = new AdminCallbacks( $this->config );
 
 		$this->set_subpages();
-
 		$this->settings->add_subpages( $this->subpages )->init();
 
 		return $this;
 	}
 
 	/**
-	 * Undocumented function
+	 * Configure the feature's admin subpage.
 	 */
 	public function set_subpages(): void {
+		$feature_key = array_key_first( $this->feature_settings_page );
+		if ( null === $feature_key ) {
+			$this->subpages = array();
+			return;
+		}
+
 		$this->subpages = array(
 			array(
-				'parent_slug' => $this->plugin_data['TextDomain'],
-				'page_title' => array_key_last( $this->feature_settings_page ),
-				'menu_title' => array_key_last( $this->feature_settings_page ),
+				'parent_slug' => (string) ( $this->config_array['TextDomain'] ?? '' ),
+				'page_title' => $feature_key,
+				'menu_title' => $feature_key,
 				'capability' => 'manage_options',
-				'menu_slug' => array_key_first( $this->feature_settings_page ),
+				'menu_slug' => $feature_key,
 				'callback' => array( $this->callbacks, 'example_feature' ),
 			),
 		);
-	}
-
-	/**
-	 * Test so far...
-	 *
-	 * @param string $string - A string to test.
-	 */
-	public function test( string $string = 'test' ): string {
-		return $string;
 	}
 }

@@ -6,10 +6,13 @@ This is the RAN WordPress plugin starter. It is its own Git repository under a
 larger local WordPress installation; work inside this directory unless the task
 explicitly concerns the parent site.
 
-The supported baseline is WordPress 7.0+ and PHP 8.4+. Keep the plugin header,
+The supported baseline is WordPress 7.0+ and PHP 8.4–8.5 (`>=8.4 <8.6`). The
+plugin header expresses the minimum PHP version; `composer.json` and
+PHPCompatibility define the full supported PHP range. Keep the plugin header,
 `composer.json`, `.phpcs.xml`, CI, and documentation aligned whenever that
-contract changes. The JavaScript baseline is Node.js 24.11.0 with pnpm 11.13+;
-`package.json` is the local and CI Node-version authority.
+contract changes. PHP 8.6 and later runtimes require an explicit compatibility
+update before being claimed. The JavaScript baseline is Node.js 24.11.0 with
+pnpm 11.13+; `package.json` is the local and CI Node-version authority.
 
 ## Dex: plans and execution record
 
@@ -71,21 +74,29 @@ health files before offering public support or contributions.
 ## Development workflow
 
 Install from the tracked locks; never use a setup script that deletes them.
+The ordinary deterministic quality gates are the canonical aggregate commands:
 
 ```sh
 composer install --no-interaction
 pnpm install --frozen-lockfile
+composer check
 pnpm check
-pnpm check:generated
-composer test
-composer run standards -- --report=summary
 ```
+
+`composer check` runs the PHP formatting/standards, unit-test, and WordPress-aware
+PHPStan static-analysis baseline. Use `composer analyze` for a focused PHPStan
+run when iterating on PHP code or type information. `pnpm check` runs frontend
+lint/format checks and verifies that committed `assets/dist/` output is current.
+Focused release/archive checks remain separate where documented by CI or release
+guidance.
 
 Source assets live in `assets/src/`; compiled runtime files in `assets/dist/`
 are committed. When a staged change can affect generated assets, the
 pre-commit hook rebuilds and requires the resulting `assets/dist/` changes to
 be staged. Tooling, documentation, and release-only changes must not trigger
-an unnecessary rebuild.
+an unnecessary rebuild. The asset build path runs `pnpm check:source` before
+building so a legitimate stale `assets/dist/` tree can be regenerated; use
+`pnpm check` after generation when verifying parity.
 
 ## Git and releases
 

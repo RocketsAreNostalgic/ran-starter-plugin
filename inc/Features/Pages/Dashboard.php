@@ -21,46 +21,41 @@ use Ran\PluginLib\FeaturesAPI\RegistrableFeatureInterface;
  * @package  RanPlugin
  */
 class Dashboard extends FeatureControllerAbstract implements RegistrableFeatureInterface {
-
-
 	/**
-	 * Instance of our Settings API (WIP)
+	 * Instance of our Settings API (WIP).
 	 *
-	 * @var mixed $settings - The settings API.
+	 * @var SettingsApi
 	 */
 	public SettingsApi $settings;
 
 	/**
-	 * Instance of our AdminCallbacks
+	 * Instance of our AdminCallbacks.
 	 *
-	 * @var mixed $callbacks - The admin callbacks.
+	 * @var AdminCallbacks
 	 */
 	public AdminCallbacks $callbacks;
 
 	/**
-	 * Instance of our ManagerCallbacks
+	 * Instance of our ManagerCallbacks.
 	 *
-	 * @var mixed $callbacks_mngr - The manager callbacks.
+	 * @var ManagerCallbacks
 	 */
 	public ManagerCallbacks $callbacks_mngr;
 
 	/**
 	 * Array of admin menu items.
 	 *
-	 * @var array<mixed> - The admin menu items.
+	 * @var array<mixed>
 	 */
 	public array $wp_admin_sidebar_menu_item = array();
 
-	 /**
-	  * Our registration function to add action hooks to WP
-	  */
+	/**
+	 * Our registration function to add action hooks to WP.
+	 */
 	public function init(): Dashboard {
-
-		$this->settings = new SettingsApi();
-
-		$this->callbacks = new AdminCallbacks( $this->plugin );
-
-		$this->callbacks_mngr = new ManagerCallbacks( $this->plugin );
+		$this->settings       = new SettingsApi();
+		$this->callbacks      = new AdminCallbacks( $this->config );
+		$this->callbacks_mngr = new ManagerCallbacks();
 
 		$this->create_wp_admin_sidebar_menu_item();
 		$this->set_dashboard_settings();
@@ -68,6 +63,7 @@ class Dashboard extends FeatureControllerAbstract implements RegistrableFeatureI
 		$this->set_dashboard_fields();
 
 		$this->settings->add_wp_admin_pages( $this->wp_admin_sidebar_menu_item )->with_subpages( 'Dashboard' )->init();
+
 		return $this;
 	}
 
@@ -77,10 +73,10 @@ class Dashboard extends FeatureControllerAbstract implements RegistrableFeatureI
 	public function create_wp_admin_sidebar_menu_item(): void {
 		$this->wp_admin_sidebar_menu_item = array(
 			array(
-				'page_title' => $this->plugin_array['Name'],
-				'menu_title' => $this->plugin_array['Name'],
+				'page_title' => $this->config_array['Name'],
+				'menu_title' => $this->config_array['Name'],
 				'capability' => 'manage_options',
-				'menu_slug' => $this->plugin_array['TextDomain'],
+				'menu_slug' => $this->config_array['TextDomain'],
 				'callback' => array( $this->callbacks, 'admin_dashboard' ),
 				'icon_url' => 'dashicons-store',
 				'position' => 110,
@@ -126,7 +122,7 @@ class Dashboard extends FeatureControllerAbstract implements RegistrableFeatureI
 		$args = array();
 
 		// TODO: Migrating to Plugin features object.
-		//phpcs:disable
+		// phpcs:disable
 		// foreach ( $this->feature_managers as $key => $value ) {
 		// $args[] = array(
 		// 'id' => $key,
@@ -141,7 +137,7 @@ class Dashboard extends FeatureControllerAbstract implements RegistrableFeatureI
 		// ),
 		// );
 		// }
-		//phpcs:enable
+		// phpcs:enable
 
 		$this->settings->set_fields( $args );
 	}

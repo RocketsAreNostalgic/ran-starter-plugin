@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="RAN Coding Standards">
-	<description>RAN Plugin Modified Wordpress Coding Standards</description>
+	<description>RAN Plugin Modified WordPress Coding Standards</description>
 	<!--
 		Setup instructions:
 
@@ -9,12 +9,13 @@
 
 		See these links for useful information:
 			- https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-ruleset.xml
-			- https://github.com/squizlabs/PHP_CodeSniffer/wiki/Customisable-Sniff-Properties
-			- https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/wiki/Customizable-sniff-properties
+			- https://github.com/squizlabs/PHP_CodeSniffer/wiki/Customisable-sniff-Properties
+			- https://github.com/WordPress/WordPress-Coding-Standards/wiki/Customizable-sniff-properties
 			- https://github.com/slevomat/coding-standard/blob/master/doc/type-hints.md
 			- https://github.com/slevomat/coding-standard/blob/master/doc/classes.md
 	-->
 	<config name="minimum_supported_wp_version" value="7.0"/>
+	<config name="testVersion" value="8.4-8.5"/>
 
 	<!-- What to scan -->
 	<file>.</file>
@@ -30,19 +31,8 @@
 	<arg name="parallel" value="4"/>
 	<arg value="ns"/>
 
-	<!-- Check for PHP cross-version compatibility. -->
-	<!--
-		To enable this, the PHPCompatibilityWP standard needs
-		to be installed.
-		See the readme for installation instructions:
-		https://github.com/PHPCompatibility/PHPCompatibilityWP
-		For more information, also see:
-		https://github.com/PHPCompatibility/PHPCompatibility
-	-->
-	<!--
-	<config name="testVersion" value="5.2-"/>
+	<!-- Check the currently supported stable PHP 8.x range. -->
 	<rule ref="PHPCompatibilityWP"/>
-	-->
 
 	<!--
 		WPCS custom properties.

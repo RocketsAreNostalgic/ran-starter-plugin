@@ -7,28 +7,120 @@ concurrency:
     group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
     cancel-in-progress: true
 
+permissions:
+    contents: read
+
 jobs:
-    quality:
+    baseline:
+        uses: RocketsAreNostalgic/.github/.github/workflows/quality-wordpress-plugin.yml@72a90b5826db37d1e94cdcdcf3374ccf58c0aa7d # accepted quality-v1 provider
+        with:
+            php-version: '8.4'
+            pnpm-version: '11.13.1'
+
+    project:
+        name: Project-specific quality
         runs-on: ubuntu-latest
+        timeout-minutes: 15
+        services:
+            mysql:
+                image: mysql:8.4
+                env:
+                    MYSQL_DATABASE: wordpress_test
+                    MYSQL_ROOT_PASSWORD: root
+                ports:
+                    - 3306:3306
+                options: >-
+                    --health-cmd="mysqladmin ping --host=127.0.0.1 --user=root --password=root"
+                    --health-interval=10s
+                    --health-timeout=5s
+                    --health-retries=10
         steps:
-            - uses: actions/checkout@v6.0.2
-            - uses: pnpm/action-setup@v5.0.0
+            - name: Check out exact PR head
+              uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+              with:
+                  persist-credentials: false
+                  ref: ${{ github.event.pull_request.head.sha }}
+
+            - name: Verify exact PR head and locked manifests
+              env:
+                  RAN_EXPECTED_SHA: ${{ github.event.pull_request.head.sha }}
+                  RAN_PNPM_VERSION: '11.13.1'
+              run: |
+                  set -euo pipefail
+                  test -n "$RAN_EXPECTED_SHA"
+                  test "$(git rev-parse HEAD)" = "$RAN_EXPECTED_SHA"
+                  test -f composer.json
+                  test -f composer.lock
+                  test -f package.json
+                  test -f pnpm-lock.yaml
+                  declared_pnpm="$(jq -er '.packageManager | select(startswith("pnpm@")) | ltrimstr("pnpm@") | split("+")[0]' package.json)"
+                  test "$declared_pnpm" = "$RAN_PNPM_VERSION"
+
+            - name: Set up pnpm
+              uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
               with:
                   version: 11.13.1
-            - uses: actions/setup-node@v6.4.0
+
+            - name: Set up Node.js
+              uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
               with:
                   node-version-file: package.json
                   cache: pnpm
-            - uses: shivammathur/setup-php@v2
+
+            - name: Set up PHP and WP-CLI
+              uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
               with:
                   php-version: '8.4'
-                  tools: composer:v2
-            - run: composer install --no-interaction --prefer-dist
-            - run: pnpm install --frozen-lockfile
-            - run: pnpm check
-            - run: pnpm check:generated
-            - run: composer test
-            - run: composer run cs:check
-            - run: composer run standards -- --report=summary
-            - run: pnpm release:archive:check
-            - run: find . -path './node_modules' -prune -o -path './vendor' -prune -o -type f -name '*.php' -exec php -l {} \;
+                  extensions: mysqli, zip
+                  tools: composer:v2, wp-cli:2.12.0
+                  coverage: none
+
+            - name: Verify exact pnpm toolchain
+              run: test "$(pnpm --version)" = '11.13.1'
+
+            - name: Validate Composer configuration
+              run: composer validate --strict --no-check-publish --no-check-all
+
+            - name: Install locked dependencies
+              run: |
+                  composer install --no-interaction --prefer-dist --no-progress
+                  pnpm install --frozen-lockfile
+
+            - name: Verify deterministic archive contract
+              run: pnpm release:archive:check
+
+            - name: Build installable archive
+              run: pnpm release:archive -- --output="$GITHUB_WORKSPACE/build/ran-starter-plugin.zip"
+
+            - name: Install WordPress floor
+              run: |
+                  set -euo pipefail
+                  wp core download --path=build/wordpress --version=7.0
+                  test "$(wp core version --path=build/wordpress)" = '7.0'
+                  wp config create --path=build/wordpress --dbname=wordpress_test --dbuser=root --dbpass=root --dbhost=127.0.0.1:3306
+                  wp core install --path=build/wordpress --url=http://localhost --title='RAN Starter Plugin CI' --admin_user=admin --admin_password=admin --admin_email=admin@example.com --skip-email
+
+            - name: Install and activate exact archive
+              run: |
+                  set -euo pipefail
+                  wp plugin install "$GITHUB_WORKSPACE/build/ran-starter-plugin.zip" --path=build/wordpress --activate
+                  wp plugin is-active ran-starter-plugin --path=build/wordpress
+                  test "$(wp plugin get ran-starter-plugin --field=version --path=build/wordpress)" = "$(jq -er '.version' package.json)"
+
+    quality:
+        name: quality
+        if: ${{ always() }}
+        needs:
+            - baseline
+            - project
+        runs-on: ubuntu-latest
+        steps:
+            - name: Require all quality lanes
+              env:
+                  BASELINE_RESULT: ${{ needs.baseline.result }}
+                  PROJECT_RESULT: ${{ needs.project.result }}
+              run: |
+                  printf 'baseline=%s\nproject=%s\n' "$BASELINE_RESULT" "$PROJECT_RESULT"
+                  if [ "$BASELINE_RESULT" != success ] || [ "$PROJECT_RESULT" != success ]; then
+                      exit 1
+                  fi

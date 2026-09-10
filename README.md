@@ -8,14 +8,16 @@ intended to be activated unchanged on a production site.
 ## Baseline
 
 - WordPress 7.0 or newer
-- PHP 8.4 or newer (PHP 9 is intentionally not claimed yet)
+- PHP 8.4–8.5
 - Node.js 24 or newer
 - pnpm 11.13 or newer
 - Composer 2
 
-The plugin header, Composer constraint, PHP_CodeSniffer configuration, CI, and
-documentation must remain aligned with this baseline. PHP 8.4 is the project
-baseline; it is a normal PHP release branch, not a PHP "LTS" designation.
+The plugin header expresses the minimum PHP version, while `composer.json` and
+PHPCompatibility define the currently supported PHP range (`>=8.4 <8.6`). Keep
+the plugin header, Composer constraint, PHP_CodeSniffer configuration, CI, and
+documentation aligned whenever that contract changes. PHP 8.6 and PHP 9 are
+not claimed until they are deliberately added to the compatibility contract.
 
 ## Create a plugin from the starter
 
@@ -37,10 +39,15 @@ baseline; it is a normal PHP release branch, not a PHP "LTS" designation.
 ```sh
 composer install
 pnpm install --frozen-lockfile
+composer check
 pnpm check
-pnpm check:generated
-composer test
 ```
+
+`composer check` is the ordinary deterministic PHP quality contract. It includes
+formatting/standards, unit tests, PHPCompatibility, and WordPress-aware PHPStan
+static analysis. Use `composer analyze` when you want to run PHPStan by itself.
+`pnpm check` is the ordinary deterministic frontend contract and includes
+committed asset freshness verification.
 
 Composer resolves the RAN plugin library from its declared GitHub VCS source;
 `composer.lock` is tracked to make that resolution reproducible. A deployable
@@ -55,13 +62,15 @@ Source assets are under `assets/src/`; compiled runtime assets are committed in
 
 ```sh
 pnpm build
-pnpm check:generated
+pnpm check
 ```
 
-`check:generated` rebuilds the bundle and fails if `assets/dist/` is stale. The
-pre-commit hook applies the same rule when a staged change can affect generated
-assets. It intentionally does not rebuild for documentation, release, lint, or
-test-script-only edits.
+`check:generated`, which is included by `pnpm check`, rebuilds the bundle and
+fails if `assets/dist/` is stale. The asset build path uses `pnpm check:source`
+before rebuilding so legitimate source changes can update stale generated
+output. The pre-commit hook applies the same generation rule when a staged
+change can affect generated assets. It intentionally does not rebuild for
+documentation, release, lint, or test-script-only edits.
 
 ## Commits
 
