@@ -39,9 +39,11 @@ composer check
 pnpm check
 ```
 
-`composer check` is the ordinary deterministic PHP quality contract. `pnpm
-check` is the ordinary deterministic frontend contract and includes committed
-asset freshness verification.
+`composer check` is the ordinary deterministic PHP quality contract. It includes
+formatting/standards, unit tests, PHPCompatibility, and WordPress-aware PHPStan
+static analysis. Use `composer analyze` when you want to run PHPStan by itself.
+`pnpm check` is the ordinary deterministic frontend contract and includes
+committed asset freshness verification.
 
 Composer resolves the RAN plugin library from its declared GitHub VCS source;
 `composer.lock` is tracked to make that resolution reproducible. A deployable

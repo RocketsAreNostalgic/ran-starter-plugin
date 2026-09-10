@@ -26,7 +26,7 @@ $query = new WP_Query( $args );
 if ( $query->have_posts() ) :
 	$i = 1;
 
-	echo esc_html( '<div class="ac-slider--wrapper"><div class="ac-slider--container"><div class="ac-slider--view"><ul>' );
+	echo '<div class="ac-slider--wrapper"><div class="ac-slider--container"><div class="ac-slider--view"><ul>';
 
 	while ( $query->have_posts() ) :
 		$query->the_post();
@@ -37,7 +37,7 @@ if ( $query->have_posts() ) :
 		$i++;
 	endwhile;
 
-	echo esc_html( '</ul></div><div class="ac-slider--arrows"><span class="arrow ac-slider--arrows__left">&#x3c;</span><span class="arrow ac-slider--arrows__right">&#x3e;</span></div></div></div>' );
+	echo '</ul></div><div class="ac-slider--arrows"><span class="arrow ac-slider--arrows__left">&#x3c;</span><span class="arrow ac-slider--arrows__right">&#x3e;</span></div></div></div>';
 
 //phpcs:enable
 

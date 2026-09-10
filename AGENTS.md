@@ -57,10 +57,12 @@ composer check
 pnpm check
 ```
 
-`composer check` runs the PHP formatting/standards and unit-test baseline.
-`pnpm check` runs frontend lint/format checks and verifies that committed
-`assets/dist/` output is current. Focused release/archive checks remain separate
-where documented by CI or release guidance.
+`composer check` runs the PHP formatting/standards, unit-test, and WordPress-aware
+PHPStan static-analysis baseline. Use `composer analyze` for a focused PHPStan
+run when iterating on PHP code or type information. `pnpm check` runs frontend
+lint/format checks and verifies that committed `assets/dist/` output is current.
+Focused release/archive checks remain separate where documented by CI or release
+guidance.
 
 Source assets live in `assets/src/`; compiled runtime files in `assets/dist/`
 are committed. When a staged change can affect generated assets, the

@@ -12,92 +12,68 @@ namespace Ran\StarterPlugin\Features;
 use Ran\StarterPlugin\Api\Callbacks\AdminCallbacks;
 use Ran\StarterPlugin\Api\Callbacks\TaxonomyCallbacks;
 use Ran\StarterPlugin\Base\BaseController;
-use Ran\StarterPlugin\Base\Config;
 use Ran\StarterPlugin\Base\ControllerInterface;
 use Ran\StarterPlugin\Base\SettingsApi;
+
 /**
- * Custom Taxonomy Controller
+ * Custom Taxonomy Controller.
  *
  * @package RanPlugin
  */
 class CustomTaxonomyController extends BaseController implements ControllerInterface {
-
 	/**
-	 * Construct method.
+	 * Settings API.
 	 *
-	 * @param Config $config Config object.
+	 * @var SettingsApi
 	 */
-	public function __construct( Config $config ) {
-		$this->config = $config;
-	}
+	public SettingsApi $settings;
 
 	/**
-	 * Config object.
+	 * Admin callbacks.
 	 *
-	 * @var Config $config - The config object.
+	 * @var AdminCallbacks
 	 */
-	private Config $config;
-
+	public AdminCallbacks $callbacks;
 
 	/**
-	 * Public settings variable.
+	 * Taxonomy callbacks.
 	 *
-	 * @var mixed - the settings
+	 * @var TaxonomyCallbacks
 	 */
-	public mixed $settings;
+	public TaxonomyCallbacks $tax_callbacks;
 
 	/**
-	 * Public callbacks variable.
+	 * Subpages array.
 	 *
-	 * @var mixed - the callbacks
-	 */
-	public mixed $callbacks;
-
-	/**
-	 * Public taxonomy callbacks variable.
-	 *
-	 * @var mixed - the taxonomy callbacks
-	 */
-	public mixed $tax_callbacks;
-
-	/**
-	 * Public subpages variable.
-	 *
-	 * @var array<mixed> - An array of subpages.
+	 * @var array<mixed>
 	 */
 	public array $subpages = array();
 
 	/**
-	 * Public taxonomies variable.
+	 * Taxonomies array.
 	 *
-	 * @var array<mixed> - An array of taxonomies.
+	 * @var array<mixed>
 	 */
 	public array $taxonomies = array();
 
 	/**
-	 * Our registration function to add action hooks to WP.
+	 * Register the optional taxonomy manager.
 	 */
 	public function register(): void {
 		if ( ! $this->activated( 'taxonomy_manager' ) ) {
 			return;
 		}
 
-		$this->settings = new SettingsApi();
-
-		$this->callbacks = new AdminCallbacks( $this->$config );
-
+		$this->settings      = new SettingsApi();
+		$this->callbacks     = new AdminCallbacks( $this->config );
 		$this->tax_callbacks = new TaxonomyCallbacks();
 
 		$this->setSubpages();
-
 		$this->setSettings();
-
 		$this->setSections();
-
 		$this->setFields();
 
 		$this->settings->addSubPages( $this->subpages )->register();
-
 		$this->storeCustomTaxonomies();
 
 		if ( ! empty( $this->taxonomies ) ) {
@@ -111,12 +87,12 @@ class CustomTaxonomyController extends BaseController implements ControllerInter
 	public function setSubpages(): void {
 		$this->subpages = array(
 			array(
-				'parent_slug' => "$this->config['Text Domain']",
+				'parent_slug' => (string) ( $this->plugin_data['TextDomain'] ?? '' ),
 				'page_title' => 'Custom Taxonomies',
 				'menu_title' => 'Taxonomy Manager',
 				'capability' => 'manage_options',
 				'menu_slug' => 'ran_taxonomy',
-				'callback' => array( $this->callbacks, 'adminTaxonomy' ),
+				'callback' => array( $this->callbacks, 'admin_taxonomy' ),
 			),
 		);
 	}
@@ -218,36 +194,45 @@ class CustomTaxonomyController extends BaseController implements ControllerInter
 	 * Store Custom Taxonomies.
 	 */
 	public function storeCustomTaxonomies(): void {
-		if ( get_option( 'ran_plugin_tax' ) ) {
-			$options = get_option( 'ran_plugin_tax' );
-		} else {
+		$options = get_option( 'ran_plugin_tax', array() );
+		if ( ! is_array( $options ) ) {
 			$options = array();
 		}
 
 		foreach ( $options as $option ) {
+			if ( ! is_array( $option ) ) {
+				continue;
+			}
+
+			$singular = (string) ( $option['singular_name'] ?? '' );
+			$taxonomy = (string) ( $option['taxonomy'] ?? '' );
+			if ( '' === $taxonomy ) {
+				continue;
+			}
+
 			$labels = array(
-				'name'              => $option['singular_name'],
-				'singular_name'     => $option['singular_name'],
-				'search_items'      => 'Search ' . $option['singular_name'],
-				'all_items'         => 'All ' . $option['singular_name'],
-				'parent_item'       => 'Parent ' . $option['singular_name'],
-				'parent_item_colon' => 'Parent ' . $option['singular_name'] . ':',
-				'edit_item'         => 'Edit ' . $option['singular_name'],
-				'update_item'       => 'Update ' . $option['singular_name'],
-				'add_new_item'      => 'Add New ' . $option['singular_name'],
-				'new_item_name'     => 'New ' . $option['singular_name'] . ' Name',
-				'menu_name'         => $option['singular_name'],
+				'name'              => $singular,
+				'singular_name'     => $singular,
+				'search_items'      => 'Search ' . $singular,
+				'all_items'         => 'All ' . $singular,
+				'parent_item'       => 'Parent ' . $singular,
+				'parent_item_colon' => 'Parent ' . $singular . ':',
+				'edit_item'         => 'Edit ' . $singular,
+				'update_item'       => 'Update ' . $singular,
+				'add_new_item'      => 'Add New ' . $singular,
+				'new_item_name'     => 'New ' . $singular . ' Name',
+				'menu_name'         => $singular,
 			);
 
 			$this->taxonomies[] = array(
-				'hierarchical'      => isset( $option['hierarchical'] ) ? true : false,
+				'hierarchical'      => isset( $option['hierarchical'] ),
 				'labels'            => $labels,
 				'show_ui'           => true,
 				'show_admin_column' => true,
 				'query_var'         => true,
-				'show_in_rest'        => true,
-				'rewrite'           => array( 'slug' => $option['taxonomy'] ),
-				'objects'           => isset( $option['objects'] ) ? $option['objects'] : null,
+				'show_in_rest'      => true,
+				'rewrite'           => array( 'slug' => $taxonomy ),
+				'objects'           => isset( $option['objects'] ) && is_array( $option['objects'] ) ? $option['objects'] : array(),
 			);
 		}
 	}
@@ -257,8 +242,13 @@ class CustomTaxonomyController extends BaseController implements ControllerInter
 	 */
 	public function registerCustomTaxonomy(): void {
 		foreach ( $this->taxonomies as $taxonomy ) {
-			$objects = isset( $taxonomy['objects'] ) ? array_keys( $taxonomy['objects'] ) : null;
-			register_taxonomy( $taxonomy['rewrite']['slug'], $objects, $taxonomy );
+			$objects = isset( $taxonomy['objects'] ) && is_array( $taxonomy['objects'] ) ? array_keys( $taxonomy['objects'] ) : array();
+			$rewrite = isset( $taxonomy['rewrite'] ) && is_array( $taxonomy['rewrite'] ) ? $taxonomy['rewrite'] : array();
+			$slug    = (string) ( $rewrite['slug'] ?? '' );
+			if ( '' === $slug ) {
+				continue;
+			}
+			register_taxonomy( $slug, $objects, $taxonomy );
 		}
 	}
 }

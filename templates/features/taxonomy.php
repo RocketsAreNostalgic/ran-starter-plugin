@@ -34,12 +34,12 @@ declare(strict_types = 1);
 			<?php
 			$options = get_option( 'ran_plugin_tax' ) ?: array();
 
-			echo esc_html( '<table class="cpt-table"><tr><th>ID</th><th>Singular Name</th><th class="text-center">Hierarchical</th><th class="text-center">Actions</th></tr>' );
+			echo '<table class="cpt-table"><tr><th>ID</th><th>Singular Name</th><th class="text-center">Hierarchical</th><th class="text-center">Actions</th></tr>';
 
 			foreach ( $options as $option ) {
 				$hierarchical = isset( $option['hierarchical'] ) ? 'TRUE' : 'FALSE';
 
-				echo esc_html( "<tr><td>{$option['taxonomy']}</td><td>{$option['singular_name']}</td><td class=\"text-center\">{$hierarchical}</td><td class=\"text-center\">" );
+				echo '<tr><td>' . esc_html( $option['taxonomy'] ) . '</td><td>' . esc_html( $option['singular_name'] ) . '</td><td class="text-center">' . esc_html( $hierarchical ) . '</td><td class="text-center">';
 
 				echo '<form method="post" action="" class="inline-block">';
 				echo '<input type="hidden" name="edit_taxonomy" value="' . esc_attr( $option['taxonomy'] ) . '">';
