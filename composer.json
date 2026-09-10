@@ -55,6 +55,10 @@
 			"@cs:check",
 			"@standards:full"
 		],
+		"check": [
+			"@lint",
+			"@test"
+		],
 		"format": [
 			"@cs",
 			"@standards:fix"

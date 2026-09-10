@@ -26,9 +26,6 @@ jobs:
             - run: composer install --no-interaction --prefer-dist
             - run: pnpm install --frozen-lockfile
             - run: pnpm check
-            - run: pnpm check:generated
-            - run: composer test
-            - run: composer run cs:check
-            - run: composer run standards -- --report=summary
+            - run: composer check
             - run: pnpm release:archive:check
             - run: find . -path './node_modules' -prune -o -path './vendor' -prune -o -type f -name '*.php' -exec php -l {} \;

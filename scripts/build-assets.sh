@@ -2,5 +2,5 @@
 
 set -eu
 
-pnpm check
+pnpm check:source
 pnpm build
