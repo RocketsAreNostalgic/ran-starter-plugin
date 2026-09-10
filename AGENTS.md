@@ -6,10 +6,13 @@ This is the RAN WordPress plugin starter. It is its own Git repository under a
 larger local WordPress installation; work inside this directory unless the task
 explicitly concerns the parent site.
 
-The supported baseline is WordPress 7.0+ and PHP 8.4+. Keep the plugin header,
+The supported baseline is WordPress 7.0+ and PHP 8.4–8.5 (`>=8.4 <8.6`). The
+plugin header expresses the minimum PHP version; `composer.json` and
+PHPCompatibility define the full supported PHP range. Keep the plugin header,
 `composer.json`, `.phpcs.xml`, CI, and documentation aligned whenever that
-contract changes. The JavaScript baseline is Node.js 24.11.0 with pnpm 11.13+;
-`package.json` is the local and CI Node-version authority.
+contract changes. PHP 8.6 and later runtimes require an explicit compatibility
+update before being claimed. The JavaScript baseline is Node.js 24.11.0 with
+pnpm 11.13+; `package.json` is the local and CI Node-version authority.
 
 ## Dex: plans and execution record
 
