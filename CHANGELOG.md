@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.1](https://github.com/RocketsAreNostalgic/ran-starter-plugin/compare/v0.1.0...v0.1.1) (2026-09-12)
+
+
+### Miscellaneous Chores
+
+* add WordPress-aware PHPStan quality gate ([08e7fca](https://github.com/RocketsAreNostalgic/ran-starter-plugin/commit/08e7fca925988ae856f546f48ae6a747885c00ec))
+* adopt shared RAN quality packages ([#15](https://github.com/RocketsAreNostalgic/ran-starter-plugin/issues/15)) ([69baac4](https://github.com/RocketsAreNostalgic/ran-starter-plugin/commit/69baac4fbfb254c44dca65e32cce6141a49abab6))
+* align starter PHP compatibility baseline ([74eb48c](https://github.com/RocketsAreNostalgic/ran-starter-plugin/commit/74eb48c3cccefda15799c58ae18c0090804d7179))
+* standardize quality command contract ([c084ef8](https://github.com/RocketsAreNostalgic/ran-starter-plugin/commit/c084ef819fe6cb378f869a01d282fe5ad890e447))
+
 ## [0.1.0](https://github.com/RocketsAreNostalgic/ran-starter-plugin/compare/v0.0.4...v0.1.0) (2026-07-30)
 
 
