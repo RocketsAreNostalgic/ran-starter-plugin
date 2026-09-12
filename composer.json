@@ -41,7 +41,7 @@
 		"ran/plugin-lib": "dev-main"
 	},
 	"require-dev": {
-		"ran/coding-standards": "dev-main#0b03e61a4bb558deeb6bc6b6399f44c0ec95e5be",
+		"ran/coding-standards": "dev-main",
 		"friendsofphp/php-cs-fixer": "^3.0",
 		"yoast/phpunit-polyfills": "^2.0",
 		"phpunit/phpunit": "^9.6",
