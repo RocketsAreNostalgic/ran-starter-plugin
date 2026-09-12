@@ -33,10 +33,12 @@
 		</properties>
 	</rule>
 
-	<!-- Starter-specific WPCS exceptions remain local. -->
-	<rule ref="WordPress-Extra">
-		<exclude name="WordPress.WP.EnqueuedResources"/>
-		<exclude name="Universal.Operators.DisallowShortTernary"/>
+	<!-- Starter-specific WPCS exceptions remain local without re-importing WordPress-Extra. -->
+	<rule ref="WordPress.WP.EnqueuedResources">
+		<severity>0</severity>
+	</rule>
+	<rule ref="Universal.Operators.DisallowShortTernary">
+		<severity>0</severity>
 	</rule>
 
 	<!-- Preserve Starter's stronger documentation and generic PHP checks. -->
