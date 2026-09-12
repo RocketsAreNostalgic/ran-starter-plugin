@@ -7,6 +7,7 @@ intended to be activated unchanged on a production site.
 
 ## Baseline
 
+- RAN quality profile: `wordpress-plugin`
 - WordPress 7.0 or newer
 - PHP 8.4–8.5
 - Node.js 24 or newer
@@ -25,14 +26,25 @@ not claimed until they are deliberately added to the compatibility contract.
 2. Replace `RAN Starter Plugin`, `ran-starter-plugin`, and
    `Ran\\StarterPlugin` with the new product name, slug, and namespace.
 3. Update the plugin header, `composer.json`, `package.json`, `.phpcs.xml`,
-   release configuration, and this README as one identity change.
-4. Remove unused example controllers, templates, and assets before adding new
+   release configuration, and this README as one identity change. Keep support
+   ranges, prefixes/namespaces, source paths, globals and justified exceptions
+   local to the derived repository.
+4. Retain the shared `ran/coding-standards` and
+   `@rocketsarenostalgic/quality-config` ancestry. Do not copy their shared
+   rules back into local configuration. Keep the `wordpress-plugin` profile
+   unless the derived repository's actual code surface requires a reviewed
+   profile change.
+5. Regenerate both tracked lockfiles from the changed manifests and review the
+   resulting dependency graph. Do not replace locked shared-package revisions
+   with floating, unreviewed branch state.
+6. Remove unused example controllers, templates, and assets before adding new
    product behaviour.
-5. Decide whether the derived plugin is private/internal or publicly supported.
+7. Decide whether the derived plugin is private/internal or publicly supported.
    Public RAN plugins must conform to the
    [RAN Community Standards](https://github.com/RocketsAreNostalgic/.github/blob/main/COMMUNITY_STANDARDS.md)
    before public support or contribution intake is enabled.
-6. Run the checks below before the first commit.
+8. Run the checks below before the first commit and keep any stronger
+   project-specific gates that the derived plugin introduces.
 
 ## Install and verify
 
@@ -44,16 +56,26 @@ pnpm check
 ```
 
 `composer check` is the ordinary deterministic PHP quality contract. It includes
-formatting/standards, unit tests, PHPCompatibility, and WordPress-aware PHPStan
+formatting, the shared `RANWordPressPlugin` PHPCS/WPCS/PHPCompatibility
+baseline plus Starter-local rules, unit tests, and WordPress-aware PHPStan
 static analysis. Use `composer analyze` when you want to run PHPStan by itself.
-`pnpm check` is the ordinary deterministic frontend contract and includes
-committed asset freshness verification.
+`pnpm check` is the ordinary deterministic frontend contract: ESLint, Prettier
+and Stylelint derive from `@rocketsarenostalgic/quality-config`, Starter-local
+rules remain local, and committed asset freshness is verified.
 
-Composer resolves the RAN plugin library from its declared GitHub VCS source;
-`composer.lock` is tracked to make that resolution reproducible. A deployable
-archive must include `vendor/`; a source checkout needs `composer install`.
-Do not delete the lockfile or replace `composer install` with `composer update`
-in setup scripts.
+During the Phase 7 proof, `composer.lock` binds `ran/coding-standards` to exact
+candidate `0b03e61a4bb558deeb6bc6b6399f44c0ec95e5be`, while `pnpm-lock.yaml`
+binds `@rocketsarenostalgic/quality-config` to exact candidate
+`751edd097e3902efb93992bf47401a1a4f4b1fa8`. Once both Starter and Booster
+prove those candidates and versioned shared-package releases exist, this
+repository should move to the released versions through a reviewed dependency
+update rather than silently following a mutable branch.
+
+Composer resolves the RAN plugin library and coding-standard candidate from
+their declared GitHub VCS sources; `composer.lock` is tracked to make those
+resolutions reproducible. A deployable archive must include `vendor/`; a source
+checkout needs `composer install`. Do not delete the lockfile or replace
+`composer install` with `composer update` in setup scripts.
 
 ### Assets
 
@@ -93,7 +115,8 @@ that should not independently trigger a plugin release. Use `!` or a
 
 See [AGENTS.md](AGENTS.md) for the repository operating guide, Dex-backed
 working plans and execution records, the installed official WordPress agent
-skills, and the community-health requirements for derived plugins.
+skills, the `wordpress-plugin` RAN quality profile and shared-standard
+boundaries, and the community-health requirements for derived plugins.
 
 ## Community health
 

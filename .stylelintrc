@@ -1,6 +1,6 @@
 {
 	"extends": [
-		"@wordpress/stylelint-config/scss",
+		"@rocketsarenostalgic/quality-config/stylelint/wordpress-scss",
 		"stylelint-config-rational-order"
 	],
 	"plugins": [
@@ -25,7 +25,10 @@
 		"rule-empty-line-before": [
 			"always-multi-line",
 			{
-				"except": ["after-single-line-comment", "first-nested"]
+				"except": [
+					"after-single-line-comment",
+					"first-nested"
+				]
 			}
 		],
 		"liberty/use-logical-spec": "always",

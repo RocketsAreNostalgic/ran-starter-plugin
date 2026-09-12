@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d50bcafeee8ac7199090cbd5390881de",
+    "content-hash": "a81b4bfbbe05c4b511208c0469aafc55",
     "packages": [
         {
             "name": "psr/log",
@@ -1833,53 +1833,6 @@
             "time": "2026-07-27T10:28:41+00:00"
         },
         {
-            "name": "phpstan/phpdoc-parser",
-            "version": "2.3.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "fb19eedd2bb67ff8cf7a5502ad329e701d6398a3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/fb19eedd2bb67ff8cf7a5502ad329e701d6398a3",
-                "reference": "fb19eedd2bb67ff8cf7a5502ad329e701d6398a3",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.4 || ^8.0"
-            },
-            "require-dev": {
-                "doctrine/annotations": "^2.0",
-                "nikic/php-parser": "^5.3.0",
-                "php-parallel-lint/php-parallel-lint": "^1.2",
-                "phpstan/extension-installer": "^1.0",
-                "phpstan/phpstan": "^2.0",
-                "phpstan/phpstan-phpunit": "^2.0",
-                "phpstan/phpstan-strict-rules": "^2.0",
-                "phpunit/phpunit": "^9.6",
-                "symfony/process": "^5.2"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "PHPStan\\PhpDocParser\\": [
-                        "src/"
-                    ]
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "PHPDoc parser with support for nullable, intersection and generic types",
-            "support": {
-                "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/2.3.3"
-            },
-            "time": "2026-07-08T07:01:06+00:00"
-        },
-        {
             "name": "phpstan/phpstan",
             "version": "2.2.13",
             "dist": {
@@ -2459,6 +2412,60 @@
                 "source": "https://github.com/php-fig/event-dispatcher/tree/1.0.0"
             },
             "time": "2019-01-08T18:20:26+00:00"
+        },
+        {
+            "name": "ran/coding-standards",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RocketsAreNostalgic/ran-coding-standards.git",
+                "reference": "0b03e61a4bb558deeb6bc6b6399f44c0ec95e5be"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RocketsAreNostalgic/ran-coding-standards/zipball/0b03e61a4bb558deeb6bc6b6399f44c0ec95e5be",
+                "reference": "0b03e61a4bb558deeb6bc6b6399f44c0ec95e5be",
+                "shasum": ""
+            },
+            "require": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^1.1",
+                "php": ">=7.4",
+                "squizlabs/php_codesniffer": "^3.13.6",
+                "wp-coding-standards/wpcs": "^3.4.1"
+            },
+            "require-dev": {
+                "phpcompatibility/php-compatibility": "10.0.0-alpha2",
+                "phpcompatibility/phpcompatibility-paragonie": "2.0.0-alpha2",
+                "phpcompatibility/phpcompatibility-wp": "3.0.0-alpha2"
+            },
+            "default-branch": true,
+            "type": "phpcodesniffer-standard",
+            "scripts": {
+                "validate:strict": [
+                    "composer validate --strict --no-check-publish --no-check-all"
+                ],
+                "test:consumer-install": [
+                    "@php tests/consumer-install.php"
+                ],
+                "test": [
+                    "@php tests/run.php"
+                ],
+                "check": [
+                    "@validate:strict",
+                    "@test",
+                    "@test:consumer-install"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Shared PHP and WordPress coding standards for Rockets Are Nostalgic projects.",
+            "homepage": "https://github.com/RocketsAreNostalgic/ran-coding-standards",
+            "support": {
+                "source": "https://github.com/RocketsAreNostalgic/ran-coding-standards/tree/main",
+                "issues": "https://github.com/RocketsAreNostalgic/ran-coding-standards/issues"
+            },
+            "time": "2026-09-11T16:32:33+00:00"
         },
         {
             "name": "react/cache",
@@ -3996,71 +4003,6 @@
                 }
             ],
             "time": "2020-09-28T06:39:44+00:00"
-        },
-        {
-            "name": "slevomat/coding-standard",
-            "version": "8.22.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/slevomat/coding-standard.git",
-                "reference": "1dd80bf3b93692bedb21a6623c496887fad05fec"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/1dd80bf3b93692bedb21a6623c496887fad05fec",
-                "reference": "1dd80bf3b93692bedb21a6623c496887fad05fec",
-                "shasum": ""
-            },
-            "require": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2 || ^0.7 || ^1.1.2",
-                "php": "^7.4 || ^8.0",
-                "phpstan/phpdoc-parser": "^2.3.0",
-                "squizlabs/php_codesniffer": "^3.13.4"
-            },
-            "require-dev": {
-                "phing/phing": "3.0.1|3.1.0",
-                "php-parallel-lint/php-parallel-lint": "1.4.0",
-                "phpstan/phpstan": "2.1.24",
-                "phpstan/phpstan-deprecation-rules": "2.0.3",
-                "phpstan/phpstan-phpunit": "2.0.7",
-                "phpstan/phpstan-strict-rules": "2.0.6",
-                "phpunit/phpunit": "9.6.8|10.5.48|11.4.4|11.5.36|12.3.10"
-            },
-            "type": "phpcodesniffer-standard",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "8.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "SlevomatCodingStandard\\": "SlevomatCodingStandard/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Slevomat Coding Standard for PHP_CodeSniffer complements Consistence Coding Standard by providing sniffs with additional checks.",
-            "keywords": [
-                "dev",
-                "phpcs"
-            ],
-            "support": {
-                "issues": "https://github.com/slevomat/coding-standard/issues",
-                "source": "https://github.com/slevomat/coding-standard/tree/8.22.1"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/kukulich",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/slevomat/coding-standard",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2025-09-13T08:53:30+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -5949,9 +5891,10 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "phpcompatibility/php-compatibility": 20,
-        "phpcompatibility/phpcompatibility-paragonie": 20,
-        "phpcompatibility/phpcompatibility-wp": 20,
+        "phpcompatibility/php-compatibility": 15,
+        "phpcompatibility/phpcompatibility-paragonie": 15,
+        "phpcompatibility/phpcompatibility-wp": 15,
+        "ran/coding-standards": 20,
         "ran/plugin-lib": 20
     },
     "prefer-stable": true,
