@@ -22,12 +22,13 @@
 	<!-- Shared RAN WordPress/WPCS/PHPCompatibility ancestry. -->
 	<rule ref="RANWordPressPlugin"/>
 
-	<!-- Project identity remains local. -->
+	<!-- Project identity remains local, including the repository-owned test namespace. -->
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<property name="prefixes" type="array">
 				<element value="ran_starter_plugin"/>
 				<element value="Ran\StarterPlugin"/>
+				<element value="Ran\Tests"/>
 			</property>
 		</properties>
 	</rule>
