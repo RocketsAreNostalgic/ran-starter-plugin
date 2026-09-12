@@ -12,6 +12,10 @@
 		{
 			"type": "vcs",
 			"url": "https://github.com/RocketsAreNostalgic/ran-plugin-library.git"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/RocketsAreNostalgic/ran-coding-standards.git"
 		}
 	],
 	"support": {
@@ -37,19 +41,15 @@
 		"ran/plugin-lib": "dev-main"
 	},
 	"require-dev": {
-		"squizlabs/php_codesniffer": "^3.13.5",
-		"wp-coding-standards/wpcs": "^3.0",
-		"dealerdirect/phpcodesniffer-composer-installer": "^1.0",
-		"slevomat/coding-standard": "^8.14",
+		"ran/coding-standards": "dev-main#0b03e61a4bb558deeb6bc6b6399f44c0ec95e5be",
 		"friendsofphp/php-cs-fixer": "^3.0",
-		"phpcsstandards/phpcsutils": "^1.1.2",
 		"yoast/phpunit-polyfills": "^2.0",
 		"phpunit/phpunit": "^9.6",
 		"10up/wp_mock": "^1.0",
 		"wp-phpunit/wp-phpunit": "^6.4",
-		"phpcompatibility/phpcompatibility-wp": "^3.0@dev",
-		"phpcompatibility/php-compatibility": "^10.0@dev",
-		"phpcompatibility/phpcompatibility-paragonie": "^2.0@dev",
+		"phpcompatibility/phpcompatibility-wp": "3.0.0-alpha2",
+		"phpcompatibility/php-compatibility": "10.0.0-alpha2",
+		"phpcompatibility/phpcompatibility-paragonie": "2.0.0-alpha2",
 		"php-stubs/wordpress-stubs": "7.0.*",
 		"phpstan/phpstan": "^2.1",
 		"szepeviktor/phpstan-wordpress": "^2.0"
