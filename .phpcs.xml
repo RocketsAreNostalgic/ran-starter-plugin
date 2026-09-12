@@ -3,7 +3,7 @@
 	<description>RAN Starter Plugin coding standards.</description>
 
 	<!-- Project support contract remains local to the consumer. -->
-	<config name="minimum_supported_wp_version" value="7.0"/>
+	<config name="minimum_wp_version" value="7.0"/>
 	<config name="testVersion" value="8.4-8.5"/>
 
 	<!-- Project source selection remains local to the consumer. -->
