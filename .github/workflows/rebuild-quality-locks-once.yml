@@ -43,7 +43,6 @@ jobs:
       - name: Rebuild Composer lock without executing package code
         run: |
           set -euo pipefail
-          composer validate --strict --no-check-publish --no-check-all
           composer update \
             ran/coding-standards \
             phpcompatibility/php-compatibility \
@@ -54,6 +53,7 @@ jobs:
             --no-scripts \
             --no-plugins \
             --no-interaction
+          composer validate --strict --no-check-publish --no-check-all
           php -r '
             $lock = json_decode(file_get_contents("composer.lock"), true, 512, JSON_THROW_ON_ERROR);
             $packages = array_merge($lock["packages"] ?? [], $lock["packages-dev"] ?? []);
