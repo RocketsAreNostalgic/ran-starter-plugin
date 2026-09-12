@@ -1,7 +1,7 @@
-import wordpress from "@wordpress/eslint-plugin";
+import ranWordPress from "@rocketsarenostalgic/quality-config/eslint/wordpress";
 
 export default [
-	...wordpress.configs.recommended,
+	...ranWordPress,
 	{
 		files: [ "assets/src/**/*.{js,mjs,ts,mts}" ],
 		languageOptions: {
