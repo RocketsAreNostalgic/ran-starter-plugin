@@ -71,6 +71,36 @@ A public derived plugin outside the RAN organization does not receive the
 organization defaults automatically; copy or recreate compliant community
 health files before offering public support or contributions.
 
+## RAN quality profile and shared standards
+
+This repository's RAN quality profile is `wordpress-plugin`.
+
+The organisation-level coding ancestry is consumed through the shared packages:
+
+- `ran/coding-standards` for the `RANWordPressPlugin` PHPCS/WPCS baseline; and
+- `@rocketsarenostalgic/quality-config` for the WordPress ESLint, Prettier and
+  Stylelint ancestry.
+
+During the Phase 7 proof, the tracked lockfiles bind those packages to the exact
+reviewed candidate revisions `0b03e61a4bb558deeb6bc6b6399f44c0ec95e5be`
+and `751edd097e3902efb93992bf47401a1a4f4b1fa8`. Do not replace those locks with
+floating or unreviewed package state. After Starter and Booster have both proven
+the candidates and the shared packages receive versioned releases, migrate this
+starter to those released versions through an explicit reviewed dependency PR.
+
+Repository-local configuration remains authoritative for this project's actual
+contract: WordPress/PHP support ranges, plugin prefix and namespace, source and
+generated paths, JS globals, browser policy, Starter-specific Stylelint rules,
+and narrow project exceptions. Do not move those settings into the shared
+packages merely to reduce local file size, and do not copy shared ancestry back
+into local config.
+
+A plugin derived from this starter should retain the `wordpress-plugin` profile
+unless its actual code surface requires a reviewed profile change. As part of
+the initial identity change, review the local quality settings and exceptions,
+keep the shared standards dependencies, regenerate both lockfiles from the new
+manifests, and prove the canonical `composer check` / `pnpm check` contract.
+
 ## Development workflow
 
 Install from the tracked locks; never use a setup script that deletes them.
@@ -83,11 +113,13 @@ composer check
 pnpm check
 ```
 
-`composer check` runs the PHP formatting/standards, unit-test, and WordPress-aware
-PHPStan static-analysis baseline. Use `composer analyze` for a focused PHPStan
-run when iterating on PHP code or type information. `pnpm check` runs frontend
-lint/format checks and verifies that committed `assets/dist/` output is current.
-Focused release/archive checks remain separate where documented by CI or release
+`composer check` runs PHP formatting, the shared `RANWordPressPlugin` standards
+plus Starter-local PHPCS rules, unit tests, and WordPress-aware PHPStan static
+analysis. Use `composer analyze` for a focused PHPStan run when iterating on PHP
+code or type information. `pnpm check` runs the frontend checks through the RAN
+shared WordPress ESLint/Prettier/Stylelint ancestry, retains Starter-local rules,
+and verifies that committed `assets/dist/` output is current. Focused
+release/archive checks remain separate where documented by CI or release
 guidance.
 
 Source assets live in `assets/src/`; compiled runtime files in `assets/dist/`
