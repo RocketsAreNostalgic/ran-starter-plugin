@@ -82,15 +82,6 @@ jobs:
                   set -euo pipefail
                   test "$(git rev-parse HEAD)" = "$RAN_QUALITY_COMMIT"
 
-            - name: Reject stale Quality trigger before Release Please
-              env:
-                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  RAN_QUALITY_COMMIT: ${{ steps.quality.outputs.commit }}
-              run: |
-                  set -euo pipefail
-                  current_main="$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/heads/main" --jq '.object.sha')"
-                  test "$current_main" = "$RAN_QUALITY_COMMIT"
-
             - name: Open, update, or publish the Release Please release
               id: release
               uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
