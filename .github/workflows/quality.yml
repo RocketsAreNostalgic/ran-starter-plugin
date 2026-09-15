@@ -2,10 +2,14 @@ name: Quality
 
 on:
     pull_request:
+    push:
+        branches:
+            - main
+    workflow_dispatch:
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-    cancel-in-progress: true
+    cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
     contents: read
@@ -35,15 +39,15 @@ jobs:
                     --health-timeout=5s
                     --health-retries=10
         steps:
-            - name: Check out exact PR head
+            - name: Check out exact source revision
               uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
               with:
                   persist-credentials: false
-                  ref: ${{ github.event.pull_request.head.sha }}
+                  ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
 
-            - name: Verify exact PR head and locked manifests
+            - name: Verify exact source revision and locked manifests
               env:
-                  RAN_EXPECTED_SHA: ${{ github.event.pull_request.head.sha }}
+                  RAN_EXPECTED_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
                   RAN_PNPM_VERSION: '11.13.1'
               run: |
                   set -euo pipefail
@@ -85,6 +89,9 @@ jobs:
               run: |
                   composer install --no-interaction --prefer-dist --no-progress
                   pnpm install --frozen-lockfile
+
+            - name: Verify release workflow contract
+              run: bash tests/release-workflow-contract.sh
 
             - name: Verify deterministic archive contract
               run: pnpm release:archive:check
