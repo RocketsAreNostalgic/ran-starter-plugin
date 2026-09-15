@@ -24,7 +24,7 @@ jobs:
             }}
         runs-on: ubuntu-24.04
         permissions:
-            actions: read
+            actions: write
             contents: write
             issues: write
             pull-requests: write
@@ -98,6 +98,65 @@ jobs:
                   token: ${{ secrets.GITHUB_TOKEN }}
                   config-file: release-please-config.json
                   manifest-file: .release-please-manifest.json
+
+            - name: Dispatch exact Release Please candidate Quality
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: |
+                  set -euo pipefail
+                  expected_head='release-please--branches--main--components--ran-starter-plugin'
+                  open_prs="$(gh api --paginate --slurp "repos/${GITHUB_REPOSITORY}/pulls?state=open&base=main&per_page=100")"
+                  candidate_prs="$(jq -cer \
+                      --arg bot 'github-actions[bot]' \
+                      --arg head "$expected_head" \
+                      --arg repository "$GITHUB_REPOSITORY" \
+                      'add | [.[] | select(
+                          .state == "open"
+                          and .user.login == $bot
+                          and .base.ref == "main"
+                          and .head.ref == $head
+                          and .head.repo.full_name == $repository
+                      )]' <<< "$open_prs")"
+                  candidate_count="$(jq -er 'length' <<< "$candidate_prs")"
+                  if [[ "$candidate_count" == 0 ]]; then
+                      exit 0
+                  fi
+                  test "$candidate_count" == 1
+
+                  candidate="$(jq -cer '.[0]' <<< "$candidate_prs")"
+                  head_sha="$(jq -er '.head.sha' <<< "$candidate")"
+                  [[ "$head_sha" =~ ^[0-9a-f]{40}$ ]]
+                  test "$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/heads/${expected_head}" --jq '.object.sha')" = "$head_sha"
+
+                  workflow_id="$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/quality.yml" --jq '.id')"
+                  runs="$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/${workflow_id}/runs?head_sha=${head_sha}&per_page=100")"
+                  suppress_dispatch="$(jq -r \
+                      --arg head "$expected_head" \
+                      --arg repository "$GITHUB_REPOSITORY" \
+                      --arg sha "$head_sha" \
+                      --argjson workflow_id "$workflow_id" \
+                      'any(.workflow_runs[];
+                          .workflow_id == $workflow_id
+                          and .path == ".github/workflows/quality.yml"
+                          and (.event == "pull_request" or .event == "workflow_dispatch")
+                          and .head_branch == $head
+                          and .head_repository.full_name == $repository
+                          and .head_sha == $sha
+                          and (
+                              (.status == "completed" and .conclusion == "success")
+                              or .status == "requested"
+                              or .status == "queued"
+                              or .status == "pending"
+                              or .status == "waiting"
+                              or .status == "in_progress"
+                          )
+                      )' <<< "$runs")"
+                  if [[ "$suppress_dispatch" == true ]]; then
+                      exit 0
+                  fi
+
+                  jq -nc --arg ref "$expected_head" '{ref: $ref}' \
+                      | gh api --method POST "repos/${GITHUB_REPOSITORY}/actions/workflows/quality.yml/dispatches" --input - >/dev/null
 
             - name: Read back exact created release
               if: steps.release.outputs.release_created == 'true'
