@@ -141,14 +141,32 @@ two sets.
 
 ## Release Please
 
-Release Please watches pushes to `main` and opens or updates a release PR from
-Conventional Commits. Merging that PR creates the version tag and GitHub
-release; it does not publish to WordPress.org or deploy a site.
+`Quality` qualifies both pull-request heads and trusted pushes to `main`. The
+privileged Release Please workflow runs only after a successful same-repository
+`Quality` run for an exact `main` revision. It re-reads the Quality workflow and
+run identity, checks out that exact commit without persisted credentials, and
+only then gives the pinned Release Please action its bounded repository-write
+permissions. A later ordinary `main` push does not invalidate an already
+qualified release commit; any release that is created must still resolve back
+to the exact qualified commit, and the workflow verifies that tag/release
+identity after publication.
 
-The release manifest starts at the current `0.0.4` plugin version and keeps the
-main plugin header and `package.json` version synchronized. Before merging the
-first release PR, verify its proposed version, changelog, generated assets, and
-the distributable archive separately:
+Release Please updates made with `GITHUB_TOKEN` do not recursively trigger the
+normal pull-request workflow. After Release Please opens or updates its bot-owned
+release PR, the trusted release workflow therefore dispatches the read-only
+`Quality` workflow for that exact release-PR head, suppressing duplicate active
+or successful runs. This keeps the repository's required terminal `quality`
+check meaningful for generated release PRs without exposing release-write
+credentials to their head code.
+
+Release Please opens or updates a release PR from Conventional Commits. Merging
+that PR creates the version tag and GitHub release; it does not publish to
+WordPress.org or deploy a site.
+
+The release manifest is currently at `0.1.0` and keeps the main plugin header and
+`package.json` version synchronized. Before merging a release PR, verify its
+proposed version, changelog, generated assets, and the distributable archive
+separately:
 
 ```sh
 pnpm release:archive:check
