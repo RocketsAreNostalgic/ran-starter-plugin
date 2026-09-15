@@ -58,7 +58,7 @@ require "$release" "expected_head='release-please--branches--main--components--r
 require "$release" '.user.login == $bot'
 require "$release" '.head.repo.full_name == $repository'
 require "$release" 'actions/workflows/quality.yml/dispatches'
-require "$release" "'{ref: $ref}'"
+require "$release" "'{ref: \$ref}'"
 require "$release" 'if: steps.release.outputs.release_created == '\''true'\'''
 require "$release" 'test "$RAN_RELEASE_SHA" = "$RAN_QUALITY_COMMIT"'
 require "$release" 'git/ref/tags/${RAN_TAG_NAME}'
