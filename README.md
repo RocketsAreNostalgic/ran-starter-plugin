@@ -141,14 +141,27 @@ two sets.
 
 ## Release Please
 
-Release Please watches pushes to `main` and opens or updates a release PR from
-Conventional Commits. Merging that PR creates the version tag and GitHub
-release; it does not publish to WordPress.org or deploy a site.
+`Quality` qualifies both pull-request heads and trusted pushes to `main`. The
+privileged Release Please workflow runs only after a successful same-repository
+`Quality` run for the exact `main` revision. It re-reads the Quality workflow
+identity, checks out that exact commit without persisted credentials, rejects a
+stale trigger if `main` has already moved, and only then gives the pinned Release
+Please action its bounded repository-write permissions. If Release Please
+creates a tag and GitHub release, the workflow reads both back and requires them
+to target the exact qualified commit.
 
-The release manifest starts at the current `0.0.4` plugin version and keeps the
-main plugin header and `package.json` version synchronized. Before merging the
-first release PR, verify its proposed version, changelog, generated assets, and
-the distributable archive separately:
+The stale-trigger check is defence in depth rather than an atomic lock on
+`main`; the release's exact tag/commit identity and post-publication readback are
+the durable publication guarantees.
+
+Release Please opens or updates a release PR from Conventional Commits. Merging
+that PR creates the version tag and GitHub release; it does not publish to
+WordPress.org or deploy a site.
+
+The release manifest is currently at `0.1.0` and keeps the main plugin header and
+`package.json` version synchronized. Before merging a release PR, verify its
+proposed version, changelog, generated assets, and the distributable archive
+separately:
 
 ```sh
 pnpm release:archive:check
