@@ -29,7 +29,7 @@
 		"release:archive": "php scripts/build-release.php",
 		"release:archive:check": "php scripts/build-release.php --check",
 		"check:source": "pnpm lint && pnpm format:check",
-		"check": "true",
+		"check": "pnpm check:source && pnpm check:generated",
 		"check:generated": "vite build && git diff --exit-code -- assets/dist",
 		"test:php": "composer test"
 	},
