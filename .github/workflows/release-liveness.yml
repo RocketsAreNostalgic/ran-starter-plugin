@@ -15,4 +15,4 @@ permissions:
 
 jobs:
   observe:
-    uses: RocketsAreNostalgic/.github/.github/workflows/release-liveness-observer.yml@ca928ef0c76360e2559ccd21e827be0461adea14
+    uses: RocketsAreNostalgic/.github/.github/workflows/release-liveness-observer.yml@04df4c0267eb295964b6f80144f33fa0513fce13
