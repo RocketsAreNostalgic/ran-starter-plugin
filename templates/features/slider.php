@@ -9,13 +9,13 @@ declare(strict_types = 1);
 
 //phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound,WordPress.PHP.YodaConditions.NotYoda
 $args = array(
-	'post_type' => 'testimonial',
-	'post_status' => 'publish',
+	'post_type'      => 'testimonial',
+	'post_status'    => 'publish',
 	'posts_per_page' => 5,
-	'meta_query' => array(
+	'meta_query'     => array(
 		array(
-			'key' => '_ran_testimonial_key',
-			'value' => 's:8:"approved";i:1;s:8:"featured";i:1;',
+			'key'     => '_ran_testimonial_key',
+			'value'   => 's:8:"approved";i:1;s:8:"featured";i:1;',
 			'compare' => 'LIKE',
 		),
 	),

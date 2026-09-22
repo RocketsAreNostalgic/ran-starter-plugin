@@ -46,11 +46,11 @@ class ManagerCallbacks {
 	 * @param mixed $args - Array of arguments for checkboxes.
 	 */
 	public function checkbox_field( mixed $args ): void {
-		$name = $args['label_for'];
-		$classes = $args['class'];
+		$name        = $args['label_for'];
+		$classes     = $args['class'];
 		$option_name = $args['option_name'];
-		$checkbox = get_option( $option_name );
-		$checked = isset( $checkbox[ $name ] ) ? ( $checkbox[ $name ] ? true : false ) : false;
+		$checkbox    = get_option( $option_name );
+		$checked     = isset( $checkbox[ $name ] ) ? ( $checkbox[ $name ] ? true : false ) : false;
 
 		echo '<div class="' . \esc_attr( $classes ) . '"><input type="checkbox" id="' . \esc_attr( $name ) . '" name="' . \esc_attr( $option_name ) . '[' . \esc_attr( $name ) . ']" value="1" class="" ' . ( $checked ? 'checked' : '' ) . '><label for="' . \esc_attr( $name ) . '"><div></div></label></div>';
 	}

@@ -88,11 +88,11 @@ class CustomTaxonomyController extends BaseController implements ControllerInter
 		$this->subpages = array(
 			array(
 				'parent_slug' => (string) ( $this->plugin_data['TextDomain'] ?? '' ),
-				'page_title' => 'Custom Taxonomies',
-				'menu_title' => 'Taxonomy Manager',
-				'capability' => 'manage_options',
-				'menu_slug' => 'ran_taxonomy',
-				'callback' => array( $this->callbacks, 'admin_taxonomy' ),
+				'page_title'  => 'Custom Taxonomies',
+				'menu_title'  => 'Taxonomy Manager',
+				'capability'  => 'manage_options',
+				'menu_slug'   => 'ran_taxonomy',
+				'callback'    => array( $this->callbacks, 'admin_taxonomy' ),
 			),
 		);
 	}
@@ -104,8 +104,8 @@ class CustomTaxonomyController extends BaseController implements ControllerInter
 		$args = array(
 			array(
 				'option_group' => 'ran_plugin_tax_settings',
-				'option_name' => 'ran_plugin_tax',
-				'callback' => array( $this->tax_callbacks, 'tax_sanitize' ),
+				'option_name'  => 'ran_plugin_tax',
+				'callback'     => array( $this->tax_callbacks, 'tax_sanitize' ),
 			),
 		);
 
@@ -118,10 +118,10 @@ class CustomTaxonomyController extends BaseController implements ControllerInter
 	public function setSections(): void {
 		$args = array(
 			array(
-				'id' => 'ran_tax_index',
-				'title' => 'Custom Taxonomy Manager',
+				'id'       => 'ran_tax_index',
+				'title'    => 'Custom Taxonomy Manager',
 				'callback' => array( $this->tax_callbacks, 'tax_section_manager' ),
-				'page' => 'ran_taxonomy',
+				'page'     => 'ran_taxonomy',
 			),
 		);
 
@@ -134,55 +134,55 @@ class CustomTaxonomyController extends BaseController implements ControllerInter
 	public function setFields(): void {
 		$args = array(
 			array(
-				'id' => 'taxonomy',
-				'title' => 'Custom Taxonomy ID',
+				'id'       => 'taxonomy',
+				'title'    => 'Custom Taxonomy ID',
 				'callback' => array( $this->tax_callbacks, 'text_field' ),
-				'page' => 'ran_taxonomy',
-				'section' => 'ran_tax_index',
-				'args' => array(
+				'page'     => 'ran_taxonomy',
+				'section'  => 'ran_tax_index',
+				'args'     => array(
 					'option_name' => 'ran_plugin_tax',
-					'label_for' => 'taxonomy',
+					'label_for'   => 'taxonomy',
 					'placeholder' => 'eg. genre',
-					'array' => 'taxonomy',
+					'array'       => 'taxonomy',
 				),
 			),
 			array(
-				'id' => 'singular_name',
-				'title' => 'Singular Name',
+				'id'       => 'singular_name',
+				'title'    => 'Singular Name',
 				'callback' => array( $this->tax_callbacks, 'text_field' ),
-				'page' => 'ran_taxonomy',
-				'section' => 'ran_tax_index',
-				'args' => array(
+				'page'     => 'ran_taxonomy',
+				'section'  => 'ran_tax_index',
+				'args'     => array(
 					'option_name' => 'ran_plugin_tax',
-					'label_for' => 'singular_name',
+					'label_for'   => 'singular_name',
 					'placeholder' => 'eg. Genre',
-					'array' => 'taxonomy',
+					'array'       => 'taxonomy',
 				),
 			),
 			array(
-				'id' => 'hierarchical',
-				'title' => 'Hierarchical',
+				'id'       => 'hierarchical',
+				'title'    => 'Hierarchical',
 				'callback' => array( $this->tax_callbacks, 'checkbox_field' ),
-				'page' => 'ran_taxonomy',
-				'section' => 'ran_tax_index',
-				'args' => array(
+				'page'     => 'ran_taxonomy',
+				'section'  => 'ran_tax_index',
+				'args'     => array(
 					'option_name' => 'ran_plugin_tax',
-					'label_for' => 'hierarchical',
-					'class' => 'ui-toggle',
-					'array' => 'taxonomy',
+					'label_for'   => 'hierarchical',
+					'class'       => 'ui-toggle',
+					'array'       => 'taxonomy',
 				),
 			),
 			array(
-				'id' => 'objects',
-				'title' => 'Post Types',
+				'id'       => 'objects',
+				'title'    => 'Post Types',
 				'callback' => array( $this->tax_callbacks, 'checkbox_post_types_field' ),
-				'page' => 'ran_taxonomy',
-				'section' => 'ran_tax_index',
-				'args' => array(
+				'page'     => 'ran_taxonomy',
+				'section'  => 'ran_tax_index',
+				'args'     => array(
 					'option_name' => 'ran_plugin_tax',
-					'label_for' => 'objects',
-					'class' => 'ui-toggle',
-					'array' => 'taxonomy',
+					'label_for'   => 'objects',
+					'class'       => 'ui-toggle',
+					'array'       => 'taxonomy',
 				),
 			),
 		);

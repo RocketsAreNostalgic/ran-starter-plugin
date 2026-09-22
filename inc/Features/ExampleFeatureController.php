@@ -95,11 +95,11 @@ class ExampleFeatureController extends FeatureControllerAbstract implements Regi
 		$this->subpages = array(
 			array(
 				'parent_slug' => (string) ( $this->config_array['TextDomain'] ?? '' ),
-				'page_title' => $feature_key,
-				'menu_title' => $feature_key,
-				'capability' => 'manage_options',
-				'menu_slug' => $feature_key,
-				'callback' => array( $this->callbacks, 'example_feature' ),
+				'page_title'  => $feature_key,
+				'menu_title'  => $feature_key,
+				'capability'  => 'manage_options',
+				'menu_slug'   => $feature_key,
+				'callback'    => array( $this->callbacks, 'example_feature' ),
 			),
 		);
 	}

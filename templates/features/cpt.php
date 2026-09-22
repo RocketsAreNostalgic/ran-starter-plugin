@@ -38,7 +38,7 @@ declare(strict_types = 1);
 			echo '<table class="cpt-table"><tr><th>ID</th><th>Singular Name</th><th>Plural Name</th><th class="text-center">Public</th><th class="text-center">Archive</th><th class="text-center">Actions</th></tr>';
 
 			foreach ( $options as $option ) {
-				$public = isset( $option['public'] ) ? 'TRUE' : 'FALSE';
+				$public  = isset( $option['public'] ) ? 'TRUE' : 'FALSE';
 				$archive = isset( $option['has_archive'] ) ? 'TRUE' : 'FALSE';
 
 				echo esc_html( "<tr><td>{$option['post_type']}</td><td>{$option['singular_name']}</td><td>{$option['plural_name']}</td><td class=\"text-center\">{$public}</td><td class=\"text-center\">{$archive}</td><td class=\"text-center\">" );
