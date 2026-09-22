@@ -69,7 +69,7 @@
 		"analyze": "phpstan analyse --configuration=phpstan.neon --no-progress --memory-limit=1G",
 		"build-assets": "bash ./scripts/build-assets.sh",
 		"build": [
-			"@standards:fix",
+			"bash scripts/format-php-for-build.sh",
 			"@build-assets"
 		],
 		"lint:syntax": "bash -o pipefail -c 'find . -type d \\( -name vendor -o -name node_modules -o -name .git \\) -prune -o -type f -name \"*.php\" -print0 | xargs -0 -n1 php -l'",

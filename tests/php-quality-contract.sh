@@ -57,6 +57,39 @@ cp "$fixture" "$fixture_dir/first-pass.txt"
 php vendor/bin/phpcbf --standard=.phpcs.xml -q "$fixture"
 cmp "$fixture" "$fixture_dir/first-pass.txt"
 
+# Verify build sequencing for clean, fixed and failed formatter outcomes.
+mkdir "$fixture_dir/bin"
+cat > "$fixture_dir/bin/composer" <<'SH'
+#!/usr/bin/env bash
+printf '%s\n' "$1" >> "$BUILD_TEST_LOG"
+case "$1" in
+    standards:fix) exit "$BUILD_TEST_FIX_STATUS" ;;
+    standards) exit "$BUILD_TEST_CHECK_STATUS" ;;
+    *) exit 99 ;;
+esac
+SH
+chmod +x "$fixture_dir/bin/composer"
+for fix_status in 0 1 2 3; do
+    : > "$fixture_dir/build.log"
+    status=0
+    PATH="$fixture_dir/bin:$PATH" BUILD_TEST_LOG="$fixture_dir/build.log" \
+        BUILD_TEST_FIX_STATUS="$fix_status" BUILD_TEST_CHECK_STATUS=0 \
+        bash scripts/format-php-for-build.sh || status=$?
+    if [[ "$fix_status" -le 1 ]]; then
+        [[ "$status" -eq 0 ]]
+        [[ "$(cat "$fixture_dir/build.log")" == $'standards:fix\nstandards' ]]
+    else
+        [[ "$status" -eq "$fix_status" ]]
+        [[ "$(cat "$fixture_dir/build.log")" == 'standards:fix' ]]
+    fi
+done
+# A supposedly successful fix cannot bypass the final standards check.
+status=0
+PATH="$fixture_dir/bin:$PATH" BUILD_TEST_LOG="$fixture_dir/build.log" \
+    BUILD_TEST_FIX_STATUS=1 BUILD_TEST_CHECK_STATUS=2 \
+    bash scripts/format-php-for-build.sh || status=$?
+[[ "$status" -eq 2 ]]
+
 # Prove the actual Composer parser aggregate succeeds before the negative case.
 composer lint:syntax > "$fixture_dir/syntax-valid.log" 2>&1
 
