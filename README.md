@@ -142,22 +142,24 @@ two sets.
 ## Release Please
 
 `Quality` qualifies both pull-request heads and trusted pushes to `main`. The
-privileged Release Please workflow runs only after a successful same-repository
-`Quality` run for an exact `main` revision. It re-reads the Quality workflow and
-run identity, checks out that exact commit without persisted credentials, and
-only then gives the pinned Release Please action its bounded repository-write
-permissions. A later ordinary `main` push does not invalidate an already
-qualified release commit; any release that is created must still resolve back
-to the exact qualified commit, and the workflow verifies that tag/release
-identity after publication.
+local Release Please workflow is now a thin caller of the organisation-owned
+Profile A release contract in `RocketsAreNostalgic/.github`, pinned to an exact
+approved revision. The shared contract admits only the actual successful
+same-repository `Quality` `workflow_run` for a push to `main`, proves the exact
+admitted revision in a read-only job, and grants Release Please write authority
+only after that admission. Immediately before mutation it also requires current
+`main` still to equal the admitted revision and explicitly targets Release
+Please at `main`.
 
-Release Please updates made with `GITHUB_TOKEN` do not recursively trigger the
-normal pull-request workflow. After Release Please opens or updates its bot-owned
-release PR, the trusted release workflow therefore dispatches the read-only
-`Quality` workflow for that exact release-PR head, suppressing duplicate active
-or successful runs. This keeps the repository's required terminal `quality`
-check meaningful for generated release PRs without exposing release-write
-credentials to their head code.
+Release Please remains authoritative for version calculation, changelog,
+release-PR lifecycle, tags and GitHub Releases. Because Release Please mutations
+made with `GITHUB_TOKEN` do not recursively trigger pull-request workflows, the
+shared Profile A contract also binds the configured bot-owned release-PR branch
+to its exact head and dispatches this repository's existing read-only `Quality`
+workflow only when no successful or in-flight qualification already covers that
+head. The repository does not maintain a second release publisher, version
+engine, lifecycle-label reconciler, historical recovery path, or separate
+post-publication state machine.
 
 Release Please opens or updates a release PR from Conventional Commits. Merging
 that PR creates the version tag and GitHub release; it does not publish to
