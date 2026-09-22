@@ -113,9 +113,11 @@ composer check
 pnpm check
 ```
 
-`composer check` runs PHP formatting, the shared `RANWordPressPlugin` standards
+`composer check` runs independent PHP syntax validation and the shared `RANWordPressPlugin` standards
 plus Starter-local PHPCS rules, unit tests, and WordPress-aware PHPStan static
-analysis. Use `composer analyze` for a focused PHPStan run when iterating on PHP
+analysis. `composer standards` checks PHP style; `composer standards:fix`
+uses PHPCBF with the same rules and paths. PHP-CS-Fixer is not used.
+Use `composer analyze` for a focused PHPStan run when iterating on PHP
 code or type information. `pnpm check` runs the frontend checks through the RAN
 shared WordPress ESLint/Prettier/Stylelint ancestry, retains Starter-local rules,
 and verifies that committed `assets/dist/` output is current. Focused

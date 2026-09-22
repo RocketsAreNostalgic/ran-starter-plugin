@@ -49,4 +49,13 @@
 	<rule ref="Generic.Commenting.Todo"/>
 	<rule ref="Generic.Commenting.Fixme"/>
 	<rule ref="Squiz.ControlStructures.ControlSignature"/>
+	<!-- One formatter authority: enforce intended assignment/array alignment here. -->
+	<rule ref="Generic.Formatting.MultipleStatementAlignment">
+		<properties>
+			<property name="error" value="true"/>
+		</properties>
+	</rule>
+	<rule ref="WordPress.Arrays.MultipleStatementAlignment">
+		<type>error</type>
+	</rule>
 </ruleset>
