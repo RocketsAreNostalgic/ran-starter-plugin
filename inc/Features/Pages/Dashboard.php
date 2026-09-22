@@ -76,10 +76,10 @@ class Dashboard extends FeatureControllerAbstract implements RegistrableFeatureI
 				'page_title' => $this->config_array['Name'],
 				'menu_title' => $this->config_array['Name'],
 				'capability' => 'manage_options',
-				'menu_slug' => $this->config_array['TextDomain'],
-				'callback' => array( $this->callbacks, 'admin_dashboard' ),
-				'icon_url' => 'dashicons-store',
-				'position' => 110,
+				'menu_slug'  => $this->config_array['TextDomain'],
+				'callback'   => array( $this->callbacks, 'admin_dashboard' ),
+				'icon_url'   => 'dashicons-store',
+				'position'   => 110,
 			),
 		);
 	}
@@ -91,8 +91,8 @@ class Dashboard extends FeatureControllerAbstract implements RegistrableFeatureI
 		$args = array(
 			array(
 				'option_group' => 'ran_plugin_settings',
-				'option_name' => 'ran_plugin',
-				'callback' => array( $this->callbacks_mngr, 'checkbox_sanitize' ),
+				'option_name'  => 'ran_plugin',
+				'callback'     => array( $this->callbacks_mngr, 'checkbox_sanitize' ),
 			),
 		);
 
@@ -105,10 +105,10 @@ class Dashboard extends FeatureControllerAbstract implements RegistrableFeatureI
 	public function set_dashboard_sections(): void {
 		$args = array(
 			array(
-				'id' => 'ran_admin_index',
-				'title' => 'Settings Manager',
+				'id'       => 'ran_admin_index',
+				'title'    => 'Settings Manager',
 				'callback' => array( $this->callbacks_mngr, 'admin_section_manager' ),
-				'page' => 'ran_plugin',
+				'page'     => 'ran_plugin',
 			),
 		);
 

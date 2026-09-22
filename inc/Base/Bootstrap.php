@@ -37,7 +37,7 @@ class Bootstrap implements BootstrapInterface {
 	 * @param  ConfigInterface $config the config object.
 	 */
 	public function __construct( ConfigInterface $config ) {
-		$this->config = $config;
+		$this->config      = $config;
 		$this->plugin_data = $this->config->get_plugin_config();
 	}
 

@@ -41,14 +41,14 @@ class ExampleFeatureControllerTest extends WP_Mock\Tools\TestCase {
 	public function test_missing_feature_is_disabled_without_replacing_plugin_options(): void {
 		$option_name = 'ran_plugin';
 		$options     = array(
-			'Version' => '1.2.3',
+			'Version'       => '1.2.3',
 			'other_feature' => true,
 		);
 		$config      = $this->createMock( ConfigInterface::class );
 
 		$config->method( 'get_config' )->willReturn(
 			array(
-				'RAN' => array( 'AppOption' => $option_name ),
+				'RAN'  => array( 'AppOption' => $option_name ),
 				'Slug' => $option_name,
 			)
 		);
@@ -62,8 +62,8 @@ class ExampleFeatureControllerTest extends WP_Mock\Tools\TestCase {
 			->with(
 				$option_name,
 				array(
-					'Version' => '1.2.3',
-					'other_feature' => true,
+					'Version'                  => '1.2.3',
+					'other_feature'            => true,
 					'ExampleFeatureController' => false,
 				)
 			)

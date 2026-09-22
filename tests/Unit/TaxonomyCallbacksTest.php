@@ -53,8 +53,8 @@ class TaxonomyCallbacksTest extends WP_Mock\Tools\TestCase {
 		$callback->checkbox_post_types_field(
 			array(
 				'option_name' => 'ran_plugin_tax',
-				'label_for' => 'objects',
-				'class' => 'ui-toggle',
+				'label_for'   => 'objects',
+				'class'       => 'ui-toggle',
 			)
 		);
 		$output = ob_get_clean();

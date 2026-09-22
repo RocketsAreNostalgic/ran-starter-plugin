@@ -70,14 +70,14 @@ class CptCallbacks {
 	 * @param mixed $args - Arguments create a CPT text field.
 	 */
 	public function text_field( mixed $args ): void {
-		$name = $args['label_for'];
+		$name        = $args['label_for'];
 		$option_name = $args['option_name'];
-		$value = '';
+		$value       = '';
 		//phpcs:disable WordPress.Security.NonceVerification.Missing
 		if ( isset( $_POST['edit_post'] ) ) {
-			$input = get_option( $option_name );
+			$input     = get_option( $option_name );
 			$edit_post = sanitize_text_field( wp_unslash( $_POST['edit_post'] ) );
-			$value = isset( $input[ $edit_post ][ $name ] ) ? $input[ $edit_post ][ $name ] : '';
+			$value     = isset( $input[ $edit_post ][ $name ] ) ? $input[ $edit_post ][ $name ] : '';
 		}
 		//phpcs:enable
 
@@ -92,13 +92,13 @@ class CptCallbacks {
 	 * @param  array<string|bool> $args - An array of checkbox arguments.
 	 */
 	public function checkbox_field( array $args ): void {
-		$name = $args['label_for'];
-		$classes = $args['class'];
+		$name        = $args['label_for'];
+		$classes     = $args['class'];
 		$option_name = $args['option_name'];
-		$checked = false;
+		$checked     = false;
 		//phpcs:disable WordPress.Security.NonceVerification.Missing
 		if ( isset( $_POST['edit_post'] ) ) {
-			$checkbox = get_option( $option_name );
+			$checkbox  = get_option( $option_name );
 			$edit_post = sanitize_text_field( wp_unslash( $_POST['edit_post'] ) );
 			$checked = isset( $checkbox[ $edit_post ][ $name ] ) ?: false; //phpcs:ignore
 		}

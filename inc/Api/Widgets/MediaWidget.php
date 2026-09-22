@@ -37,12 +37,12 @@ class MediaWidget extends WP_Widget {
 			$this->ran_widget_id,
 			$this->ran_widget_name,
 			array(
-				'classname' => $this->ran_widget_id,
-				'description' => $this->ran_widget_name,
+				'classname'                   => $this->ran_widget_id,
+				'description'                 => $this->ran_widget_name,
 				'customize_selective_refresh' => true,
 			),
 			array(
-				'width' => 400,
+				'width'  => 400,
 				'height' => 350,
 			)
 		);

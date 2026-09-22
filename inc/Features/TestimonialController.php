@@ -71,19 +71,19 @@ class TestimonialController extends BaseController implements ControllerInterfac
 		$message = isset( $_POST['message'] ) ? sanitize_textarea_field( wp_unslash( $_POST['message'] ) ) : '';
 
 		$data = array(
-			'name' => $name,
-			'email' => $email,
+			'name'     => $name,
+			'email'    => $email,
 			'approved' => 0,
 			'featured' => 0,
 		);
 
 		$args = array(
-			'post_title' => 'Testimonial from ' . $name,
+			'post_title'   => 'Testimonial from ' . $name,
 			'post_content' => $message,
-			'post_author' => 1,
-			'post_status' => 'publish',
-			'post_type' => 'testimonial',
-			'meta_input' => array(
+			'post_author'  => 1,
+			'post_status'  => 'publish',
+			'post_type'    => 'testimonial',
+			'meta_input'   => array(
 				'_ran_testimonial_key' => $data,
 			),
 		);
@@ -140,11 +140,11 @@ class TestimonialController extends BaseController implements ControllerInterfac
 		$subpage = array(
 			array(
 				'parent_slug' => 'edit.php?post_type=testimonial',
-				'page_title' => 'Shortcodes',
-				'menu_title' => 'Shortcodes',
-				'capability' => 'manage_options',
-				'menu_slug' => 'ran_testimonial_shortcode',
-				'callback' => array( $this->callbacks, 'shortcodePage' ),
+				'page_title'  => 'Shortcodes',
+				'menu_title'  => 'Shortcodes',
+				'capability'  => 'manage_options',
+				'menu_slug'   => 'ran_testimonial_shortcode',
+				'callback'    => array( $this->callbacks, 'shortcodePage' ),
 			),
 		);
 
@@ -158,17 +158,17 @@ class TestimonialController extends BaseController implements ControllerInterfac
 		register_post_type(
 			'testimonial',
 			array(
-				'labels' => array(
-					'name' => 'Testimonials',
+				'labels'              => array(
+					'name'          => 'Testimonials',
 					'singular_name' => 'Testimonial',
 				),
-				'public' => true,
-				'has_archive' => false,
-				'menu_icon' => 'dashicons-testimonial',
+				'public'              => true,
+				'has_archive'         => false,
+				'menu_icon'           => 'dashicons-testimonial',
 				'exclude_from_search' => true,
-				'publicly_queryable' => false,
-				'supports' => array( 'title', 'editor' ),
-				'show_in_rest' => true,
+				'publicly_queryable'  => false,
+				'supports'            => array( 'title', 'editor' ),
+				'show_in_rest'        => true,
 			)
 		);
 	}
@@ -252,8 +252,8 @@ class TestimonialController extends BaseController implements ControllerInterfac
 		}
 
 		$data = array(
-			'name' => isset( $_POST['ran_testimonial_author'] ) ? sanitize_text_field( wp_unslash( $_POST['ran_testimonial_author'] ) ) : '',
-			'email' => isset( $_POST['ran_testimonial_email'] ) ? sanitize_email( wp_unslash( $_POST['ran_testimonial_email'] ) ) : '',
+			'name'     => isset( $_POST['ran_testimonial_author'] ) ? sanitize_text_field( wp_unslash( $_POST['ran_testimonial_author'] ) ) : '',
+			'email'    => isset( $_POST['ran_testimonial_email'] ) ? sanitize_email( wp_unslash( $_POST['ran_testimonial_email'] ) ) : '',
 			'approved' => isset( $_POST['ran_testimonial_approved'] ) ? 1 : 0,
 			'featured' => isset( $_POST['ran_testimonial_featured'] ) ? 1 : 0,
 		);

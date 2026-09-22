@@ -33,9 +33,7 @@ composer install --no-interaction
 pnpm install --frozen-lockfile
 pnpm check
 pnpm check:generated
-composer test
-composer run cs:check
-composer run standards
+composer check
 pnpm release:archive:check
 ```
 
