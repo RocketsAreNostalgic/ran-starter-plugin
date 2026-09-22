@@ -31,7 +31,7 @@ function ran_starter_plugin_quality_contract() {
 PHP
 
 # Both alignment rules must be blocking under the ordinary ruleset (-n included).
-if php vendor/bin/phpcs --standard=.phpcs.xml -q --report=json "$fixture" > "$fixture_dir/report.json"; then
+if php vendor/bin/phpcs --standard=.phpcs.xml -n -q --report=json "$fixture" > "$fixture_dir/report.json"; then
 	echo 'Alignment violations unexpectedly passed PHPCS' >&2
 	exit 1
 fi
@@ -56,6 +56,9 @@ php vendor/bin/phpcs --standard=.phpcs.xml -q "$fixture"
 cp "$fixture" "$fixture_dir/first-pass.txt"
 php vendor/bin/phpcbf --standard=.phpcs.xml -q "$fixture"
 cmp "$fixture" "$fixture_dir/first-pass.txt"
+
+# Prove the actual Composer parser aggregate succeeds before the negative case.
+composer lint:syntax > "$fixture_dir/syntax-valid.log" 2>&1
 
 # Exercise the actual Composer parser aggregate, not only a standalone php -l.
 printf '<?php function broken( {\n' > "$fixture"

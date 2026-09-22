@@ -72,7 +72,7 @@
 			"@standards:fix",
 			"@build-assets"
 		],
-		"lint:syntax": "bash -o pipefail -c 'find . -type d \\( -name vendor -o -name node_modules -o -name .git \\) -prune -o -type f -name \"*.php\" -print0 | xargs -0 -r -n1 php -l'",
+		"lint:syntax": "bash -o pipefail -c 'find . -type d \\( -name vendor -o -name node_modules -o -name .git \\) -prune -o -type f -name \"*.php\" -print0 | xargs -0 -n1 php -l'",
 		"test:unit": "phpunit --configuration phpunit.xml",
 		"test:quality-contract": "bash tests/php-quality-contract.sh"
 	},
