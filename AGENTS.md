@@ -81,12 +81,14 @@ The organisation-level coding ancestry is consumed through the shared packages:
 - `@rocketsarenostalgic/quality-config` for the WordPress ESLint, Prettier and
   Stylelint ancestry.
 
-During the Phase 7 proof, the tracked lockfiles bind those packages to the exact
-reviewed candidate revisions `0b03e61a4bb558deeb6bc6b6399f44c0ec95e5be`
-and `751edd097e3902efb93992bf47401a1a4f4b1fa8`. Do not replace those locks with
-floating or unreviewed package state. After Starter and Booster have both proven
-the candidates and the shared packages receive versioned releases, migrate this
-starter to those released versions through an explicit reviewed dependency PR.
+The PHP standard uses `^1.0`, with the tracked Composer lock binding released
+v1.0.0 at `6af816a02b7d1108ad5c990e9d0fda0af0a13de7`. Future upgrades need a
+reviewed dependency PR and retained local qualification. `RANOwnedMethods`
+remains opt-in; a package update must not silently activate a new naming cohort.
+The frontend lock still binds the reviewed Phase 7 candidate
+`751edd097e3902efb93992bf47401a1a4f4b1fa8`; migrate it only through its separate
+released-version adoption after the required reference proofs. Do not replace
+either lock with floating or unreviewed package state.
 
 Repository-local configuration remains authoritative for this project's actual
 contract: WordPress/PHP support ranges, plugin prefix and namespace, source and

@@ -63,15 +63,16 @@ static analysis. Use `composer analyze` when you want to run PHPStan by itself.
 and Stylelint derive from `@rocketsarenostalgic/quality-config`, Starter-local
 rules remain local, and committed asset freshness is verified.
 
-During the Phase 7 proof, `composer.lock` binds `ran/coding-standards` to exact
-candidate `0b03e61a4bb558deeb6bc6b6399f44c0ec95e5be`, while `pnpm-lock.yaml`
-binds `@rocketsarenostalgic/quality-config` to exact candidate
-`751edd097e3902efb93992bf47401a1a4f4b1fa8`. Once both Starter and Booster
-prove those candidates and versioned shared-package releases exist, this
-repository should move to the released versions through a reviewed dependency
-update rather than silently following a mutable branch.
+`ran/coding-standards` uses the compatible stable constraint `^1.0`;
+`composer.lock` currently pins v1.0.0 at
+`6af816a02b7d1108ad5c990e9d0fda0af0a13de7`. PHPCS and PHPCBF share the
+existing project rules; `RANOwnedMethods` remains opt-in and is not enabled here.
+The frontend package remains on its reviewed Phase 7 candidate:
+`pnpm-lock.yaml` binds `@rocketsarenostalgic/quality-config` to
+`751edd097e3902efb93992bf47401a1a4f4b1fa8`. Its released-version adoption is a
+separate reviewed dependency update.
 
-Composer resolves the RAN plugin library and coding-standard candidate from
+Composer resolves the RAN plugin library and coding-standard package from
 their declared GitHub VCS sources; `composer.lock` is tracked to make those
 resolutions reproducible. A deployable archive must include `vendor/`; a source
 checkout needs `composer install`. Do not delete the lockfile or replace
