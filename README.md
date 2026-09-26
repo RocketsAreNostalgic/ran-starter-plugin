@@ -201,3 +201,12 @@ This is a private RAN development starter. It has no present WordPress.org
 publishing or public support commitment. Individual plugins own their runtime
 behaviour; this repository owns the reusable development and release
 conventions.
+
+## Native PHP qualification
+
+Quality runs the locked PHP checks and project archive/install tests on both
+PHP 8.4 and 8.5. Each project lane verifies its actual PHP interpreter and
+installed dependency platform requirements before installing and activating
+the built archive on WordPress 7.0. The terminal `quality` check requires both
+versions to succeed. Composer’s platform pin remains the dependency-resolution
+floor; it does not replace native runtime qualification.
