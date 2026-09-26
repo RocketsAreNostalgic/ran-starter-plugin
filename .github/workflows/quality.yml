@@ -90,7 +90,8 @@ jobs:
             - name: Verify native PHP version
               env:
                   EXPECTED_PHP: ${{ matrix.php }}
-              run: php -r 'exit(PHP_MAJOR_VERSION . "." . PHP_MINOR_VERSION === getenv("EXPECTED_PHP") ? 0 : 1);'
+              run: |
+                  php -r 'exit(PHP_MAJOR_VERSION . "." . PHP_MINOR_VERSION === getenv("EXPECTED_PHP") ? 0 : 1);'
 
             - name: Verify exact pnpm toolchain
               run: test "$(pnpm --version)" = '11.13.1'
