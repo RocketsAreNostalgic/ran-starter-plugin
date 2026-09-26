@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.2](https://github.com/RocketsAreNostalgic/ran-starter-plugin/compare/v0.1.1...v0.1.2) (2026-09-24)
+
+
+### Miscellaneous Chores
+
+* **quality:** adopt coding standards v1.0.0 ([#27](https://github.com/RocketsAreNostalgic/ran-starter-plugin/issues/27)) ([0e8a5e6](https://github.com/RocketsAreNostalgic/ran-starter-plugin/commit/0e8a5e6c71f8bd718603f0697efd07ee8e50e4a6))
+* **quality:** consolidate PHP formatting on PHPCS and PHPCBF ([#25](https://github.com/RocketsAreNostalgic/ran-starter-plugin/issues/25)) ([4f71279](https://github.com/RocketsAreNostalgic/ran-starter-plugin/commit/4f712793653a338416046deae9a2146b745cf781))
+
 ## [0.1.1](https://github.com/RocketsAreNostalgic/ran-starter-plugin/compare/v0.1.0...v0.1.1) (2026-09-15)
 
 
