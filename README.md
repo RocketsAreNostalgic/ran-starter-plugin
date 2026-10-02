@@ -166,7 +166,7 @@ Release Please opens or updates a release PR from Conventional Commits. Merging
 that PR creates the version tag and GitHub release; it does not publish to
 WordPress.org or deploy a site.
 
-The release manifest is currently at `0.1.0` and keeps the main plugin header and
+The release manifest is currently at `0.1.2` and keeps the main plugin header and
 `package.json` version synchronized. Before merging a release PR, verify its
 proposed version, changelog, generated assets, and the distributable archive
 separately:
