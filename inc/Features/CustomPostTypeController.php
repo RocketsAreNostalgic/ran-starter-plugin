@@ -77,7 +77,7 @@ class CustomPostTypeController extends BaseController implements ControllerInter
 
 		$this->setFields();
 
-		$this->settings->addSubPages( $this->subpages )->register();
+		$this->settings->add_subpages( $this->subpages )->init();
 
 		$this->storeCustomPostTypes();
 
@@ -114,7 +114,7 @@ class CustomPostTypeController extends BaseController implements ControllerInter
 			),
 		);
 
-		$this->settings->setSettings( $args );
+		$this->settings->set_settings( $args );
 	}
 
 	/**
@@ -130,7 +130,7 @@ class CustomPostTypeController extends BaseController implements ControllerInter
 			),
 		);
 
-		$this->settings->setSections( $args );
+		$this->settings->set_sections( $args );
 	}
 
 	/**
@@ -205,7 +205,7 @@ class CustomPostTypeController extends BaseController implements ControllerInter
 			),
 		);
 
-		$this->settings->setFields( $args );
+		$this->settings->set_fields( $args );
 	}
 
 	/**

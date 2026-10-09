@@ -99,6 +99,37 @@ class StarterContractsTest extends WP_Mock\Tools\TestCase {
 		$controller->settings->register_custom_fields();
 	}
 	/**
+	 * Enabled CPT scaffolding uses the real Settings API and stored-option observations.
+	 *
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
+	public function test_enabled_cpt_uses_real_settings_registration(): void {
+		WP_Mock::userFunction( 'get_plugin_data' )->andReturn(
+			array(
+				'Name'       => 'Fixture',
+				'Version'    => '1.2.3',
+				'TextDomain' => 'fixture',
+			)
+		);
+		WP_Mock::userFunction( 'plugin_dir_path' )->andReturn( dirname( __DIR__, 2 ) . '/' );
+		WP_Mock::userFunction( 'plugin_dir_url' )->andReturn( 'https://example.com/plugin/' );
+		WP_Mock::userFunction( 'plugin_basename' )->andReturn( 'ran-starter-plugin.php' );
+		WP_Mock::userFunction( 'sanitize_key' )->andReturn( 'fixture' );
+		WP_Mock::userFunction( 'trailingslashit' )->andReturnUsing( static fn ( string $value ): string => rtrim( $value, '/' ) . '/' );
+		Config::init( dirname( __DIR__, 2 ) . '/ran-starter-plugin.php' );
+		WP_Mock::userFunction( 'get_option' )->with( 'fixture', array() )->andReturn( array( 'cpt_manager' => true ) );
+		WP_Mock::userFunction( 'get_option' )->with( 'ran_plugin_cpt' )->once()->andReturn( false );
+		$controller = new \Ran\StarterPlugin\Features\CustomPostTypeController( new Config() );
+		$controller->register();
+		self::assertInstanceOf( \Ran\StarterPlugin\Base\SettingsApi::class, $controller->settings );
+		self::assertSame( 'ran_cpt', $controller->settings->wp_admin_subpages[0]['menu_slug'] );
+		WP_Mock::userFunction( 'register_setting' )->once()->with( 'ran_plugin_cpt_settings', 'ran_plugin_cpt', array( $controller->cpt_callbacks, 'cptSanitize' ) );
+		WP_Mock::userFunction( 'add_settings_section' )->once();
+		WP_Mock::userFunction( 'add_settings_field' )->times( count( $controller->settings->fields ) );
+		$controller->settings->register_custom_fields();
+	}
+	/**
 	 * The registered WordPress adapters preserve nullable overrides and normal output.
 	 *
 	 * @runInSeparateProcess
