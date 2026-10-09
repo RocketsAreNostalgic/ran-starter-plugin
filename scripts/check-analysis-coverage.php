@@ -20,9 +20,9 @@ try {
 			throw new RuntimeException( 'Analysis exclusions, stubs, suppressions or executable bootstraps require review.' );
 		}
 	}
-	$ran_starter_plugin_selected  = $ran_starter_plugin_container->getService( 'fileFinderAnalyse' )->findFiles( $ran_starter_plugin_container->getParameter( 'paths' ) )->getFiles();
-	$ran_starter_plugin_directory = new RecursiveDirectoryIterator( $ran_starter_plugin_root, FilesystemIterator::SKIP_DOTS );
-	$ran_starter_plugin_filter    = new RecursiveCallbackFilterIterator(
+	$ran_starter_plugin_selected        = $ran_starter_plugin_container->getService( 'fileFinderAnalyse' )->findFiles( $ran_starter_plugin_container->getParameter( 'paths' ) )->getFiles();
+	$ran_starter_plugin_directory       = new RecursiveDirectoryIterator( $ran_starter_plugin_root, FilesystemIterator::SKIP_DOTS );
+	$ran_starter_plugin_filter          = new RecursiveCallbackFilterIterator(
 		$ran_starter_plugin_directory,
 		static function ( SplFileInfo $file ) use ( $ran_starter_plugin_root ): bool {
 			$relative = substr( $file->getPathname(), strlen( $ran_starter_plugin_root ) + 1 );
@@ -36,8 +36,30 @@ try {
 			return true;
 		}
 	);
-	$ran_starter_plugin_count     = 0;
-	$ran_starter_plugin_snippets  = array();
+	$ran_starter_plugin_count           = 0;
+	$ran_starter_plugin_snippets        = array();
+	$ran_starter_plugin_xml_declaration = '~\A(?:\xEF\xBB\xBF)?<\?xml[ \t\r\n]+version[ \t\r\n]*=[ \t\r\n]*(?:"1\.[01]"|\'1\.[01]\')(?:[ \t\r\n]+encoding[ \t\r\n]*=[ \t\r\n]*(?:"[A-Za-z][A-Za-z0-9._-]*"|\'[A-Za-z][A-Za-z0-9._-]*\'))?(?:[ \t\r\n]+standalone[ \t\r\n]*=[ \t\r\n]*(?:"(?:yes|no)"|\'(?:yes|no)\'))?[ \t\r\n]*\?>~';
+	// Native PHP tokens distinguish executed code from strings and XML data without executing source.
+	$ran_starter_plugin_classify = static function ( string $source, string $origin ) use ( $ran_starter_plugin_xml_declaration ): bool {
+		$inspection = preg_replace( $ran_starter_plugin_xml_declaration, '', $source );
+		if ( null === $inspection ) {
+			throw new RuntimeException( 'Cannot classify maintained source.' );
+		}
+		$has_php = false;
+		foreach ( token_get_all( $inspection ) as $token ) {
+			if ( ! is_array( $token ) ) {
+				continue;
+			}
+			if ( ( T_INLINE_HTML === $token[0] && str_contains( $token[1], '<?' ) ) || ( T_OPEN_TAG === $token[0] && ! str_starts_with( strtolower( $token[1] ), '<?php' ) ) ) {
+				// phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Standalone CLI diagnostic includes the actual maintained source origin, not HTML.
+				throw new RuntimeException( 'Unsupported PHP opening tag requires review: ' . $origin );
+			}
+			if ( T_OPEN_TAG === $token[0] || T_OPEN_TAG_WITH_ECHO === $token[0] ) {
+				$has_php = true;
+			}
+		}
+		return $has_php;
+	};
 	foreach ( new RecursiveIteratorIterator( $ran_starter_plugin_filter ) as $ran_starter_plugin_file ) {
 		if ( ! $ran_starter_plugin_file->isFile() ) {
 			continue;
@@ -49,10 +71,6 @@ try {
 		$ran_starter_plugin_source = file_get_contents( $ran_starter_plugin_path );
 		if ( false === $ran_starter_plugin_source ) {
 			throw new RuntimeException( 'Cannot inspect maintained source: ' . $ran_starter_plugin_relative );
-		}
-		$ran_starter_plugin_php_header = preg_match( '/\A(?:\xEF\xBB\xBF)?(?:#![^\n]*\n)?\s*<\?(?:php|=)/i', $ran_starter_plugin_source );
-		if ( ! $ran_starter_plugin_php_header && in_array( $ran_starter_plugin_extension, array( 'md', 'json', 'lock', 'svg' ), true ) ) {
-			continue;
 		}
 		if ( in_array( $ran_starter_plugin_extension, array( 'sh', 'yml', 'yaml' ), true ) || preg_match( '/\A#![^\n]*(?:bash|sh)\b/', $ran_starter_plugin_source ) ) {
 			$ran_starter_plugin_remaining = preg_replace_callback(
@@ -71,14 +89,15 @@ try {
 			}
 			$ran_starter_plugin_remaining = preg_replace_callback(
 				"/<<'([A-Z_]+)'\\R(.*?)\\R\\1(?:\\R|$)/s",
-				static function ( array $match ) use ( &$ran_starter_plugin_snippets, $ran_starter_plugin_relative ): string {
-					if ( str_contains( $match[2], '<?php' ) ) {
+				static function ( array $match ) use ( &$ran_starter_plugin_snippets, $ran_starter_plugin_relative, $ran_starter_plugin_classify ): string {
+					if ( $ran_starter_plugin_classify( $match[2], $ran_starter_plugin_relative ) ) {
 						$ran_starter_plugin_snippets[] = array(
 							'source' => $match[2],
 							'origin' => $ran_starter_plugin_relative,
 						);
+						return '';
 					}
-					return '';
+					return $match[2];
 				},
 				$ran_starter_plugin_remaining
 			);
@@ -89,12 +108,13 @@ try {
 			if ( 'tests/php-quality-contract.sh' === $ran_starter_plugin_relative ) {
 				$ran_starter_plugin_remaining = str_replace( "printf '<?php function broken( {\\n' > \"\$fixture\"", '', $ran_starter_plugin_remaining );
 			}
-			if ( preg_match( '/(?:^|\R|[;&|])\s*(?:run:\s*|if\s+|then\s+)?php\b[^\n]*(?:\s-[A-Za-z]*[rBRE]\b|\s--(?:run|process-begin|process-code|process-end)\b)|<\?(?:php|=)/', $ran_starter_plugin_remaining ) ) {
+			if ( preg_match( '/(?:^|\R|[;&|])\s*(?:run:\s*|if\s+|then\s+)?php\b[^\n]*(?:\s-[A-Za-z]*[rBRE]\b|\s--(?:run|process-begin|process-code|process-end)\b)|<\?/', $ran_starter_plugin_remaining ) ) {
 				throw new RuntimeException( 'Embedded PHP form requires review: ' . $ran_starter_plugin_relative );
 			}
 			continue;
 		}
-		if ( in_array( $ran_starter_plugin_extension, array( 'php', 'phtml', 'inc' ), true ) || preg_match( '/<\?(?:php|=)/i', $ran_starter_plugin_source ) ) {
+		$ran_starter_plugin_has_php = $ran_starter_plugin_classify( $ran_starter_plugin_source, $ran_starter_plugin_relative );
+		if ( in_array( $ran_starter_plugin_extension, array( 'php', 'phtml', 'inc' ), true ) || $ran_starter_plugin_has_php ) {
 			if ( ! in_array( $ran_starter_plugin_path, $ran_starter_plugin_selected, true ) ) {
 				throw new RuntimeException( 'PHPStan does not directly select maintained PHP: ' . $ran_starter_plugin_relative );
 			}

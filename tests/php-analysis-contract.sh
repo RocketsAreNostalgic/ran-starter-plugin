@@ -4,7 +4,7 @@ cd "$(dirname "$0")/.."
 fixture_dir=$(mktemp -d "${TMPDIR:-/tmp}/ran-starter-contract.XXXXXX")
 trap 'status=$?; if [[ $status -ne 0 ]]; then tail -n 40 "$fixture_dir"/repo/*.log >&2; fi; rm -rf "$fixture_dir"' EXIT
 mkdir "$fixture_dir/repo"
-for item in inc templates scripts tests .github composer.json phpstan.neon ran-starter-plugin.php uninstall.php index.php; do
+for item in inc templates scripts tests .github .phpcs.xml phpunit.xml composer.json phpstan.neon ran-starter-plugin.php uninstall.php index.php; do
     cp -a "$item" "$fixture_dir/repo/"
 done
 ln -s "$PWD/vendor" "$fixture_dir/repo/vendor"
@@ -86,5 +86,30 @@ cat ../probe.txt >> disguised.json
 if composer analyze > disguised.log 2>&1; then echo 'BOM-prefixed PHP passed' >&2; exit 1; fi
 grep -q 'disguised.json' disguised.log
 rm disguised.json
+sed '1s/php//' ../probe.txt > inc/bare.php
+if composer analyze > bare.log 2>&1; then echo 'Bare PHP tag passed' >&2; exit 1; fi
+grep -q 'Unsupported PHP opening tag' bare.log
+rm inc/bare.php
+sed '1s/php/xml bogus/' ../probe.txt > false-xml.json
+if composer analyze > false-xml.log 2>&1; then echo 'False XML declaration passed' >&2; exit 1; fi
+grep -q 'Unsupported PHP opening tag' false-xml.log
+rm false-xml.json
+printf '%s\n' '<html>' > mixed.json
+cat ../probe.txt >> mixed.json
+if composer analyze > mixed.log 2>&1; then echo 'Mixed HTML PHP escaped coverage' >&2; exit 1; fi
+grep -q 'mixed.json' mixed.log
+rm mixed.json
+printf "cat <<'PHP'\n" > extra.sh
+sed '1s/php//' ../probe.txt >> extra.sh
+printf '%s\n' PHP >> extra.sh
+if composer analyze > bare-heredoc.log 2>&1; then echo 'Bare heredoc PHP passed' >&2; exit 1; fi
+grep -q 'Unsupported PHP opening tag' bare-heredoc.log
+rm extra.sh
+printf "cat <<'PHP'\n" > extra.sh
+sed '1s/php/= "value"; ?>/' ../probe.txt >> extra.sh
+printf '%s\n' PHP >> extra.sh
+composer analyze > echo-heredoc.log 2>&1
+rm extra.sh
+cp phpunit.xml valid.xml
 composer analyze > restored.log 2>&1
 echo 'PHP analysis contract passed'
