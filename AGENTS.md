@@ -85,15 +85,18 @@ The PHP standard uses `^1.0`, with the tracked Composer lock binding released
 v1.0.0 at `6af816a02b7d1108ad5c990e9d0fda0af0a13de7`. Future upgrades need a
 reviewed dependency PR and retained local qualification. `RANOwnedMethods`
 remains opt-in; a package update must not silently activate a new naming cohort.
-The frontend lock still binds the reviewed Phase 7 candidate
-`751edd097e3902efb93992bf47401a1a4f4b1fa8`; migrate it only through its separate
-released-version adoption after the required reference proofs. Do not replace
-either lock with floating or unreviewed package state.
+The frontend lock binds the upstream-aligned candidate
+`3633371011f05dcea8bf8e13e2ca3005cb4e1d8f`. Future changes require a reviewed
+dependency update; shared publication requires the same candidate to qualify
+against Starter and Core. Do not replace either lock with floating or
+unreviewed package state.
 
 Repository-local configuration remains authoritative for this project's actual
 contract: WordPress/PHP support ranges, plugin prefix and namespace, source and
-generated paths, JS globals, browser policy, Starter-specific Stylelint rules,
-and narrow project exceptions. Do not move those settings into the shared
+generated paths, JS globals, browser build targets and narrow project exceptions.
+CSS/SCSS lint rules follow the official WordPress baseline without additional
+RAN enforcement, as accepted in [the owner decision](https://github.com/RocketsAreNostalgic/.github/issues/65#issuecomment-6077430975).
+The class-name exception permits WordPress-generated admin body classes. Do not move those settings into the shared
 packages merely to reduce local file size, and do not copy shared ancestry back
 into local config.
 
@@ -121,7 +124,7 @@ analysis. `composer standards` checks PHP style; `composer standards:fix`
 uses PHPCBF with the same rules and paths. PHP-CS-Fixer is not used.
 Use `composer analyze` for a focused PHPStan run when iterating on PHP
 code or type information. `pnpm check` runs the frontend checks through the RAN
-shared WordPress ESLint/Prettier/Stylelint ancestry, retains Starter-local rules,
+shared WordPress ESLint/Prettier/Stylelint ancestry, retains project exceptions,
 and verifies that committed `assets/dist/` output is current. Focused
 release/archive checks remain separate where documented by CI or release
 guidance.

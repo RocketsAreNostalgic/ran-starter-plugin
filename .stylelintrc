@@ -1,12 +1,6 @@
 {
 	"extends": [
-		"@rocketsarenostalgic/quality-config/stylelint/wordpress-scss",
-		"stylelint-config-rational-order"
-	],
-	"plugins": [
-		"stylelint-use-logical-spec",
-		"stylelint-no-unsupported-browser-features",
-		"stylelint-high-performance-animation"
+		"@rocketsarenostalgic/quality-config/stylelint/wordpress-scss"
 	],
 	"ignoreFiles": [
 		"**/*.md",
@@ -21,28 +15,6 @@
 		"*.xml"
 	],
 	"rules": {
-		"selector-class-pattern": null,
-		"rule-empty-line-before": [
-			"always-multi-line",
-			{
-				"except": [
-					"after-single-line-comment",
-					"first-nested"
-				]
-			}
-		],
-		"liberty/use-logical-spec": "always",
-		"plugin/no-low-performance-animation-properties": [
-			true,
-			{
-				"severity": "warning"
-			}
-		],
-		"plugin/no-unsupported-browser-features": [
-			true,
-			{
-				"severity": "warning"
-			}
-		]
+		"selector-class-pattern": null
 	}
 }
