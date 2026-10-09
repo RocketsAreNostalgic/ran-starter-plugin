@@ -86,7 +86,7 @@ v1.0.0 at `6af816a02b7d1108ad5c990e9d0fda0af0a13de7`. Future upgrades need a
 reviewed dependency PR and retained local qualification. `RANOwnedMethods`
 remains opt-in; a package update must not silently activate a new naming cohort.
 The frontend lock binds the upstream-aligned candidate
-`c7ca14dfadb6584ff3baa1884579f59b2b85c757`. Future changes require a reviewed
+`7faebe578c509e9265769314fd41bb1485b868b0`. Future changes require a reviewed
 dependency update; shared publication requires the same candidate to qualify
 against Starter and Core. Do not replace either lock with floating or
 unreviewed package state.
