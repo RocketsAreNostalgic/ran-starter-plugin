@@ -89,7 +89,7 @@ class CptCallbacks {
 	 *
 	 * TODO Add nonce verification. See TestimonialController for an example.
 	 *
-	 * @param  array<string|bool> $args - An array of checkbox arguments.
+	 * @param array{label_for:string,class:string,option_name:string} $args Checkbox field metadata from setFields().
 	 */
 	public function checkbox_field( array $args ): void {
 		$name        = $args['label_for'];

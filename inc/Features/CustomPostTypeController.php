@@ -23,7 +23,7 @@ class CustomPostTypeController extends BaseController implements ControllerInter
 	/**
 	 * Public settings variable.
 	 *
-	 * @var $settings mixed - the settings.
+	 * @var mixed $settings The settings.
 	 */
 	public mixed $settings;
 
