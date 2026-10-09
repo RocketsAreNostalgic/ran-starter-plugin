@@ -11,7 +11,7 @@ plugin header expresses the minimum PHP version; `composer.json` and
 PHPCompatibility define the full supported PHP range. Keep the plugin header,
 `composer.json`, `.phpcs.xml`, CI, and documentation aligned whenever that
 contract changes. PHP 8.6 and later runtimes require an explicit compatibility
-update before being claimed. The JavaScript baseline is Node.js 24.11.0 with
+update before being claimed. The JavaScript baseline is Node.js 24.21.0 with
 pnpm 11.13+; `package.json` is the local and CI Node-version authority.
 
 ## Dex: plans and execution record
@@ -86,7 +86,7 @@ v1.0.0 at `6af816a02b7d1108ad5c990e9d0fda0af0a13de7`. Future upgrades need a
 reviewed dependency PR and retained local qualification. `RANOwnedMethods`
 remains opt-in; a package update must not silently activate a new naming cohort.
 The frontend lock binds the upstream-aligned candidate
-`3633371011f05dcea8bf8e13e2ca3005cb4e1d8f`. Future changes require a reviewed
+`c7ca14dfadb6584ff3baa1884579f59b2b85c757`. Future changes require a reviewed
 dependency update; shared publication requires the same candidate to qualify
 against Starter and Core. Do not replace either lock with floating or
 unreviewed package state.
