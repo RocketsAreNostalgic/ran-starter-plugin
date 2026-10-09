@@ -36,6 +36,7 @@ class CptCallbacks {
 	public function cpt_sanitize( array $input ): array {
 
 		$output = get_option( 'ran_plugin_cpt' );
+		$output = is_array( $output ) ? $output : array();
 
 		//phpcs:disable WordPress.Security.NonceVerification.Missing
 		if ( isset( $_POST['remove'] ) ) {

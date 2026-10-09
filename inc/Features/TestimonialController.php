@@ -52,8 +52,8 @@ class TestimonialController extends BaseController implements ControllerInterfac
 
 		$this->setShortcodePage();
 
-		add_shortcode( 'testimonial-form', array( $this, 'testimonial_form' ) );
-		add_shortcode( 'testimonial-slideshow', array( $this, 'testimonial_slideshow' ) );
+		add_shortcode( 'testimonial-form', fn ( mixed ...$args ): string => $this->testimonial_form( ...$args ) ?? '' );
+		add_shortcode( 'testimonial-slideshow', fn ( mixed ...$args ): string => $this->testimonial_slideshow( ...$args ) ?? '' );
 		add_action( 'wp_ajax_submit_testimonial', array( $this, 'submit_testimonial' ) );
 		add_action( 'wp_ajax_nopriv_submit_testimonial', array( $this, 'submit_testimonial' ) );
 	}
@@ -110,6 +110,8 @@ class TestimonialController extends BaseController implements ControllerInterfac
 	 *
 	 * Derived plugins should enqueue any feature-specific assets explicitly;
 	 * the starter does not advertise placeholder asset URLs that do not exist.
+	 *
+	 * @return string|null Rendered content, or null on buffer failure.
 	 */
 	public function testimonial_form(): ?string {
 		ob_start();
@@ -124,6 +126,8 @@ class TestimonialController extends BaseController implements ControllerInterfac
 	 *
 	 * Derived plugins should enqueue any feature-specific assets explicitly;
 	 * the starter does not advertise placeholder asset URLs that do not exist.
+	 *
+	 * @return string|null Rendered content, or null on buffer failure.
 	 */
 	public function testimonial_slideshow(): ?string {
 		ob_start();
@@ -148,7 +152,7 @@ class TestimonialController extends BaseController implements ControllerInterfac
 			),
 		);
 
-		$this->settings->addSubPages( $subpage )->register();
+		$this->settings->add_subpages( $subpage )->init();
 	}
 
 	/**

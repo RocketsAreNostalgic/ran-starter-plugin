@@ -30,7 +30,8 @@ if ( $query->have_posts() ) :
 
 	while ( $query->have_posts() ) :
 		$query->the_post();
-		$name = get_post_meta( get_the_ID(), '_ran_testimonial_key', true )['name'] ?? '';
+		$post_id = get_the_ID();
+		$name    = false === $post_id ? '' : ( get_post_meta( $post_id, '_ran_testimonial_key', true )['name'] ?? '' );
 
 		echo '<li class="ac-slider--view__slides' . ( $i === 1 ? ' is-active' : '' ) . '"><p class="testimonial-quote">"' . esc_html( get_the_content() ) . '"</p><p class="testimonial-author">~ ' . esc_html( $name ) . ' ~</p></li>';
 

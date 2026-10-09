@@ -34,7 +34,7 @@ class AdminCallbacks {
 	 */
 	public function __construct( ?ConfigInterface $plugin = null ) {
 		$config            = $plugin ?? Config::get_instance();
-		$this->plugin_data = $config->get_plugin_config();
+		$this->plugin_data = $config->get_config();
 	}
 
 	/**

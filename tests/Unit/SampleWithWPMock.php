@@ -38,6 +38,7 @@ class SampleWithWPMockTest extends WP_Mock\Tools\TestCase {
 	 * Ensures the WP_Mock harness itself remains usable by the starter.
 	 */
 	public function test_harness_is_available(): void {
-		self::assertTrue( true );
+		WP_Mock::userFunction( 'esc_html' )->once()->with( 'probe' )->andReturn( 'mocked' );
+		self::assertSame( 'mocked', esc_html( 'probe' ) );
 	}
 }
