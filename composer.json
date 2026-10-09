@@ -64,9 +64,13 @@
 		"standards:fix": "phpcbf --standard=.phpcs.xml --report=summary",
 		"test": [
 			"@test:unit",
-			"@test:quality-contract"
+			"@test:quality-contract",
+			"@test:analysis-contract"
 		],
-		"analyze": "phpstan analyse --configuration=phpstan.neon --no-progress --memory-limit=1G",
+		"analyze": [
+			"@check:coverage",
+			"phpstan analyse --configuration=phpstan.neon --no-progress --memory-limit=1G"
+		],
 		"build-assets": "bash ./scripts/build-assets.sh",
 		"build": [
 			"bash scripts/format-php-for-build.sh",
@@ -74,7 +78,9 @@
 		],
 		"lint:syntax": "bash -o pipefail -c 'find . -type d \\( -name vendor -o -name node_modules -o -name .git \\) -prune -o -type f -name \"*.php\" -print0 | xargs -0 -n1 php -l'",
 		"test:unit": "phpunit --configuration phpunit.xml",
-		"test:quality-contract": "bash tests/php-quality-contract.sh"
+		"test:quality-contract": "bash tests/php-quality-contract.sh",
+		"check:coverage": "@php scripts/check-analysis-coverage.php",
+		"test:analysis-contract": "bash tests/php-analysis-contract.sh"
 	},
 	"config": {
 		"allow-plugins": {

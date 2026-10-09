@@ -169,3 +169,15 @@ If CI fails, inspect GitHub Actions logs directly and diagnose/fix the failure y
 
 This prohibition is a cost-control requirement and must not be overridden by convenience,
 CI failure, review comments, or suggestions from GitHub/Blacksmith UI.
+
+PHPStan Level 8 is blocking through `composer analyze`, with PHP 8.4 semantics
+and the existing `treatPhpDocTypesAsCertain: false`. Coverage verifies the actual
+checker file selection for entrypoints, source, templates, scripts and tests.
+New PHP files in maintained directories are included automatically; otherwise
+PHP headers (including extensionless or metadata-named files) fail closed.
+Literal single-quoted shell `php -r` and quoted PHP heredoc forms are extracted
+and analyzed without executing their bodies; new unsupported executable forms
+require review. Documentation examples remain data. The existing malformed
+syntax fixture retains its required parser failure. `composer test:analysis-contract`
+proves nullable findings fail the canonical runner, Level 7 passes the same
+probes, and coverage and configuration regressions cannot return green.
