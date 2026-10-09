@@ -124,7 +124,11 @@ class StarterContractsTest extends WP_Mock\Tools\TestCase {
 		$controller->register();
 		self::assertInstanceOf( \Ran\StarterPlugin\Base\SettingsApi::class, $controller->settings );
 		self::assertSame( 'ran_cpt', $controller->settings->wp_admin_subpages[0]['menu_slug'] );
-		WP_Mock::userFunction( 'register_setting' )->once()->with( 'ran_plugin_cpt_settings', 'ran_plugin_cpt', array( $controller->cpt_callbacks, 'cptSanitize' ) );
+		foreach ( array_merge( $controller->settings->settings, $controller->settings->sections, $controller->settings->fields ) as $entry ) {
+			self::assertTrue( is_callable( $entry['callback'] ) );
+		}
+
+		WP_Mock::userFunction( 'register_setting' )->once()->with( 'ran_plugin_cpt_settings', 'ran_plugin_cpt', array( $controller->cpt_callbacks, 'cpt_sanitize' ) );
 		WP_Mock::userFunction( 'add_settings_section' )->once();
 		WP_Mock::userFunction( 'add_settings_field' )->times( count( $controller->settings->fields ) );
 		$controller->settings->register_custom_fields();

@@ -110,7 +110,7 @@ class CustomPostTypeController extends BaseController implements ControllerInter
 			array(
 				'option_group' => 'ran_plugin_cpt_settings',
 				'option_name'  => 'ran_plugin_cpt',
-				'callback'     => array( $this->cpt_callbacks, 'cptSanitize' ),
+				'callback'     => array( $this->cpt_callbacks, 'cpt_sanitize' ),
 			),
 		);
 
@@ -125,7 +125,7 @@ class CustomPostTypeController extends BaseController implements ControllerInter
 			array(
 				'id'       => 'ran_cpt_index',
 				'title'    => 'Custom Post Type Manager',
-				'callback' => array( $this->cpt_callbacks, 'cptSectionManager' ),
+				'callback' => array( $this->cpt_callbacks, 'cpt_section_manager' ),
 				'page'     => 'ran_cpt',
 			),
 		);
