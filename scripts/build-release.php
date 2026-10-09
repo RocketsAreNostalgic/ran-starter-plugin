@@ -211,8 +211,11 @@ function ran_starter_plugin_release_validate_archive( string $archive_path, stri
 
 $root    = dirname( __DIR__ );
 $version = ran_starter_plugin_release_version( $root );
-$check   = in_array( '--check', $argv, true );
-$output  = null;
+if ( ! isset( $argv ) ) {
+	ran_starter_plugin_release_fail( 'CLI arguments are unavailable; enable register_argc_argv.' );
+}
+$check  = in_array( '--check', $argv, true );
+$output = null;
 foreach ( $argv as $argument ) {
 	if ( str_starts_with( $argument, '--output=' ) ) {
 		$output = substr( $argument, 9 );
