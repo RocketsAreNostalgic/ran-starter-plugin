@@ -23,7 +23,7 @@ class CustomPostTypeController extends BaseController implements ControllerInter
 	/**
 	 * Public settings variable.
 	 *
-	 * @var $settings mixed - the settings.
+	 * @var mixed $settings The settings.
 	 */
 	public mixed $settings;
 
@@ -77,7 +77,7 @@ class CustomPostTypeController extends BaseController implements ControllerInter
 
 		$this->setFields();
 
-		$this->settings->addSubPages( $this->subpages )->register();
+		$this->settings->add_subpages( $this->subpages )->init();
 
 		$this->storeCustomPostTypes();
 
@@ -110,11 +110,11 @@ class CustomPostTypeController extends BaseController implements ControllerInter
 			array(
 				'option_group' => 'ran_plugin_cpt_settings',
 				'option_name'  => 'ran_plugin_cpt',
-				'callback'     => array( $this->cpt_callbacks, 'cptSanitize' ),
+				'callback'     => array( $this->cpt_callbacks, 'cpt_sanitize' ),
 			),
 		);
 
-		$this->settings->setSettings( $args );
+		$this->settings->set_settings( $args );
 	}
 
 	/**
@@ -125,12 +125,12 @@ class CustomPostTypeController extends BaseController implements ControllerInter
 			array(
 				'id'       => 'ran_cpt_index',
 				'title'    => 'Custom Post Type Manager',
-				'callback' => array( $this->cpt_callbacks, 'cptSectionManager' ),
+				'callback' => array( $this->cpt_callbacks, 'cpt_section_manager' ),
 				'page'     => 'ran_cpt',
 			),
 		);
 
-		$this->settings->setSections( $args );
+		$this->settings->set_sections( $args );
 	}
 
 	/**
@@ -205,7 +205,7 @@ class CustomPostTypeController extends BaseController implements ControllerInter
 			),
 		);
 
-		$this->settings->setFields( $args );
+		$this->settings->set_fields( $args );
 	}
 
 	/**

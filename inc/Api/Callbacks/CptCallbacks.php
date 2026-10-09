@@ -36,6 +36,7 @@ class CptCallbacks {
 	public function cpt_sanitize( array $input ): array {
 
 		$output = get_option( 'ran_plugin_cpt' );
+		$output = is_array( $output ) ? $output : array();
 
 		//phpcs:disable WordPress.Security.NonceVerification.Missing
 		if ( isset( $_POST['remove'] ) ) {
@@ -89,7 +90,7 @@ class CptCallbacks {
 	 *
 	 * TODO Add nonce verification. See TestimonialController for an example.
 	 *
-	 * @param  array<string|bool> $args - An array of checkbox arguments.
+	 * @param array{label_for:string,class:string,option_name:string} $args Checkbox field metadata from setFields().
 	 */
 	public function checkbox_field( array $args ): void {
 		$name        = $args['label_for'];

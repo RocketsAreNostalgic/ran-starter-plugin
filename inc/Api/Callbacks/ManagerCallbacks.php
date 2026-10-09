@@ -33,7 +33,7 @@ class ManagerCallbacks {
 		$output = array();
 
 		// Loop through our checkbox array and create an array of sanitized values.
-		foreach ( $this as $key => $value ) {
+		foreach ( $this instanceof \Traversable ? $this : get_object_vars( $this ) as $key => $value ) {
 			$output[ $key ] = isset( $input[ $key ] ) ? true : false;
 		}
 

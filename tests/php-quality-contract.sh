@@ -17,7 +17,7 @@ cat > "$fixture" <<'PHP'
 /**
  * Return example values.
  *
- * @return array Example values.
+ * @return array<string, string> Example values.
  */
 function ran_starter_plugin_quality_contract() {
 	$short = 'a';
@@ -36,7 +36,10 @@ if php vendor/bin/phpcs --standard=.phpcs.xml -n -q --report=json "$fixture" > "
 	exit 1
 fi
 php -r '
-$report = json_decode(file_get_contents($argv[1]), true, 512, JSON_THROW_ON_ERROR);
+if (!isset($argv[1])) { fwrite(STDERR, "Checker report argument is required.\n"); exit(1); }
+$report_json = file_get_contents($argv[1]);
+if (false === $report_json) { throw new RuntimeException("Checker report could not be read."); }
+$report = json_decode($report_json, true, 512, JSON_THROW_ON_ERROR);
 $found = [];
 foreach ($report["files"] as $file) {
     foreach ($file["messages"] as $message) {

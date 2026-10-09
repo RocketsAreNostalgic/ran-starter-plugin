@@ -20,9 +20,9 @@ class Bootstrap implements BootstrapInterface {
 	/**
 	 * The Config class object.
 	 *
-	 * @var Config $config - the config object.
+	 * @var ConfigInterface $config - the config object.
 	 */
-	private Config $config;
+	private ConfigInterface $config;
 
 	/**
 	 * Plugin data array
@@ -38,7 +38,7 @@ class Bootstrap implements BootstrapInterface {
 	 */
 	public function __construct( ConfigInterface $config ) {
 		$this->config      = $config;
-		$this->plugin_data = $this->config->get_plugin_config();
+		$this->plugin_data = $this->config->get_config();
 	}
 
 	/**

@@ -73,7 +73,7 @@ class CustomTaxonomyController extends BaseController implements ControllerInter
 		$this->setSections();
 		$this->setFields();
 
-		$this->settings->addSubPages( $this->subpages )->register();
+		$this->settings->add_subpages( $this->subpages )->init();
 		$this->storeCustomTaxonomies();
 
 		if ( ! empty( $this->taxonomies ) ) {
@@ -109,7 +109,7 @@ class CustomTaxonomyController extends BaseController implements ControllerInter
 			),
 		);
 
-		$this->settings->setSettings( $args );
+		$this->settings->set_settings( $args );
 	}
 
 	/**
@@ -125,7 +125,7 @@ class CustomTaxonomyController extends BaseController implements ControllerInter
 			),
 		);
 
-		$this->settings->setSections( $args );
+		$this->settings->set_sections( $args );
 	}
 
 	/**
@@ -187,7 +187,7 @@ class CustomTaxonomyController extends BaseController implements ControllerInter
 			),
 		);
 
-		$this->settings->setFields( $args );
+		$this->settings->set_fields( $args );
 	}
 
 	/**

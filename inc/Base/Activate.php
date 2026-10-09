@@ -31,14 +31,15 @@ class Activate implements ActivationInterface {
 	 */
 	public static function activate( ConfigInterface $config, mixed ...$args ): void {
 
-		$plugin_data = $config->get_plugin_config();
+		$plugin_data = $config->get_config();
 
 		$option_data = array( 'Version' => $plugin_data['Version'] );
+		$option_name = $config->get_options_key();
 
 		flush_rewrite_rules();
 
-		if ( ! get_option( $plugin_data['PluginOption'] ) ) {
-			update_option( $plugin_data['PluginOption'], $option_data );
+		if ( ! get_option( $option_name ) ) {
+			update_option( $option_name, $option_data );
 		}
 	}
 }

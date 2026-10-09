@@ -29,7 +29,7 @@ class ExampleFeatureCallbacks {
 	 */
 	public function __construct( ConfigInterface $plugin ) {
 
-		$this->plugin_data = $plugin->get_plugin_config();
+		$this->plugin_data = $plugin->get_config();
 	}
 
 	/**
@@ -37,13 +37,13 @@ class ExampleFeatureCallbacks {
 	 */
 	public function admin_dashboard(): bool {
 
-		return require_once $this->plugin_data['PATH'] . '/templates/dashboard.php';
+		return (bool) require_once $this->plugin_data['PATH'] . '/templates/dashboard.php';
 	}
 
 	/**
 	 * Require the example template.
 	 */
 	public function example_feature(): bool {
-		return require_once "$this->plugin_data['PATH']" . '/templates/features/example-feature.php';
+		return (bool) require_once $this->plugin_data['PATH'] . '/templates/features/example-feature.php';
 	}
 }

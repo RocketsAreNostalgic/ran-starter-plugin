@@ -222,3 +222,17 @@ the built archive on WordPress 7.0. The terminal `quality` check requires both
 versions to succeed. The tracked dependency lock remains unchanged; installed
 dependency checks verify the real runtime rather than relying on support
 declarations alone.
+
+PHPStan Level 8 is blocking through `composer analyze`, with PHP 8.4 semantics
+and the existing `treatPhpDocTypesAsCertain: false`. Coverage verifies the actual
+checker file selection for entrypoints, source, templates, scripts and tests.
+New PHP files in maintained directories are included automatically; otherwise
+PHP headers (including extensionless or metadata-named files) fail closed.
+Literal single-quoted shell `php -r` and quoted PHP heredoc forms are extracted
+and analyzed independently without executing their bodies or sharing snippet
+symbols; new unsupported executable forms require review. Native PHP string
+literals and genuine leading XML declarations remain data. PHP-bearing data
+files require narrow review; no data extension has a blanket coverage waiver. The existing malformed
+syntax fixture retains its required parser failure. `composer test:analysis-contract`
+proves nullable findings fail the canonical runner, Level 7 passes the same
+probes, and coverage and configuration regressions cannot return green.

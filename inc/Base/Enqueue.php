@@ -17,14 +17,14 @@ class Enqueue extends BaseController implements ControllerInterface {
 	/**
 	 * Styles to enqueue.
 	 *
-	 * @var array<string>
+	 * @var array<array<mixed>>
 	 */
 	public array $styles = array();
 
 	/**
 	 * Scripts to enqueue.
 	 *
-	 * @var array<string>
+	 * @var array<array<mixed>>
 	 */
 	public array $scripts = array();
 
@@ -32,7 +32,7 @@ class Enqueue extends BaseController implements ControllerInterface {
 	/**
 	 * Media to enqueue.
 	 *
-	 * @var array<string>
+	 * @var array<array<mixed>>
 	 */
 	public array $media = array();
 
@@ -46,7 +46,7 @@ class Enqueue extends BaseController implements ControllerInterface {
 	/**
 	 * A chain-able call to enqueue all our scripts, styles and media.
 	 *
-	 * @param  array<mixed> $scripts - The array of scripts.
+	 * @param  array<array<mixed>> $scripts - The array of scripts.
 	 */
 	public function enqueue_scripts( array $scripts ): Enqueue {
 		foreach ( $scripts as $script ) {
@@ -58,7 +58,7 @@ class Enqueue extends BaseController implements ControllerInterface {
 	/**
 	 * A chain-able call to enqueue all our styles.
 	 *
-	 * @param  array<mixed> $styles - The array of styles.
+	 * @param  array<array<mixed>> $styles - The array of styles.
 	 */
 	public function enqueue_styles( array $styles ): Enqueue {
 		foreach ( $styles as $style ) {
@@ -71,7 +71,7 @@ class Enqueue extends BaseController implements ControllerInterface {
 	/**
 	 * A chain-able call to enqueue all our media.
 	 *
-	 * @param  array<mixed> $media - An array of media.
+	 * @param  array<array<mixed>> $media - An array of media.
 	 */
 	public function enqueue_media( array $media ): Enqueue {
 		foreach ( $media as $args ) {

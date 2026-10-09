@@ -19,7 +19,7 @@ const RAN_STARTER_PLUGIN_RELEASE_MTIME = 946684800;
  *
  * @param string $message Error message.
  */
-function ran_starter_plugin_release_fail( string $message ): void {
+function ran_starter_plugin_release_fail( string $message ): never {
 	fwrite( STDERR, $message . PHP_EOL );
 	exit( 1 );
 }
@@ -197,6 +197,10 @@ function ran_starter_plugin_release_validate_archive( string $archive_path, stri
 	// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- ZipArchive exposes numFiles.
 	for ( $index = 0; $index < $archive->numFiles; $index++ ) {
 		$name = $archive->getNameIndex( $index );
+		if ( false === $name ) {
+			$archive->close();
+			ran_starter_plugin_release_fail( 'Archive entry name could not be read.' );
+		}
 		if ( ! str_starts_with( $name, $root ) || preg_match( '#^' . preg_quote( $root, '#' ) . '(?:node_modules|tests|\\.git|\\.github|scripts)/|^' . preg_quote( $root, '#' ) . 'vendor/bin/#', $name ) ) {
 			$archive->close();
 			ran_starter_plugin_release_fail( 'Archive contains an invalid development path: ' . $name );
@@ -207,8 +211,11 @@ function ran_starter_plugin_release_validate_archive( string $archive_path, stri
 
 $root    = dirname( __DIR__ );
 $version = ran_starter_plugin_release_version( $root );
-$check   = in_array( '--check', $argv, true );
-$output  = null;
+if ( ! isset( $argv ) ) {
+	ran_starter_plugin_release_fail( 'CLI arguments are unavailable; enable register_argc_argv.' );
+}
+$check  = in_array( '--check', $argv, true );
+$output = null;
 foreach ( $argv as $argument ) {
 	if ( str_starts_with( $argument, '--output=' ) ) {
 		$output = substr( $argument, 9 );
