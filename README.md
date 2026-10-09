@@ -60,17 +60,28 @@ formatting, the shared `RANWordPressPlugin` PHPCS/WPCS/PHPCompatibility
 baseline plus Starter-local rules, unit tests, and WordPress-aware PHPStan
 static analysis. Use `composer analyze` when you want to run PHPStan by itself.
 `pnpm check` is the ordinary deterministic frontend contract: ESLint, Prettier
-and Stylelint derive from `@rocketsarenostalgic/quality-config`, Starter-local
-rules remain local, and committed asset freshness is verified.
+and Stylelint derive from `@rocketsarenostalgic/quality-config`, project
+exceptions remain local, and committed asset freshness is verified.
 
 `ran/coding-standards` uses the compatible stable constraint `^1.0`;
 `composer.lock` currently pins v1.0.0 at
 `6af816a02b7d1108ad5c990e9d0fda0af0a13de7`. PHPCS and PHPCBF share the
 existing project rules; `RANOwnedMethods` remains opt-in and is not enabled here.
-The frontend package remains on its reviewed Phase 7 candidate:
-`pnpm-lock.yaml` binds `@rocketsarenostalgic/quality-config` to
-`751edd097e3902efb93992bf47401a1a4f4b1fa8`. Its released-version adoption is a
-separate reviewed dependency update.
+The frontend lock binds `@rocketsarenostalgic/quality-config` to upstream-aligned
+candidate `3633371011f05dcea8bf8e13e2ca3005cb4e1d8f`, with WordPress Stylelint
+configuration 26.1.0, Stylelint 17.14.1 and Stylelint-SCSS 7.2.0. Its
+released-version adoption remains a separate reviewed dependency update.
+
+CSS/SCSS checks follow the official WordPress baseline, as accepted in
+[the owner decision](https://github.com/RocketsAreNostalgic/.github/issues/65#issuecomment-6077430975).
+Starter no longer adds logical-property enforcement, rational declaration ordering,
+browser-warning or animation-performance plugins. Browser build targets remain
+unchanged. Upstream disables SCSS duplicate-selector and descending-specificity
+checks because Stylelint 17 follows CSS nesting rather than Sass concatenation;
+these former checks are not replaced locally. The upstream CSS validator also
+skips custom-property values. Source selection and generated-asset parity remain
+required, and the local class-name exception permits WordPress-generated admin
+body classes.
 
 Composer resolves the RAN plugin library and coding-standard package from
 their declared GitHub VCS sources; `composer.lock` is tracked to make those
