@@ -68,7 +68,7 @@ exceptions remain local, and committed asset freshness is verified.
 `6af816a02b7d1108ad5c990e9d0fda0af0a13de7`. PHPCS and PHPCBF share the
 existing project rules; `RANOwnedMethods` remains opt-in and is not enabled here.
 The frontend lock binds `@rocketsarenostalgic/quality-config` to upstream-aligned
-candidate `c7ca14dfadb6584ff3baa1884579f59b2b85c757`, with WordPress Stylelint
+candidate `7faebe578c509e9265769314fd41bb1485b868b0`, with WordPress Stylelint
 configuration 26.1.0, Stylelint 17.14.1 and Stylelint-SCSS 7.2.0. Its
 released-version adoption remains a separate reviewed dependency update.
 
