@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3](https://github.com/RocketsAreNostalgic/ran-starter-plugin/compare/v0.1.2...v0.1.3) (2026-10-09)
+
+
+### Bug Fixes
+
+* enforce complete Starter PHPStan Level 8 coverage ([#35](https://github.com/RocketsAreNostalgic/ran-starter-plugin/issues/35)) ([a6f24cf](https://github.com/RocketsAreNostalgic/ran-starter-plugin/commit/a6f24cfc71852a7500778a7d0061fcbd3483dc4c))
+
 ## [0.1.2](https://github.com/RocketsAreNostalgic/ran-starter-plugin/compare/v0.1.1...v0.1.2) (2026-09-24)
 
 
