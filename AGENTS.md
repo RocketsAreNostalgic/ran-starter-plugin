@@ -176,8 +176,10 @@ checker file selection for entrypoints, source, templates, scripts and tests.
 New PHP files in maintained directories are included automatically; otherwise
 PHP headers (including extensionless or metadata-named files) fail closed.
 Literal single-quoted shell `php -r` and quoted PHP heredoc forms are extracted
-and analyzed without executing their bodies; new unsupported executable forms
-require review. Documentation examples remain data. The existing malformed
+and analyzed independently without executing their bodies or sharing snippet
+symbols; new unsupported executable forms require review. Native PHP string
+literals and genuine leading XML declarations remain data. PHP-bearing data
+files require narrow review; no data extension has a blanket coverage waiver. The existing malformed
 syntax fixture retains its required parser failure. `composer test:analysis-contract`
 proves nullable findings fail the canonical runner, Level 7 passes the same
 probes, and coverage and configuration regressions cannot return green.
